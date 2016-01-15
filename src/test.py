@@ -28,7 +28,7 @@ class Example(QWidget):
 
         self.setLayout(vbox)
 
-        self.setGeometry(300, 300, 300, 150)
+        self.setGeometry(300, 300, 1024, 768)
         self.setWindowTitle('Buttons')
         self.show()
 

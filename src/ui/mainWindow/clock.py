@@ -10,6 +10,7 @@ class Clock(QWidget):
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
         self.ui()
+
         self.resize(300, 100)
 
     def ui(self):
