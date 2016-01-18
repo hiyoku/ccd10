@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout)
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton)
 
+from src.ui.commons.widgets import insert_widget
+from src.ui.mainWindow.ccdInfo import CCDInfo
 from src.ui.mainWindow.clock import Clock
 
 
@@ -11,15 +13,17 @@ class MainWindow(QWidget):
         self.hbox = QHBoxLayout()
         self.vbox = QVBoxLayout()
 
-        self.insert_widget(Clock(self), self.hbox)
-
-
+        insert_widget(Clock(self), self.hbox)
+        insert_widget(QPushButton("Side Clock", self), self.hbox)
+        insert_widget(QPushButton("Header", self), self.vbox)
+        self.vbox.addStretch(1)
+        self.vbox.addWidget(QPushButton("Footer 1", self))
+        self.vbox.addWidget(QPushButton("Footer 2", self))
         self.vbox.addLayout(self.hbox)
+        self.vbox.addWidget(CCDInfo(self))
 
 
-    def insert_widget(self, wg, hb):
-        hb.addWidget(wg)
-
+        self.setLayout(self.vbox)
 
     def init_geometry(self):
         self.setGeometry(25, 25, 1000, 700)

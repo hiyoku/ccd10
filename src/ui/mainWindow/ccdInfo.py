@@ -1,15 +1,20 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QTextEdit
+from PyQt5.QtWidgets import QWidget, QLabel, QTextEdit, QHBoxLayout
 
 from src.controller.commons.Locker import Locker
+from src.ui.commons.widgets import insert_widget
 from src.utils.camera import SbigDriver
 
 
 class CCDInfo(QWidget):
+
     # Locker
     lock = Locker()
 
     def __init__(self, parent=None):
         super(CCDInfo, self).__init__(parent)
+        # Init the Layouts
+        self.hbox = QHBoxLayout()
+
         self.init_widgets()
 
     def init_widgets(self):
@@ -17,25 +22,33 @@ class CCDInfo(QWidget):
         info = self.get_info()
 
         # Camera Firmware
-        self.lf = QLabel(self)
-        self.lf.setText("Firmware: ")
+        self.lf = QLabel("Firmware:", self)
 
         self.tfirm = QTextEdit(self)
-        self.tfirm.move(310, 15)
-        self.tfirm.resize(75, 25)
         self.tfirm.setPlainText(str(info[0]))
         self.tfirm.setReadOnly(True)
 
         # Camera Name
-        self.ln = QLabel(self)
-        self.ln.setText("Camera: ")
-        self.ln.move(0, 20)
+        self.ln = QLabel("Camera:", self)
 
         self.cn = QTextEdit(self)
         self.cn.setText(str(info[2])[2:len(str(info[2]))-1])
         self.cn.setReadOnly(True)
-        self.cn.resize(200, 25)
-        self.cn.move(50, 15)
+
+        self.insert_all()
+
+        self.setLayout(self.hbox)
+
+    def textbox(self, label):
+        tb = QTextEdit(self)
+        tb.resize()
+        return tb
+
+    def insert_all(self):
+        insert_widget(self.lf, self.hbox)
+        insert_widget(self.tfirm, self.hbox)
+        insert_widget(self.ln, self.hbox)
+        insert_widget(self.cn, self.hbox)
 
     def get_info(self):
         """
