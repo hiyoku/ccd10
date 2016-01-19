@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QTextEdit, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout, QLineEdit
 
 from src.controller.commons.Locker import Locker
 from src.ui.commons.widgets import insert_widget
@@ -23,16 +23,13 @@ class CCDInfo(QWidget):
 
         # Camera Firmware
         self.lf = QLabel("Firmware:", self)
-
-        self.tfirm = QTextEdit(self)
-        self.tfirm.setPlainText(str(info[0]))
-        self.tfirm.setReadOnly(True)
+        self.tfirm = QLineEdit(str(info[0]), self)
+        # self.tfirm.setReadOnly(True)
 
         # Camera Name
         self.ln = QLabel("Camera:", self)
 
-        self.cn = QTextEdit(self)
-        self.cn.setText(str(info[2])[2:len(str(info[2]))-1])
+        self.cn = QLineEdit(str(info[2])[2:len(str(info[2]))-1], self)
         self.cn.setReadOnly(True)
 
         self.insert_all()
