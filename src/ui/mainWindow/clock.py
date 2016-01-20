@@ -1,6 +1,6 @@
 from time import strftime
 
-from PyQt5.QtWidgets import QLCDNumber, QWidget
+from PyQt5.QtWidgets import QLCDNumber, QWidget, QHBoxLayout
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
@@ -9,17 +9,16 @@ class Clock(QWidget):
     
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
-        self.ui()
+        self.init_ui()
+        self.h = QHBoxLayout()
+        self.h.addWidget(self.lcd)
 
-        self.resize(300, 100)
+        self.setLayout(self.h)
 
-    def ui(self):
-        '''
-        Function to initiate the Clock Widget
-        '''
+    def init_ui(self):
         self.lcd = QLCDNumber(self)
-        self.lcd.setDigitCount(8)
         self.lcd.display(strftime('%H:%M:%S'))
+        self.lcd.setDigitCount(8)
         self.start()
 
     # Clock Functions

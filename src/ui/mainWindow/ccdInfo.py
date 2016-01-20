@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
 
+from src.controller.camera import Camera
 from src.controller.commons.Locker import Locker
-from src.ui.commons.widgets import insert_widget
-from src.utils.camera import SbigDriver
+from src.ui.commons.layout import set_hbox
 
 
 class CCDInfo(QWidget):
@@ -12,53 +12,26 @@ class CCDInfo(QWidget):
 
     def __init__(self, parent=None):
         super(CCDInfo, self).__init__(parent)
-        # Init the Layouts
-        self.hbox = QHBoxLayout()
-
+        self.cam = Camera()
         self.init_widgets()
 
     def init_widgets(self):
         """ Function to initiate the Widgets of CCD Information """
-        info = self.get_info()
+        info = self.cam.get_info()
 
         # Camera Firmware
-        self.lf = QLabel("Firmware:", self)
-        self.tfirm = QLineEdit(str(info[0]), self)
-        # self.tfirm.setReadOnly(True)
+        lf = QLabel("Firmware:", self)
+
+        # LineEdit to show Firmware version
+        tfirm = QLineEdit(str(info[0]), self)
+        tfirm.setReadOnly(True)
 
         # Camera Name
-        self.ln = QLabel("Camera:", self)
+        ln = QLabel("Camera:", self)
 
-        self.cn = QLineEdit(str(info[2])[2:len(str(info[2]))-1], self)
-        self.cn.setReadOnly(True)
+        # LineEdit to show camera model
+        cn = QLineEdit(str(info[2])[2:len(str(info[2]))-1], self)
+        cn.setReadOnly(True)
 
-        self.insert_all()
-
-        self.setLayout(self.hbox)
-
-    def textbox(self, label):
-        tb = QTextEdit(self)
-        tb.resize()
-        return tb
-
-    def insert_all(self):
-        insert_widget(self.lf, self.hbox)
-        insert_widget(self.tfirm, self.hbox)
-        insert_widget(self.ln, self.hbox)
-        insert_widget(self.cn, self.hbox)
-
-    def get_info(self):
-        """
-            Function to get the CCD Info
-            This function will return [CameraFirmware, CameraType, CameraName]
-        """
-        ret = None
-        self.lock.set_acquire()
-        try:
-            ret = tuple(SbigDriver.ccdinfo())
-        except Exception as e:
-            print("Exception -> {}".format(e))
-        finally:
-            self.lock.set_release()
-            return ret
-
+        # Setting the layout
+        self.setLayout(set_hbox(lf, tfirm, ln, cn))
