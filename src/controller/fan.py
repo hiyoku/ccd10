@@ -5,9 +5,8 @@ from src.utils.camera import SbigDriver
 class Fan:
     lock = Locker()
 
-    def __init__(self, fanfield, parent=None):
+    def __init__(self, fanfield):
         self.fanField = fanfield
-        self.parent = parent
 
     def fan_status(self):
         # Acquiring the Lock
@@ -24,10 +23,8 @@ class Fan:
         try:
             if SbigDriver.is_fanning():
                 SbigDriver.stop_fan()
-                self.parent.status("Fan turned off.")
             else:
                 SbigDriver.start_fan()
-                self.parent.status("Fan turned on.")
         finally:
             self.fanField.setText(self.fan_status())
             self.lock.set_release()

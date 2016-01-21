@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import (QWidget, QLineEdit,
                              QPushButton, QHBoxLayout)
 
 from src.controller.fan import Fan
+from src.ui.commons.layout import set_hbox
 
 
 class FanStatus(QWidget):
@@ -19,17 +20,11 @@ class FanStatus(QWidget):
         self.FanButton = QPushButton("Fan: ", self)
 
         # Creating a Fan Object
-        self.fan = Fan(self.FanField, parent)
+        self.fan = Fan(self.FanField)
 
         # Set up the buttons
         self.FanField.setText(self.fan.fan_status())
         self.FanButton.clicked.connect(self.fan.set_fan)
 
         # Set up the layout
-        self.config_layout()
-
-    def config_layout(self):
-        self.hbox.addWidget(self.FanButton)
-        self.hbox.addWidget(self.FanField)
-
-        self.setLayout(self.hbox)
+        self.setLayout(set_hbox(self.FanButton, self.FanField))

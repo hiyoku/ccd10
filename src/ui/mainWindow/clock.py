@@ -17,8 +17,8 @@ class Clock(QWidget):
 
     def init_ui(self):
         self.lcd = QLCDNumber(self)
-        self.lcd.display(strftime('%H:%M:%S'))
         self.lcd.setDigitCount(8)
+        self.refresh()
         self.start()
 
     # Clock Functions

@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout,
                              QHBoxLayout)
 
-from src.ui.commons.layout import set_hbox
+from src.ui.commons.layout import add_all_to_vbox
 from src.ui.mainWindow.ccdInfo import CCDInfo
 from src.ui.mainWindow.clock import Clock
 from src.ui.mainWindow.fanStatus import FanStatus
@@ -19,13 +19,10 @@ class MainWindow(QWidget):
         self.MainHBox.addLayout(self.VBox)
         self.MainHBox.addStretch(1)
 
-        self.VBox.addLayout(Clock(self))
-        self.VBox.addLayout(FanStatus(self))
-        self.VBox.addWidget(CCDInfo(self))
+        add_all_to_vbox(self.VBox, Clock(self), FanStatus(self), CCDInfo(self))
 
         self.setLayout(self.MainHBox)
 
     def init_geometry(self):
         self.setGeometry(25, 25, 1000, 700)
-        self.show()
         self.show()
