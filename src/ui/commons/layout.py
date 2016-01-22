@@ -1,10 +1,13 @@
 from PyQt5.QtWidgets import QHBoxLayout
 
 # Function that create a HBox Layout
-def set_hbox(*args):
+def set_hbox(*args, stretch=None):
     hbox = QHBoxLayout()
     for widget in args:
         hbox.addWidget(widget)
+
+    if stretch is not None:
+        hbox.addStretch(stretch)
 
     return hbox
 

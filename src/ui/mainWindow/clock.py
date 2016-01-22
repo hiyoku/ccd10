@@ -1,22 +1,22 @@
 from time import strftime
 
-from PyQt5.QtWidgets import QLCDNumber, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QLCDNumber, QWidget
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+
+from src.ui.commons.layout import set_hbox
 
 
 class Clock(QWidget):
     
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
+        self.lcd = QLCDNumber(self)
         self.init_ui()
-        self.h = QHBoxLayout()
-        self.h.addWidget(self.lcd)
 
-        self.setLayout(self.h)
+        self.setLayout(set_hbox(self.lcd))
 
     def init_ui(self):
-        self.lcd = QLCDNumber(self)
         self.lcd.setDigitCount(8)
         self.refresh()
         self.start()
