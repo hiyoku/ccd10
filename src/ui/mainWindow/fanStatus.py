@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QLineEdit,
                              QPushButton, QHBoxLayout)
 
@@ -17,6 +18,8 @@ class FanStatus(QWidget):
         # Creating the Widgets
         self.FanField = QLineEdit(self)
         self.FanField.setReadOnly(True)
+        self.FanField.setMaximumWidth(100)
+        self.FanField.setAlignment(Qt.AlignCenter)
         self.FanButton = QPushButton("Fan: ", self)
 
         # Creating a Fan Object

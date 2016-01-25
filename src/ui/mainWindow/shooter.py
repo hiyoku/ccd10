@@ -2,10 +2,18 @@ from datetime import datetime
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QPalette
-from PyQt5.QtWidgets import QWidget, QPushButton, QTextEdit, QLabel, QComboBox
+from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QComboBox
 from apscheduler.schedulers.background import BackgroundScheduler
-from core.main.SThread import SThread
 
+from src.business.SThread import SThread
+from src.ui.commons.layout import set_hbox, set_lvbox
+
+
+# Aux Functions
+def set_width(*s):
+    for o in s:
+        o.setMaximumWidth(25)
+        o.setMaxLength(2)
 
 class Shooter(QWidget):
     """
@@ -17,59 +25,79 @@ class Shooter(QWidget):
         super(Shooter, self).__init__(parent)
         self.cond = 0
         self.parent = parent
-        self.init_widgets()
 
-    def init_widgets(self):
-        self.tb = QTextEdit(self)
-
-        self.pLabel = QLabel("Prefixo:", self)
-
-        self.pre = QTextEdit(self)
-
+        # Creating the first part of layout
+        # Shooter button
         self.sbutton = QPushButton("Shot!", self)
         self.sbutton.clicked.connect(self.shoot)
 
-        self.abutton = QPushButton("Auto", self)
-        self.abutton.clicked.connect(self.autoshoot)
+        # Exposition Line Edit
+        self.tb = QLineEdit(self)
 
-        self.hl = QLabel("Hora:", self)
+        # Prefix Line Edit
+        self.pre = QLineEdit(self)
 
-        self.htext = QTextEdit(self)
-
-        self.ml = QLabel("Min:", self)
-
-        self.mtext = QTextEdit(self)
-
-        self.bLabel = QLabel("Binning:", self)
-
+        # Binning ComboBox
         self.combo = QComboBox(self)
         self.fill_combo()
 
+        # Auto Mode Button
+        self.abutton = QPushButton("Auto", self)
+        self.abutton.clicked.connect(self.autoshoot)
+
+        # Hour Label and Line Edit
+        self.htext = QLineEdit(self)
+
+        # Minutes Label and Line Edit
+        self.mtext = QLineEdit(self)
+
+        # Label for Image
         self.img = QLabel(self)
+        self.config_img_label()
+
+        # Creating a Pallete
+        self.pa = QPalette()
+
+        # Labels for Image Info
+        self.prefix = QLabel(self)
+        self.date = QLabel(self)
+        self.hour = QLabel(self)
+        self.config_pallete()
+
+        set_width(self.htext, self.mtext, self.tb)
+
+        self.set_layout()
+
+    def set_layout(self):
+        hbox = set_hbox(self.sbutton, self.tb,
+                        QLabel("Prefixo:", self), self.pre,
+                        QLabel("Binning:", self), self.combo,
+                        self.abutton,
+                        QLabel("Hora:", self), self.htext,
+                        QLabel("Min:", self), self.mtext)
+
+        hb2 = set_hbox(self.prefix, self.date, self.hour)
+
+        self.setLayout(set_lvbox(hbox, set_hbox(self.img,stretch2=1), hb2))
+
+    def config_img_label(self):
         self.img.setPixmap(QPixmap("noimage.png"))
 
-        self.pa = QPalette()
-        self.pa.setColor(QPalette.Foreground, Qt.red)
-
-        self.prefix = QLabel(self)
+    def config_pallete(self):
+        self.pa.setColor(QPalette.Foreground, Qt.red) # Setting the style
         self.prefix.setPalette(self.pa)
-
-
-        self.date = QLabel(self)
         self.date.setPalette(self.pa)
-
-        self.hour = QLabel(self)
         self.hour.setPalette(self.pa)
 
     def shoot(self):
         try:
-            etime = int(self.tb.toPlainText())
-            pre = self.pre.toPlainText()
+            etime = int(self.tb.text())
+            pre = self.pre.text()
             binning = self.combo.currentIndex()
             self.ss = SThread(etime, pre, int(binning))
-            self.ss.finished.connect(self.send_info)
+            self.ss.finished.connect(self.set_image)
             self.ss.start()
-            self.parent.status("Taking photo.")
+            # self.parent.status("Taking photo.")
         except Exception as e:
            print(e)
 
@@ -82,8 +110,8 @@ class Shooter(QWidget):
 
         if now < self.settedhour:
             try:
-                etime = int(self.tb.toPlainText())
-                pre = self.pre.toPlainText()
+                etime = int(self.tb.text())
+                pre = self.pre.text()
                 binning = self.combo.currentIndex()
                 self.ss = SThread(etime, pre, int(binning))
                 self.ss.finished.connect(self.set_image)
@@ -96,8 +124,9 @@ class Shooter(QWidget):
             self.parent.status("Automatic shooter is finished")
 
     def autoshoot(self):
-        h = int(self.htext.toPlainText())
-        m = int(self.mtext.toPlainText())
+        print("Oi")
+        h = int(self.htext.text())
+        m = int(self.mtext.text())
 
         now = datetime.now()
         self.settedhour = now.replace(hour=h, minute=m)
@@ -111,10 +140,7 @@ class Shooter(QWidget):
 
         self.parent.status("Automatic Shooter setted ON ")
 
-    def send_info(self):
-        self.set_image()
-
-    def set_image(self, ST, campo):
+    def set_image(self):
         self.filename = self.ss.get_filename()
         self.tempo = self.ss.get_date()
         self.hora = self.ss.get_hora()

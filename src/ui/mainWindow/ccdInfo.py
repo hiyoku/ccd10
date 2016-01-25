@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
 
 from src.controller.camera import Camera
@@ -25,6 +26,7 @@ class CCDInfo(QWidget):
         # LineEdit to show Firmware version
         tfirm = QLineEdit(str(info[0]), self)
         tfirm.setReadOnly(True)
+        tfirm.setMaximumWidth(50)
 
         # Camera Name
         ln = QLabel("Camera:", self)
@@ -32,6 +34,8 @@ class CCDInfo(QWidget):
         # LineEdit to show camera model
         cn = QLineEdit(str(info[2])[2:len(str(info[2]))-1], self)
         cn.setReadOnly(True)
+        cn.setMinimumWidth(200)
+        cn.setAlignment(Qt.AlignCenter)
 
         # Setting the layout
         self.setLayout(set_hbox(lf, tfirm, ln, cn))

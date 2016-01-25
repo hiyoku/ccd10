@@ -8,7 +8,7 @@ class TempMonitor(QWidget):
 
     def __init__(self, parent=None):
         super(TempMonitor, self).__init__(parent)
-        self.tempMonitor = QLabel("10", self)
+        self.tempMonitor = QLabel(self)
 
         self.label = QLabel("Temperature:", self)
 
