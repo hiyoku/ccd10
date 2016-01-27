@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout,
-                             QHBoxLayout)
+                             QHBoxLayout, QStatusBar)
 
 from src.ui.commons.layout import add_all_to_vbox
 from src.ui.mainWindow.ccdInfo import CCDInfo
@@ -24,6 +24,8 @@ class MainWindow(QWidget):
 
         add_all_to_vbox(self.VBox, Clock(self), CCDInfo(self), FanStatus(self), TempRegulation(self), TempMonitor(self))
         # self.VBox.addStretch(1)
+        self.status = QStatusBar()
+        parent.set_status("dsdas")
 
         self.setLayout(self.MainHBox)
 

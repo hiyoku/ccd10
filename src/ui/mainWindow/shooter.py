@@ -1,11 +1,8 @@
-from datetime import datetime
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QPalette
 from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QComboBox
-from apscheduler.schedulers.background import BackgroundScheduler
 
-from src.business.SThread import SThread
+from src.controller.camera import Camera
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 
@@ -15,21 +12,21 @@ def set_width(*s):
         o.setMaximumWidth(25)
         o.setMaxLength(2)
 
+
 class Shooter(QWidget):
     """
         Class for Taking photo Widget
     """
-    schedShooter = BackgroundScheduler()
 
     def __init__(self, parent=None):
-        super(Shooter, self).__init__(parent)
+        super().__init__(parent)
+        self.cam = Camera()
         self.cond = 0
-        self.parent = parent
 
         # Creating the first part of layout
         # Shooter button
         self.sbutton = QPushButton("Shot!", self)
-        self.sbutton.clicked.connect(self.shoot)
+        self.sbutton.clicked.connect(self.shoot_function)
 
         # Exposition Line Edit
         self.tb = QLineEdit(self)
@@ -43,7 +40,7 @@ class Shooter(QWidget):
 
         # Auto Mode Button
         self.abutton = QPushButton("Auto", self)
-        self.abutton.clicked.connect(self.autoshoot)
+        self.abutton.clicked.connect(self.auto_shoot)
 
         # Hour Label and Line Edit
         self.htext = QLineEdit(self)
@@ -78,76 +75,30 @@ class Shooter(QWidget):
 
         hb2 = set_hbox(self.prefix, self.date, self.hour)
 
-        self.setLayout(set_lvbox(hbox, set_hbox(self.img,stretch2=1), hb2))
+        self.setLayout(set_lvbox(hbox, set_hbox(self.img, stretch2=1), hb2))
 
     def config_img_label(self):
         self.img.setPixmap(QPixmap("noimage.png"))
 
     def config_pallete(self):
-        self.pa.setColor(QPalette.Foreground, Qt.red) # Setting the style
+        self.pa.setColor(QPalette.Foreground, Qt.red)  # Setting the style
         self.prefix.setPalette(self.pa)
         self.date.setPalette(self.pa)
         self.hour.setPalette(self.pa)
 
-    def shoot(self):
-        try:
-            etime = int(self.tb.text())
-            pre = self.pre.text()
-            binning = self.combo.currentIndex()
-            self.ss = SThread(etime, pre, int(binning))
-            self.ss.finished.connect(self.set_image)
-            self.ss.start()
-            # self.parent.status("Taking photo.")
-        except Exception as e:
-           print(e)
+    def shoot_function(self):
+        self.cam.shoot(int(self.tb.text()), self.pre, int(self.combo.currentIndex()))
 
-    def ashoot(self):
-        self.cond = 1
-        now = datetime.now()
-        print("Hora agora ->"+str(now))
-        print("Hora setada ->"+str(self.settedhour))
-        print(now < self.settedhour)
-
-        if now < self.settedhour:
-            try:
-                etime = int(self.tb.text())
-                pre = self.pre.text()
-                binning = self.combo.currentIndex()
-                self.ss = SThread(etime, pre, int(binning))
-                self.ss.finished.connect(self.set_image)
-                self.ss.start()
-                self.parent.status("Taking photo.")
-            except Exception as e:
-                print(e)
-        else:
-            self.job.pause()
-            self.parent.status("Automatic shooter is finished")
-
-    def autoshoot(self):
-        print("Oi")
-        h = int(self.htext.text())
-        m = int(self.mtext.text())
-
-        now = datetime.now()
-        self.settedhour = now.replace(hour=h, minute=m)
-
-        self.schedShooter.print_jobs()
-        if(self.cond == 0):
-            self.job = self.schedShooter.add_job(self.ashoot, 'interval', seconds=10)
-            self.schedShooter.start()
-        else:
-            self.job.resume()
-
-        self.parent.status("Automatic Shooter setted ON ")
+    def auto_shoot(self):
+        self.cam.autoshoot(int(self.htext), int(self.mtext))
 
     def set_image(self):
-        self.filename = self.ss.get_filename()
-        self.tempo = self.ss.get_date()
-        self.hora = self.ss.get_hora()
+        filename = self.ss.get_filename()
+        tempo = self.ss.get_date()
+        hora = self.ss.get_hora()
 
-        self.img.setPixmap(QPixmap(self.filename))
-        self.fill_image_info(self.filename, self.tempo, self.hora)
-        self.parent.status("Image Taken!")
+        self.img.setPixmap(QPixmap(filename))
+        self.fill_image_info(filename, tempo, hora)
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)

@@ -27,7 +27,15 @@ class FanStatus(QWidget):
 
         # Set up the buttons
         self.FanField.setText(self.fan.fan_status())
-        self.FanButton.clicked.connect(self.fan.set_fan)
+        self.FanButton.clicked.connect(self.action_fanbutton)
 
         # Set up the layout
         self.setLayout(set_hbox(self.FanButton, self.FanField))
+
+    def action_fanbutton(self):
+        self.parent.set_status("Oi")
+        try:
+            self.fan.set_fan()
+        except Exception as e:
+            print("Exception on set_fan():\n{}".format(e))
+
