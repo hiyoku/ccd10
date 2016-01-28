@@ -4,11 +4,15 @@ from PyQt5.QtWidgets import QMainWindow
 from src.ui.mainWindow import menubar
 from src.ui.mainWindow.mainWindow import MainWindow
 
+from src.ui.mainWindow.status import Status
+
 
 class Main(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        # Init the Status Singleton
+        Status(self)
         # Init Layouts
         self.init_user_interface()
 
@@ -26,6 +30,3 @@ class Main(QMainWindow):
         self.setGeometry(300, 100, 1024, 600)
         self.setWindowTitle("CCD Controller 1.0.0")
         self.show()
-
-    def set_status(self, m):
-        self.statusBar().showMessage(m)

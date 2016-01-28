@@ -1,14 +1,14 @@
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout,
-                             QHBoxLayout, QStatusBar)
+                             QHBoxLayout)
 
 from src.ui.commons.layout import add_all_to_vbox
 from src.ui.mainWindow.ccdInfo import CCDInfo
 from src.ui.mainWindow.clock import Clock
 from src.ui.mainWindow.fanStatus import FanStatus
 from src.ui.mainWindow.shooter import Shooter
+from src.ui.mainWindow.status import Status
 from src.ui.mainWindow.tempMonitor import TempMonitor
 from src.ui.mainWindow.tempRegulation import TempRegulation
-
 
 class MainWindow(QWidget):
     def __init__(self, parent=None):
@@ -24,8 +24,9 @@ class MainWindow(QWidget):
 
         add_all_to_vbox(self.VBox, Clock(self), CCDInfo(self), FanStatus(self), TempRegulation(self), TempMonitor(self))
         # self.VBox.addStretch(1)
-        self.status = QStatusBar()
-        parent.set_status("dsdas")
+        oi = Status()
+
+        oi.set_status("Oi")
 
         self.setLayout(self.MainHBox)
 

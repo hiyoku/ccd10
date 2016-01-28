@@ -4,6 +4,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from src.business.SThread import SThread
 from src.controller.commons.Locker import Locker
+from src.ui.mainWindow.status import Status
 from src.utils.camera.SbigDriver import ccdinfo, set_temperature
 
 
@@ -16,6 +17,8 @@ class Camera:
 
         self.firmware = str(info[0])
         self.model = str(info[2])[2:len(str(info[2]))-1]
+
+        self.main = Status()
 
 
     def get_info(self):
@@ -41,6 +44,7 @@ class Camera:
             print("Exception: {}".format(e))
         finally:
             self.lock.set_release()
+            self.main.set_status("Temperature setted to {}".format(value))
 
     def shoot(self, etime, pre, binning):
         # Creating a instance of SThread
@@ -48,11 +52,14 @@ class Camera:
 
         try:
             ss.start()
+            self.main.set_status("Taking a photo!")
         except Exception as e:
             print("Exception on Shoot Function:\n" + e)
+        finally:
+            while not ss.isFinished:
+                pass
 
-        while not ss.isFinished:
-            return ss.get_image_info
+        return ss.get_image_info
 
     def ashoot(self, etime, pre, binning):
         self.cond = 1
