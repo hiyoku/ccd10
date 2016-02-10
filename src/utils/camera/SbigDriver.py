@@ -538,10 +538,11 @@ def photoshoot(etime, pre, binning):
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DEVICE.value, None, None)
 
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
-
+    fname = name + ".png"
+    fitsname = name + ".fits"
     print("Call set_header")
     set_header(filename, name)
     print("Call set_png")
-    set_png(name+".fits", name)
-    fname = name+".png"
-    return fname, data, hora
+    set_png(fitsname, name)
+
+    return path, fname, fitsname, data, hora

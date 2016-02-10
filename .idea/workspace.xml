@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6085c146-b0af-4fe3-bd1d-f06548d85961" name="Default" comment="Fixing Bugs">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/image.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" afterPath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
     </list>
     <ignored path="ccd10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,17 +30,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SbigDriver.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SbigDriver.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utils/camera/SbigDriver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="185" column="22" selection-start-line="185" selection-start-column="22" selection-end-line="185" selection-end-column="22" />
-              <folding />
+            <state vertical-scroll-proportion="0.6851852">
+              <caret line="545" column="27" selection-start-line="545" selection-start-column="27" selection-end-line="545" selection-end-column="27" />
+              <folding>
+                <element signature="e#25#38#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,7 +54,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-              <folding />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,16 +81,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.85557985">
-              <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+            <state vertical-scroll-proportion="-6.448276">
+              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
               <folding />
             </state>
           </provider>
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="image.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/image.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -102,17 +119,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
-              <folding />
+              <folding>
+                <marker date="1455107927353" expanded="true" signature="173:496" placeholder="..." />
+                <marker date="1455107927353" expanded="true" signature="438:496" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -172,11 +182,12 @@
         <option value="$PROJECT_DIR$/src/business/schedulers/schedClock.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/business/SThread.py" />
-        <option value="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
         <option value="$PROJECT_DIR$/src/controller/camera.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/clock.py" />
         <option value="$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/controller/image.py" />
+        <option value="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
       </list>
     </option>
   </component>
@@ -868,7 +879,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455108924348</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Fixing Bugs">
+      <created>1455108949992</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1455108949992</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -925,13 +942,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/utils/camera/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/camera/SbigLib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1218,35 +1228,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/shooter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="27" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/SThread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/clock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1455107927353" expanded="true" signature="173:496" placeholder="..." />
+            <marker date="1455107927353" expanded="true" signature="438:496" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1254,14 +1243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/camera/SbigDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="22" selection-start-line="185" selection-start-column="22" selection-end-line="185" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1284,13 +1265,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85557985">
-          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+        <state vertical-scroll-proportion="-6.448276">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/SThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/shooter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="27" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/camera/SbigDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6851852">
+          <caret line="545" column="27" selection-start-line="545" selection-start-column="27" selection-end-line="545" selection-end-column="27" />
+          <folding>
+            <element signature="e#25#38#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>
