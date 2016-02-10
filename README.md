@@ -24,7 +24,7 @@ Creating an application to manage a CCD SBIG Camera.
 
 -----
 
-> Libs
+> Used
 > - Python 3.5
 > - PyQt5
 > - Numpy
