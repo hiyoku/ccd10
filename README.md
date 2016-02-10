@@ -2,8 +2,8 @@ Creating an application to manage a CCD SBIG Camera.
 
 
 > To do
-> -Scheduled shooter: Not
-> -Algorithm: Not
+> - Scheduled shooter: Not
+> - Algorithm: Not
 
 ========== Doing ==========
 Refactoring: Doing
