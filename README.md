@@ -1,6 +1,7 @@
 Creating an application to manage a CCD SBIG Camera.
 
-#### <i class="icon-file"></i> To do
+#### To do
+----------------
 Scheduled shooter: Not
 Algorithm: Not
 
