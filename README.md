@@ -30,6 +30,7 @@ Creating an application to manage a CCD SBIG Camera.
 > - Numpy
 > - Astropy
 > - APScheduler
+> - matplotlib
 
 Need a Sbig Driver
 
