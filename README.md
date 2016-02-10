@@ -18,8 +18,11 @@ Creating an application to manage a CCD SBIG Camera.
 > - Fan Manager: OK
 > - Clock: OK
 
+-----
 
 > **Status:** Last Update at 10/02/2016
+
+-----
 
 > Libs
 > - Python 3.5
