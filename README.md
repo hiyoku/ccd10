@@ -1,10 +1,10 @@
 Creating an application to manage a CCD SBIG Camera.
 
-========== To Do ==========
+#### <i class="icon-file"></i> To do
 Scheduled shooter: Not
 Algorithm: Not
 
-========== Doing ==========\n
+========== Doing ==========
 Refactoring: Doing
 Layout: Doing
 Fixing Bugs: Doing
@@ -28,5 +28,5 @@ Numpy
 Astropy
 APScheduler
 
-# need a Sbig Driver
+Need a Sbig Driver
 
