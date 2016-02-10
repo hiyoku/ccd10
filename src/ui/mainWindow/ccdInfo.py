@@ -18,7 +18,6 @@ class CCDInfo(QWidget):
 
     def init_widgets(self):
         """ Function to initiate the Widgets of CCD Information """
-
         # Camera Firmware
         lf = QLabel("Firmware:", self)
 

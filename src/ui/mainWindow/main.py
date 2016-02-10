@@ -25,7 +25,6 @@ class Main(QMainWindow):
         a = MainWindow(self)
         self.setCentralWidget(a)
 
-
     def init_window_geometry(self):
         self.setGeometry(300, 100, 1024, 600)
         self.setWindowTitle("CCD Controller 1.0.0")

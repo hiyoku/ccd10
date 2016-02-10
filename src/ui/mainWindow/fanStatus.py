@@ -4,14 +4,15 @@ from PyQt5.QtWidgets import (QWidget, QLineEdit,
 
 from src.controller.fan import Fan
 from src.ui.commons.layout import set_hbox
+from src.ui.mainWindow.status import Status
 
 
 class FanStatus(QWidget):
 
     def __init__(self, parent=None):
         super(FanStatus, self).__init__(parent)
-        self.parent = parent
 
+        self.status = Status()
         # Creating the Layout
         self.hbox = QHBoxLayout()
 
@@ -33,9 +34,4 @@ class FanStatus(QWidget):
         self.setLayout(set_hbox(self.FanButton, self.FanField))
 
     def action_fanbutton(self):
-        self.parent.set_status("Oi")
-        try:
-            self.fan.set_fan()
-        except Exception as e:
-            print("Exception on set_fan():\n{}".format(e))
-
+        self.fan.set_fan()

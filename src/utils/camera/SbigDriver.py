@@ -8,6 +8,7 @@ from ctypes import c_ushort, POINTER, byref
 
 import numpy as np
 from matplotlib import pyplot
+
 # from astropy.io import fits
 import pyfits as fits
 from time import strftime
@@ -371,8 +372,10 @@ def set_header(filename, newname):
     fits.writeto(newname+'.fits', fits_file[0].data, fits_file[0].header, clobber=True)
 
     try:
+        print("Tricat do set_header")
         # Fechando e removendo o arquivo tempor�rio
         fits_file.close()
+        fits_file.clear()
         os.remove(filename)
 
     except OSError as e:
@@ -380,9 +383,10 @@ def set_header(filename, newname):
         print("Exception ->" + str(e))
 
 def set_png(filename, newname):
+    print("abrindo filename")
     fits_file = fits.open(filename)
-
     try:
+        print("tricat do set_png")
         pyplot.imshow(fits_file[0].data, cmap='gray')
         pyplot.axis('off')
         pyplot.savefig(newname+'.png', bbox_inches='tight')
@@ -390,6 +394,7 @@ def set_png(filename, newname):
         print("Exception -> "+e)
     finally:
         fits_file.close()
+        pyplot.close()
 
 def photoshoot(etime, pre, binning):
     open_driver()
@@ -519,6 +524,7 @@ def photoshoot(etime, pre, binning):
     except OSError:
         pass
     fits.writeto(filename, img)
+    fits.writeto(filename, img)
 
     print("GRAB IMAGE - End Readout")
 
@@ -533,7 +539,9 @@ def photoshoot(etime, pre, binning):
 
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
 
+    print("Call set_header")
     set_header(filename, name)
+    print("Call set_png")
     set_png(name+".fits", name)
     fname = name+".png"
     return fname, data, hora
