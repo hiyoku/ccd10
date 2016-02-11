@@ -515,15 +515,14 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-
-    name = path+pre+"_"+tempo
+    fn = pre+"_"+tempo
+    name = path+fn
     filename = name+"_temp.fits"
 
     try:
         os.unlink(filename)
     except OSError:
         pass
-    fits.writeto(filename, img)
     fits.writeto(filename, img)
 
     print("GRAB IMAGE - End Readout")
@@ -545,4 +544,4 @@ def photoshoot(etime, pre, binning):
     print("Call set_png")
     set_png(fitsname, name)
 
-    return path, fname, fitsname, data, hora
+    return path, fn + ".png", fn + ".fits", data, hora

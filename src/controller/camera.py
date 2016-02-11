@@ -83,8 +83,8 @@ class Camera(metaclass=Singleton):
         except Exception as e:
             print("Exception on Shoot Function:\n{}".format(e))
         finally:
-            self.image_info = ss.get_image_info()
-            print("shoot2 function: image name: {}".format(self.image_info[0]))
+            self.img = ss.get_image_info()
+            print("shoot2 function: image name: {}".format(self.img.png_name))
 
     def ashoot(self, etime, pre, binning):
         self.cond = 1

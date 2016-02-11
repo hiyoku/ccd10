@@ -94,14 +94,12 @@ class Shooter(QWidget):
         self.cam.autoshoot(int(self.htext), int(self.mtext))
 
     def set_image(self):
-        info = self.cam.image_info
         print("Image Info")
-        for i in info:
-            print(i)
+        img = self.cam.img
 
         print("Setando os Pixmap")
-        self.img.setPixmap(QPixmap(info[0]))
-        self.fill_image_info(info[0], info[1], info[2])
+        self.img.setPixmap(QPixmap((img.path + img.png_name)))
+        self.fill_image_info(img.png_name, img.date, img.hour)
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)
@@ -109,7 +107,7 @@ class Shooter(QWidget):
         self.combo.addItem("3x3", 2)
 
     def fill_image_info(self, filename, time, hora):
-        self.prefix.setText(filename[22:])
+        self.prefix.setText(filename)
         self.date.setText(time)
         self.hour.setText(hora)
 

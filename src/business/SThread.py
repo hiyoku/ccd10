@@ -2,6 +2,7 @@ from PyQt5.QtCore import QThread
 
 from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.controller.commons.Locker import Locker
+from src.controller.image import Image
 from src.utils.camera import SbigDriver
 
 
@@ -15,24 +16,25 @@ class SThread(QThread):
         self.b = binning
         self.sched = SchedTemperature()
         self.info = []
+        self.img = None
 
     def run(self):
         self.sched.stop_job()
         self.lock.set_acquire()
-        filename, tempo, hora = "", "", ""
         try:
-             filename, tempo, hora = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
+            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
         except Exception as e:
             print("Exception on SThread -> {}".format(e))
         finally:
             self.lock.set_release()
             self.sched.start_job()
-            self.set_info(filename, tempo, hora)
+            self.init_image()
 
-    def set_info(self, *args):
-        for a in args:
-            self.info.append(a)
-            print(a)
+    def init_image(self):
+        for i in self.info:
+            print(i)
+
+        self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
 
     def get_image_info(self):
-        return self.info
+        return self.img

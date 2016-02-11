@@ -43,6 +43,10 @@ class Main(QWidget):
 
     def print_ids(self):
         print("Sched 1: {}\nSched 2: {}".format(id(self.s), id(self.ss)))
+        a = None
+        print(a)
+        a = "oi"
+        print(a)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
