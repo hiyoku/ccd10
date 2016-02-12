@@ -30,6 +30,7 @@ elif sys.platform.startswith("win"):
     # else:
     #     print("Invalid Python distributionm Should be 32bits")
 
+
 def cmd(ccc, cin, cout):
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
 
@@ -67,6 +68,7 @@ def cmd(ccc, cin, cout):
 # Open Driver
 def open_driver():
     cmd(SbigLib.PAR_COMMAND.CC_OPEN_DRIVER.value, None, None)
+
 
 # Open Device USB
 def open_deviceusb():
@@ -382,6 +384,7 @@ def set_header(filename, newname):
         print(filename)
         print("Exception ->" + str(e))
 
+
 def set_png(filename, newname):
     print("abrindo filename")
     fits_file = fits.open(filename)
@@ -391,10 +394,31 @@ def set_png(filename, newname):
         pyplot.axis('off')
         pyplot.savefig(newname+'.png', bbox_inches='tight')
     except Exception as e:
-        print("Exception -> "+e)
+        print("Exception -> {}".format(e))
     finally:
         fits_file.close()
         pyplot.close()
+
+
+def set_path(pre):
+    tempo = strftime('%Y%m%d_%H%M%S')
+
+    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
+    # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+    path = "images/"
+    if int(tempo[9:11]) > 12:
+        path = path+pre+"_"+data+"/"
+    else:
+        day = int(tempo[6:8])
+        if 0 < day < 10:
+            day = "0" + str(int(day)-1)
+        else:
+            day = str(day)
+
+        path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+day+"/"
+
+    return path, tempo
+
 
 def photoshoot(etime, pre, binning):
     open_driver()
@@ -503,15 +527,7 @@ def photoshoot(etime, pre, binning):
         udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_READOUT_LINE.value, byref(cin), byref(cout))
         img[i_line] = cout
 
-    tempo = strftime('%Y%m%d_%H%M%S')
-
-    data = tempo[0:4]+"-"+tempo[4:6]+"-"+tempo[6:8]
-    hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
-    path = "images/"
-    if int(tempo[9:11]) > 12:
-        path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]+"/"
-    else:
-        path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+str(int(tempo[6:8])-1)+"/"
+    path, tempo = set_path(pre)
 
     if not os.path.isdir(path):
         os.makedirs(path)
@@ -537,11 +553,10 @@ def photoshoot(etime, pre, binning):
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DEVICE.value, None, None)
 
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
-    fname = name + ".png"
-    fitsname = name + ".fits"
+
     print("Call set_header")
     set_header(filename, name)
     print("Call set_png")
-    set_png(fitsname, name)
+    set_png(name + ".fits", name)
 
     return path, fn + ".png", fn + ".fits", data, hora

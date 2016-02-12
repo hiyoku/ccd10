@@ -5,11 +5,12 @@ from apscheduler.triggers.interval import IntervalTrigger
 
 from src.utils.singleton import Singleton
 
+
 class SchedClock(metaclass=Singleton):
     def __init__(self, lcd_display):
         self.lcd = lcd_display
 
-    def start(self):
+    def start_scheduler(self):
         scheduler = BackgroundScheduler()
         scheduler.add_job(self.refresh, IntervalTrigger(seconds=1))
         scheduler.start()
@@ -17,4 +18,3 @@ class SchedClock(metaclass=Singleton):
     # Refreshing Clock
     def refresh(self):
         self.lcd.display(strftime('%H:%M:%S'))
-

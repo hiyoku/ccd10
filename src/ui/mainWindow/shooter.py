@@ -36,7 +36,6 @@ class Shooter(QWidget):
 
         # Binning ComboBox
         self.combo = QComboBox(self)
-        self.fill_combo()
 
         # Auto Mode Button
         self.abutton = QPushButton("Auto", self)
@@ -66,6 +65,8 @@ class Shooter(QWidget):
         self.set_layout()
 
     def set_layout(self):
+        self.fill_combo()
+
         hbox = set_hbox(self.sbutton, self.tb,
                         QLabel("Prefixo:", self), self.pre,
                         QLabel("Binning:", self), self.combo,

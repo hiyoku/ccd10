@@ -6,4 +6,3 @@ class Image:
         self.fits_name = fitsname
         self.date = date
         self.hour = hour
-

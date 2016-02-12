@@ -18,20 +18,25 @@ class FanStatus(QWidget):
 
         # Creating the Widgets
         self.FanField = QLineEdit(self)
-        self.FanField.setReadOnly(True)
-        self.FanField.setMaximumWidth(100)
-        self.FanField.setAlignment(Qt.AlignCenter)
         self.FanButton = QPushButton("Fan: ", self)
 
         # Creating a Fan Object
         self.fan = Fan(self.FanField)
 
-        # Set up the buttons
-        self.FanField.setText(self.fan.fan_status())
-        self.FanButton.clicked.connect(self.action_fanbutton)
+        # Setting up
+        self.setting_up()
 
         # Set up the layout
         self.setLayout(set_hbox(self.FanButton, self.FanField))
 
     def action_fanbutton(self):
         self.fan.set_fan()
+
+    def setting_up(self):
+        self.FanField.setReadOnly(True)
+        self.FanField.setMaximumWidth(100)
+        self.FanField.setAlignment(Qt.AlignCenter)
+
+        self.FanField.setText(self.fan.fan_status())
+
+        self.FanButton.clicked.connect(self.action_fanbutton)

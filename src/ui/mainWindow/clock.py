@@ -17,5 +17,4 @@ class Clock(QWidget):
 
     def init_ui(self):
         self.lcd.setDigitCount(8)
-        self.sc.start()
-
+        self.sc.start_scheduler()
