@@ -1,5 +1,4 @@
 from datetime import datetime
-from threading import Thread
 from time import sleep
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -61,12 +60,12 @@ class Camera(metaclass=Singleton):
 
         return float(temp)
 
-    def shoot(self, etime, pre, binning):
-        s = Thread(target=self.shoot2, args=(etime, pre, binning))
-        s.start()
-        s.join()
+    # def shoot(self, etime, pre, binning):
+    #     s = Thread(target=self.shoot2, args=(etime, pre, binning))
+    #     s.start()
 
-    def shoot2(self, etime, pre, binning):
+
+    def shoot(self, etime, pre, binning):
         print("Shoot function!")
         # Creating a instance of SThread
         ss = SThread(int(etime), str(pre), int(binning))

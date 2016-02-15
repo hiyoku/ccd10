@@ -420,6 +420,13 @@ def set_path(pre):
     return path, tempo
 
 
+def get_date_hour(tempo):
+    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
+    hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+
+    return data, hora
+
+
 def photoshoot(etime, pre, binning):
     open_driver()
     open_deviceusb()
@@ -558,5 +565,7 @@ def photoshoot(etime, pre, binning):
     set_header(filename, name)
     print("Call set_png")
     set_png(name + ".fits", name)
+
+    data, hora = get_date_hour(tempo)
 
     return path, fn + ".png", fn + ".fits", data, hora
