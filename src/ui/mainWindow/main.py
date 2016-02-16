@@ -5,6 +5,7 @@ from src.ui.mainWindow import menubar
 from src.ui.mainWindow.mainWindow import MainWindow
 
 from src.ui.mainWindow.status import Status
+from src.business.configFile import Config
 
 
 class Main(QMainWindow):
@@ -15,6 +16,8 @@ class Main(QMainWindow):
         Status(self)
         # Init Layouts
         self.init_user_interface()
+        # init Config File
+        self.init_config_file()
 
     def init_user_interface(self):
         menubar.init_menu(self)
@@ -24,6 +27,13 @@ class Main(QMainWindow):
     def init_widgets(self):
         a = MainWindow(self)
         self.setCentralWidget(a)
+
+    def init_config_file(self):
+        a = Config()
+        a.create_config()
+        a.read_config()
+        a._config.set('system_options', 'log_file', 'true')
+        a.write_config()
 
     def init_window_geometry(self):
         self.setGeometry(300, 100, 1024, 600)
