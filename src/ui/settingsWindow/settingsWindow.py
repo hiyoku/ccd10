@@ -1,4 +1,4 @@
-from PyQt5.Qt import QWidget, QLabel, QLineEdit
+from PyQt5.Qt import QWidget, QLabel, QLineEdit, QCheckBox
 
 from src.ui.commons.layout import set_hbox
 
@@ -6,11 +6,13 @@ from src.ui.commons.layout import set_hbox
 class SettingsWindow(QWidget):
     def __init__(self):
         super(SettingsWindow, self).__init__()
-        # Defining label variables
-        self.lPName = None
-        self.lSite, self.lImager = None
-        self.lLat, self.lLon, self.lElev, self.lPres, self.lTemp = None
-        self.lmse, self.lilp, self.lmle, self.lmlp = None
+        # # Defining label variables
+        # self.lPName = None
+        # self.lSite, self.lImager = None
+        # self.lLat, self.lLon, self.lElev, self.lPres, self.lTemp = None
+        # self.lmse, self.lilp, self.lmle, self.lmlp = None
+        #
+        # # Defining
 
     def create_labels_system(self):
         self.lPName = QLabel("Project Name:", self)
@@ -28,7 +30,6 @@ class SettingsWindow(QWidget):
 
     def create_labels_sun(self):
         self.lmse = QLabel("Max Solar Elevation:", self)
-        self.lilp = QLabel("Ignore Lunar Position:", self)
         self.lmle = QLabel("Max Lunar Elevation:", self)
         self.lmlp = QLabel("Max Lunar Phase:", self)
 
@@ -48,7 +49,10 @@ class SettingsWindow(QWidget):
 
     def create_edits_sun(self):
         self.emse = QLineEdit(self)
-        self.eilp = QLineEdit(self)
+        self.eilp = QCheckBox('Ignore Lunar Position', self)
+        self.emle = QLineEdit(self)
+        self.emlp = QLineEdit(self)
+
 
     def create_layout(self):
         set_hbox()

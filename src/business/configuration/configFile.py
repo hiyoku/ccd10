@@ -1,15 +1,15 @@
 from configparser import ConfigParser
 
-# from src.utils.singleton import Singleton
+from src.business.configuration.constants import project as p
 
 
 class Config:
     def __init__(self):
         self._config = ConfigParser()
 
-    def create_config(self):
+    def create_config_project(self, name):
         # Creating Sections
-        self.create_sections('system_options', 'site_parameters', 'geographic_parameters', 'sun_and_moon')
+        self.create_sections(p.SITE_TITLE, p.GEOGRAPHIC_TITLE, p.SUN_MOON_TITLE)
 
         # Creating Options and values
         self._config.set('system_options', 'startup', 'true')
