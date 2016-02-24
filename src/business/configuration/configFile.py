@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from PyQt5.Qt import QSettings
 
 from src.business.configuration.constants import project as p
 
@@ -6,48 +7,31 @@ from src.business.configuration.constants import project as p
 class Config:
     def __init__(self):
         self._config = ConfigParser()
+        self._settings = QSettings()
 
-    def create_config_project(self, name):
-        # Creating Sections
-        self.create_sections(p.SITE_TITLE, p.GEOGRAPHIC_TITLE, p.SUN_MOON_TITLE)
+    def setup_settings(self, name):
+        self._settings = QSettings(name, QSettings.IniFormat)
+        self._settings.setFallbacksEnabled(False)
 
-        # Creating Options and values
-        self._config.set('system_options', 'startup', 'true')
-        self._config.set('system_options', 'image_path', 'default')
-        self._config.set('system_options', 'log_file', 'false')
+    def set_site_settings(self, name, site_id, imager_id):
+        self._settings.beginGroup(p.SITE_TITLE)
+        self._settings.setValue(p.NAME, name)
+        self._settings.setValue(p.SITE_ID, site_id)
+        self._settings.setValue(p.IMAGER_ID, imager_id)
+        self._settings.endGroup()
 
-        self._config.set('site_parameters', 'site_id', 'none')
-        self._config.set('site_parameters', 'imager_id', 'none')
+    def set_geographic_settings(self, lat, long, elev, press):
+        self._settings.beginGroup(p.GEOGRAPHIC_TITLE)
+        self._settings.setValue(p.LATITUDE, lat)
+        self._settings.setValue(p.LONGITUDE, long)
+        self._settings.setValue(p.ELEVATION, elev)
+        self._settings.setValue(p.PRESSURE, press)
+        self._settings.endGroup()
 
-        self._config.set('geographic_parameters', 'latitude', '0')
-        self._config.set('geographic_parameters', 'longitude', '0')
-        self._config.set('geographic_parameters', 'elevation', '0')
-        self._config.set('geographic_parameters', 'pressure', '0')
-        self._config.set('geographic_parameters', 'temperature', '0')
-
-        self._config.set('sun_and_moon', 'max_solar_elevation', '0')
-        self._config.set('sun_and_moon', 'ignore_lunar_position', 'false')
-        self._config.set('sun_and_moon', 'max_lunar_elevation', '0')
-        self._config.set('sun_and_moon', 'max_lunar_phase', '0')
-
-        # Writing the Config File
-        self.write_config()
-
-    def read_config(self):
-        self._config.read(['config.ini'])
-
-        return self._config
-
-    def get_sections(self):
-        return self._config.sections()
-
-    def get_items(self, section):
-        return self._config.items(section)
-
-    def create_sections(self, *args):
-        for section in args:
-            self._config.add_section(section)
-
-    def write_config(self):
-        with open('config.ini', 'w') as cfg:
-            self._config.write(cfg)
+    def set_moonsun_settings(self, solarelev, ignorel, lunarph, lunarpos):
+        self._settings.beginGroup(p.SUN_MOON_TITLE)
+        self._settings.setValue(p.MAX_SOLAR_ELEVATION, solarelev)
+        self._settings.setValue(p.IGNORE_LUNAR_POSITION, ignorel)
+        self._settings.setValue(p.MAX_LUNAR_PHASE, lunarph)
+        self._settings.setValue(p.MAX_LUNAR_ELEVATION, lunarpos)
+        self._settings.endGroup()
