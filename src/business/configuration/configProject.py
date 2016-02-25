@@ -1,12 +1,10 @@
-from configparser import ConfigParser
 from PyQt5.Qt import QSettings
 
 from src.business.configuration.constants import project as p
 
 
-class Config:
+class ConfigProject:
     def __init__(self):
-        self._config = ConfigParser()
         self._settings = QSettings()
 
     def setup_settings(self, name):

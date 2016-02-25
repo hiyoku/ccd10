@@ -5,7 +5,7 @@ from src.ui.mainWindow import menubar
 from src.ui.mainWindow.mainWindow import MainWindow
 
 from src.ui.mainWindow.status import Status
-from src.business.configuration.configFile import Config
+from src.business.configuration.configProject import Config
 
 
 class Main(QMainWindow):
