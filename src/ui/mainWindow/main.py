@@ -5,7 +5,7 @@ from src.ui.mainWindow import menubar
 from src.ui.mainWindow.mainWindow import MainWindow
 
 from src.ui.mainWindow.status import Status
-from src.business.configuration.configProject import Config
+from src.business.configuration.configProject import ConfigProject
 
 
 class Main(QMainWindow):
@@ -29,11 +29,11 @@ class Main(QMainWindow):
         self.setCentralWidget(a)
 
     def init_config_file(self):
-        a = Config()
-        a.create_config()
-        a.read_config()
-        a._config.set('system_options', 'log_file', 'true')
-        a.write_config()
+        a = ConfigProject()
+        a.setup_settings('test')
+        a.set_site_settings('test', 'siteTest', 'imagerTest')
+        a.set_geographic_settings(0, 0, 0, 0)
+        a.set_moonsun_settings(0, True, 0, 0)
 
     def init_window_geometry(self):
         self.setGeometry(300, 100, 1024, 600)

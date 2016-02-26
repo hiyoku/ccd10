@@ -5,13 +5,14 @@ from src.ui.settingsWindow.settingsWindow import SettingsWindow
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.init_widget()
         self.init_window_geometry()
 
     def init_window_geometry(self):
         # self.setGeometry(300, 100, 1024, 600)
         self.setWindowTitle("Settings")
 
-    def init_widgets(self):
-        a = SettingsWindow()
+    def init_widget(self):
+        a = SettingsWindow(self)
         self.setCentralWidget(a)
 

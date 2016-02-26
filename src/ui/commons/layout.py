@@ -35,3 +35,9 @@ def add_all_to_vbox(vbox, *args):
         vbox.addWidget(h)
 
     return vbox
+
+def add_widget_to_vbox(vbox, *args):
+    for h in args:
+        vbox.addLayout(h)
+
+    return vbox
