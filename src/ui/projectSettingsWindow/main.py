@@ -1,6 +1,6 @@
 from PyQt5.Qt import QMainWindow
 
-from src.ui.settingsWindow.settingsWindow import SettingsWindow
+from src.ui.projectSettingsWindow.settingsWindow import SettingsWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
 
     def init_window_geometry(self):
         # self.setGeometry(300, 100, 1024, 600)
-        self.setWindowTitle("Settings")
+        self.setWindowTitle("Project Settings")
 
     def init_widget(self):
         a = SettingsWindow(self)
