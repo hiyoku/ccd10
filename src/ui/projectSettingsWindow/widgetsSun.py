@@ -27,3 +27,6 @@ class WidgetsSun(QWidget):
                          set_hbox(self.lmlp, self.emlp))
 
         self.setLayout(vbox)
+
+    def get_sun(self):
+        return self.emse.text(), self.eilp.isChecked(), self.emle.text(), self.emlp.text()

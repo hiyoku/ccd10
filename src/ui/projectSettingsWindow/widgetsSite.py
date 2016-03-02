@@ -25,3 +25,17 @@ class WidgetsSite(QWidget):
                          set_hbox(self.lImager, self.eImager))
 
         self.setLayout(vbox)
+
+    def get_site_info(self):
+        return self.ePName.text(), self.eSite.text(), self.eImager.text()
+
+    def set_site_info(self, projectName, siteName, imagerName):
+        self.ePName.setText(projectName)
+        self.eSite.setText(siteName)
+        self.eImager.setText(imagerName)
+
+    def clear_site(self):
+        self.ePName.clear()
+        self.eSite.clear()
+        self.eImager.clear()
+
