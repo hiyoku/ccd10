@@ -4,12 +4,16 @@ from src.business.configuration.constants import project as p
 
 
 class ConfigProject:
-    def __init__(self):
+    def __init__(self, name):
         self._settings = QSettings()
+        self.setup_settings(name)
 
     def setup_settings(self, name):
         self._settings = QSettings(name, QSettings.IniFormat)
         self._settings.setFallbacksEnabled(False)
+
+    def get_value(self, menu, value):
+        return self._settings.value(menu+'/'+value)
 
     def set_site_settings(self, name, site_id, imager_id):
         self._settings.beginGroup(p.SITE_TITLE)
@@ -33,3 +37,18 @@ class ConfigProject:
         self._settings.setValue(p.MAX_LUNAR_PHASE, lunarph)
         self._settings.setValue(p.MAX_LUNAR_ELEVATION, lunarpos)
         self._settings.endGroup()
+
+    def get_site_settings(self):
+        return self.get_value(p.SITE_TITLE, p.NAME), self.get_value(p.SITE_TITLE, p.SITE_ID), \
+               self.get_value(p.SITE_TITLE, p.IMAGER_ID)
+
+    def get_geographic_settings(self):
+        m = p.GEOGRAPHIC_TITLE
+        return self.get_value(m, p.LATITUDE), self.get_value(m, p.LONGITUDE), \
+               self.get_value(m, p.ELEVATION), self.get_value(m, p.PRESSURE)
+
+    def get_moonsun_settings(self):
+        m = p.SUN_MOON_TITLE
+        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION), \
+               self.get_value(m, p.IGNORE_LUNAR_POSITION), self.get_value(m, p.MAX_LUNAR_PHASE), \
+               self.get_value(m, p.MAX_LUNAR_ELEVATION)

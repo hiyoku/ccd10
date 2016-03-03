@@ -23,3 +23,12 @@ class WidgetsPath(QWidget):
                          set_hbox(self.lProjPath, self.eProjPath))
 
         self.setLayout(vbox)
+
+    def get_values(self):
+        return self.cStart.isChecked(), self.cLog.isChecked(), self.eLog.text(), self.eProjPath.text()
+
+    def set_values(self, cstart, clog, elog, epp):
+        self.cStart.setChecked(cstart)
+        self.cLog.setChecked(clog)
+        self.eLog.setText(elog)
+        self.eProjPath.setText(epp)

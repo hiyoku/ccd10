@@ -23,7 +23,16 @@ class SettingsWindow(QWidget):
         self.setting_up()
 
     def button_settings(self):
-        self.button_cancel.clicked.connect(self.p.close)
+        self.button_cancel.clicked.connect(self.func_cancel)
+
+    def func_cancel(self):
+        self.p.close()
+        self.clear_all()
+
+    def clear_all(self):
+        self.site.clear_site()
+        self.geo.clear_geography()
+        self.sun.clear_sun()
 
     def setting_up(self):
         self.setLayout(set_lvbox(set_hbox(self.site),

@@ -30,3 +30,15 @@ class WidgetsSun(QWidget):
 
     def get_sun(self):
         return self.emse.text(), self.eilp.isChecked(), self.emle.text(), self.emlp.text()
+
+    def set_sun(self, mse, ilp, mle, mlp):
+        self.emse = mse
+        self.eilp.setChecked(ilp)
+        self.emle = mle
+        self.emlp = mlp
+
+    def clear_sun(self):
+        self.emse.clear()
+        self.eilp.setChecked(False)
+        self.emle.clear()
+        self.emlp.clear()
