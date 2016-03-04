@@ -39,3 +39,5 @@ class WidgetsSite(QWidget):
         self.eSite.clear()
         self.eImager.clear()
 
+    def get_name(self):
+        return self.lPName.text()
