@@ -17,4 +17,4 @@ class SchedClock(metaclass=Singleton):
 
     # Refreshing Clock
     def refresh(self):
-        self.lcd.display(strftime('%H:%M:%S'))
+        self.lcd.setText(strftime('%H:%M:%S'))

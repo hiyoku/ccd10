@@ -25,9 +25,14 @@ class SettingsWindow(QWidget):
 
     def button_settings(self):
         self.button_cancel.clicked.connect(self.func_cancel)
-        self.button_ok.clicked.connect(self.save_settings)
+        self.button_ok.clicked.connect(self.func_ok)
 
     def func_cancel(self):
+        self.p.close()
+        self.clear_all()
+
+    def func_ok(self):
+        self.save_settings()
         self.p.close()
         self.clear_all()
 
@@ -37,14 +42,25 @@ class SettingsWindow(QWidget):
         self.sun.clear_sun()
 
     def save_settings(self):
-        self.st = ConfigProject(self.site.get_name())
+        try:
+            st = ConfigProject(str(self.site.get_name()))
+            self.save_site(st)
+            self.save_geo(st)
+            self.save_sun(st)
+        except Exception as e:
+            print(e)
 
     def save_site(self, set):
-        info = self.site.get_site_info()
-        set.set_site_settings(info[0], info[1], info[2])
+        info1 = self.site.get_site_info()
+        set.set_site_settings(info1[0], info1[1], info1[2])
 
     def save_geo(self, set):
-        info = self.geo.get_geography()
+        info2 = self.geo.get_geography()
+        set.set_geographic_settings(info2[0], info2[1], info2[2], info2[3], info2[4])
+
+    def save_sun(self, set):
+        info3 = self.sun.get_sun()
+        set.set_moonsun_settings(info3[0], info3[1], info3[2], info3[3])
 
     def setting_up(self):
         self.setLayout(set_lvbox(set_hbox(self.site),

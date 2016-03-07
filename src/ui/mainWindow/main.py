@@ -16,8 +16,6 @@ class Main(QMainWindow):
         Status(self)
         # Init Layouts
         self.init_user_interface()
-        # init Config File
-        self.init_config_file()
 
     def init_user_interface(self):
         menubar.init_menu(self)
@@ -27,13 +25,6 @@ class Main(QMainWindow):
     def init_widgets(self):
         a = MainWindow(self)
         self.setCentralWidget(a)
-
-    def init_config_file(self):
-        a = ConfigProject()
-        a.setup_settings('test')
-        a.set_site_settings('test', 'siteTest', 'imagerTest')
-        a.set_geographic_settings(0, 0, 0, 0)
-        a.set_moonsun_settings(0, True, 0, 0)
 
     def init_window_geometry(self):
         self.setGeometry(300, 100, 1024, 600)

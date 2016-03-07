@@ -23,6 +23,7 @@ class MainWindow(QWidget):
 
         add_all_to_vbox(self.VBox, Clock(self), CCDInfo(self), FanStatus(self), TempRegulation(self), TempMonitor(self))
         # self.VBox.addStretch(1)
+        # self.VBox.setStyleSheet("background-color: rgb(255,0,0);")
 
         self.setLayout(self.MainHBox)
 

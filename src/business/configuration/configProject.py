@@ -22,12 +22,13 @@ class ConfigProject:
         self._settings.setValue(p.IMAGER_ID, imager_id)
         self._settings.endGroup()
 
-    def set_geographic_settings(self, lat, long, elev, press):
+    def set_geographic_settings(self, lat, long, elev, press, temp):
         self._settings.beginGroup(p.GEOGRAPHIC_TITLE)
         self._settings.setValue(p.LATITUDE, lat)
         self._settings.setValue(p.LONGITUDE, long)
         self._settings.setValue(p.ELEVATION, elev)
         self._settings.setValue(p.PRESSURE, press)
+        self._settings.setValue(p.TEMPERATURE, temp)
         self._settings.endGroup()
 
     def set_moonsun_settings(self, solarelev, ignorel, lunarph, lunarpos):
