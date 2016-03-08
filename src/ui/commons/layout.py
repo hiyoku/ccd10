@@ -22,6 +22,7 @@ def set_wvbox(*args, stretch=None):
 
     if stretch is not None:
         vbox.addStretch(stretch)
+    return vbox
 
 def set_lvbox(*args):
     vbox = QVBoxLayout()

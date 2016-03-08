@@ -1,21 +1,32 @@
 from PyQt5.QtWidgets import QLabel, QFrame
+from PyQt5.QtCore import Qt
 
 from src.business.schedulers.schedClock import SchedClock
-from src.ui.commons.layout import set_hbox
-
+from src.ui.commons.layout import set_wvbox
+from src.ui.commons.widgets import get_qfont
 
 class Clock(QFrame):
     
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
+        self.title = QLabel('Local Time', self)
+
         self.lcd = QLabel(self)
-        self.lcd.setAlignment(Qt_Alignment=left)
         self.sc = SchedClock(lcd_display=self.lcd)
-        self.setStyleSheet("background-color: rgb(255,0,0);")
 
         self.init_ui()
+        self.config_widgets()
 
-        self.setLayout(set_hbox(self.lcd))
+        self.setLayout(set_wvbox(self.title, self.lcd))
+        self.setStyleSheet("background-color: rgb(200,200,200); padding:-11%; border:2px solid rgb(150, 150, 150);")
 
     def init_ui(self):
         self.sc.start_scheduler()
+
+    def config_widgets(self):
+        self.title.setAlignment(Qt.AlignCenter)
+        self.lcd.setAlignment(Qt.AlignCenter)
+
+        self.title.setFont(get_qfont(True))
+        self.lcd.setFont(get_qfont(False))
+
