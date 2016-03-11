@@ -22,7 +22,6 @@ class SystemSettingsWindow(QWidget):
 
         self.filling_fields()
 
-
     def button_settings(self):
         self.button_cancel.clicked.connect(self.s.close)
         self.button_ok.clicked.connect(self.ok_button)

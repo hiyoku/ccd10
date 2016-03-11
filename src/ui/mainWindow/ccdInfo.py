@@ -22,7 +22,7 @@ class CCDInfo(QWidget):
         lf = QLabel("Firmware:", self)
 
         # LineEdit to show Firmware version
-        tfirm = QLineEdit(self.cam.firmware, self)
+        tfirm = QLabel(self.cam.firmware, self)
         tfirm.setReadOnly(True)
         tfirm.setMaximumWidth(50)
 
@@ -30,7 +30,7 @@ class CCDInfo(QWidget):
         ln = QLabel("Camera:", self)
 
         # LineEdit to show camera model
-        cn = QLineEdit(self.cam.model, self)
+        cn = QLabel(self.cam.model, self)
         cn.setReadOnly(True)
         cn.setMinimumWidth(200)
         cn.setAlignment(Qt.AlignCenter)

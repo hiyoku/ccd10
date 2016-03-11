@@ -25,3 +25,6 @@ class ConfigSystem:
     def get_site_settings(self):
         return cb(self._settings.value(s.STARTUP)), cb(self._settings.value(s.LOG_FILE)), \
                self._settings.value(s.LOG_PATH), self._settings.value(s.PROJECT_PATH)
+
+    def project_path(self):
+        return self._settings.value(s.PROJECT_PATH)

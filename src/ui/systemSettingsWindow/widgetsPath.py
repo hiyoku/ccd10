@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QCheckBox
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QCheckBox, QFileDialog, QPushButton
 
 from src.ui.commons.layout import set_hbox, set_lvbox
 
@@ -13,6 +13,8 @@ class WidgetsPath(QWidget):
         self.eLog = QLineEdit(self)
         self.lProjPath = QLabel('Project Path:')
         self.eProjPath = QLineEdit(self)
+        self.pbutton = QPushButton("Open File", self)
+        self.filename = ""
 
         self.setting_up()
 
@@ -20,7 +22,9 @@ class WidgetsPath(QWidget):
         vbox = set_lvbox(set_hbox(self.cStart),
                          set_hbox(self.cLog),
                          set_hbox(self.lLog, self.eLog),
-                         set_hbox(self.lProjPath, self.eProjPath))
+                         set_hbox(self.lProjPath, self.eProjPath, self.pbutton))
+
+        self.pbutton.clicked.connect(self.open)
 
         self.setLayout(vbox)
 
@@ -32,3 +36,12 @@ class WidgetsPath(QWidget):
         self.cLog.setChecked(clog)
         self.eLog.setText(elog)
         self.eProjPath.setText(epp)
+
+    def open(self):
+        try:
+            filename = QFileDialog.getOpenFileName(self, 'OpenFile')
+            self.eProjPath.setText(str(filename[0]))
+
+            self.filename = filename[0]
+        except Exception as e:
+            print(e)
