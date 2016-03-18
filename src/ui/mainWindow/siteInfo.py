@@ -1,6 +1,8 @@
 from PyQt5.Qt import QFrame, QLabel
+from PyQt5.QtCore import Qt
 
 from src.ui.commons.layout import set_lvbox, set_hbox
+from src.ui.commons.widgets import get_qfont
 
 
 class SiteInfo(QFrame):
@@ -10,14 +12,16 @@ class SiteInfo(QFrame):
         # Init Widgets
         self.init_site_widgets(sitename, imagername)
         self.init_geo_widgets(lat, long, elev, press)
+        self.config_widget()
 
         self.make_layout()
 
     def init_site_widgets(self, sitename, imagername):
+        self.title = QLabel("Site Information", self)
         self.site = QLabel("Site Name:", self)
         self.imager = QLabel("Label Name:", self)
-        self.siter = QLabel(sitename, self)
-        self.imagerr = QLabel(imagername, self)
+        self.siter = QLabel(str(sitename), self)
+        self.imagerr = QLabel(str(imagername), self)
 
     def init_geo_widgets(self, lat, long, elev, press):
         self.lat = QLabel("Latitude:", self)
@@ -25,10 +29,10 @@ class SiteInfo(QFrame):
         self.elev = QLabel("Evelation:", self)
         self.press = QLabel("Pressure:", self)
 
-        self.latr = QLabel(lat, self)
-        self.longr = QLabel(long, self)
-        self.elevr = QLabel(elev, self)
-        self.pressr = QLabel(press, self)
+        self.latr = QLabel(str(lat), self)
+        self.longr = QLabel(str(long), self)
+        self.elevr = QLabel(str(elev), self)
+        self.pressr = QLabel(str(press), self)
 
 
     def set_site_values(self, sitename, imagername):
@@ -42,9 +46,16 @@ class SiteInfo(QFrame):
         self.pressr.setText(pre)
 
     def make_layout(self):
-        self.setLayout(set_lvbox(set_hbox(self.site, self.siter),
+        self.setLayout(set_lvbox(set_hbox(self.title),
+                                 set_hbox(self.site, self.siter),
                                  set_hbox(self.imager, self.imagerr),
                                  set_hbox(self.lat, self.latr),
                                  set_hbox(self.long, self.longr),
                                  set_hbox(self.elev, self.elevr),
                                  set_hbox(self.press, self.pressr)))
+
+    def config_widget(self):
+        self.title.setFont(get_qfont(True))
+        self.title.setAlignment(Qt.AlignCenter)
+
+        self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")

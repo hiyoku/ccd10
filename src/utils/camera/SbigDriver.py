@@ -205,7 +205,8 @@ def get_temperature():
                 qtsr.ccdSetpoint,
                 qtsr.imagingCCDTemperature)
     else:
-        print(ret)
+        pass
+        # print(ret)
 
 
 # Getting the filter info

@@ -18,7 +18,7 @@ class Clock(QFrame):
         self.config_widgets()
 
         self.setLayout(set_wvbox(self.title, self.lcd))
-        self.setStyleSheet("background-color: rgb(200,200,200); padding:-11%; border:2px solid rgb(150, 150, 150);")
+        self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")
 
     def init_ui(self):
         self.sc.start_scheduler()

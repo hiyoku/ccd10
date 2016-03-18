@@ -17,8 +17,11 @@ class SchedTemperature(metaclass=Singleton):
         self.scheduler.start()
 
     def refresh_temp(self):
-        temp = get_temperature()[3]
-        a = "{0:.2f}".format(temp)
+        try:
+            temp = get_temperature()[3]
+            a = "{0:.2f}".format(temp)
+        except:
+            a = "None"
         self.object.setText(a)
 
     def stop_job(self):

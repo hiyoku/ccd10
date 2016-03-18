@@ -1,4 +1,4 @@
-FILENAME = 'system.ini'
+FILENAME = 'system'
 
 STARTUP = 'windows_startup'
 LOG_FILE = 'save_log_file'

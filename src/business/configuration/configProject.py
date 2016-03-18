@@ -5,12 +5,7 @@ from src.business.configuration.constants import project as p
 
 class ConfigProject:
     def __init__(self, name):
-        self._settings = QSettings()
-        self.setup_settings(name)
-
-    def setup_settings(self, name):
         self._settings = QSettings(name, QSettings.IniFormat)
-        self._settings.setFallbacksEnabled(False)
 
     def get_value(self, menu, value):
         return self._settings.value(menu+'/'+value)
@@ -50,6 +45,5 @@ class ConfigProject:
 
     def get_moonsun_settings(self):
         m = p.SUN_MOON_TITLE
-        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION), \
-               self.get_value(m, p.IGNORE_LUNAR_POSITION), self.get_value(m, p.MAX_LUNAR_PHASE), \
-               self.get_value(m, p.MAX_LUNAR_ELEVATION)
+        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION),\
+               self.get_value(m, p.MAX_LUNAR_PHASE), self.get_value(m, p.MAX_LUNAR_ELEVATION)

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QAction, qApp
 
 from src.ui.projectSettingsWindow.main import MainWindow
 from src.ui.systemSettingsWindow.main import MainWindow as mw
+from src.ui.cameraSettingsWindow.main import Main as csw
 
 
 def init_menu(self):
@@ -12,7 +13,7 @@ def init_menu(self):
     a1 = action_close(self)
     add_to_menu(menubar, a1[1], a1[0])
     a2 = open_settings(self)
-    add_to_menu(menubar, a2[1], a2[0], open_settings_system(self)[0])
+    add_to_menu(menubar, a2[1], a2[0], open_settings_system(self)[0], open_settings_camera(self)[0])
     # add_to_menu(menubar, open_settings_system(self))
 
 
@@ -46,6 +47,15 @@ def open_settings_system(self):
     setS.triggered.connect(self.b.show)
 
     return setS, "&Options"
+
+def open_settings_camera(self):
+    setC = QAction('Camera Settings', self)
+    setC.setShortcut("Ctrl+C")
+    self.c = csw()
+
+    setC.triggered.connect(self.c.show)
+
+    return setC, "&Options"
 
 def add_to_menu(menubar, menu, *args):
     m = menubar.addMenu(menu)

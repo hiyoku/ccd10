@@ -2,12 +2,10 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout,
                              QHBoxLayout)
 
 from src.ui.commons.layout import add_all_to_vbox
-from src.ui.mainWindow.ccdInfo import CCDInfo
+from src.ui.mainWindow.cameraInfo import CameraInfo
 from src.ui.mainWindow.clock import Clock
-from src.ui.mainWindow.fanStatus import FanStatus
 from src.ui.mainWindow.shooter import Shooter
-from src.ui.mainWindow.tempMonitor import TempMonitor
-from src.ui.mainWindow.tempRegulation import TempRegulation
+from src.ui.mainWindow.configsInfo import ConfigsInfo
 
 class MainWindow(QWidget):
     def __init__(self, parent=None):
@@ -19,14 +17,10 @@ class MainWindow(QWidget):
         self.all_h_boxes = []
 
         self.MainHBox.addLayout(self.VBox)
+        self.MainHBox.addStretch(1)
         self.MainHBox.addWidget(Shooter(self))
 
-        add_all_to_vbox(self.VBox, Clock(self), CCDInfo(self), FanStatus(self), TempRegulation(self), TempMonitor(self))
-        # self.VBox.addStretch(1)
-        # self.VBox.setStyleSheet("background-color: rgb(255,0,0);")
+        add_all_to_vbox(self.VBox, Clock(self), ConfigsInfo(self), CameraInfo(self))
+        self.VBox.addStretch(1)
 
         self.setLayout(self.MainHBox)
-
-    def init_geometry(self):
-        self.setGeometry(25, 25, 1000, 700)
-        self.show()
