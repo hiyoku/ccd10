@@ -25,27 +25,27 @@ class Shooter(QWidget):
 
         # Creating the first part of layout
         # Shooter button
-        self.sbutton = QPushButton("Shot!", self)
-        self.sbutton.clicked.connect(self.shoot_function)
-
-        # Exposition Line Edit
-        self.tb = QLineEdit(self)
-
-        # Prefix Line Edit
-        self.pre = QLineEdit(self)
-
-        # Binning ComboBox
-        self.combo = QComboBox(self)
-
-        # Auto Mode Button
-        self.abutton = QPushButton("Auto", self)
-        self.abutton.clicked.connect(self.auto_shoot)
-
-        # Hour Label and Line Edit
-        self.htext = QLineEdit(self)
-
-        # Minutes Label and Line Edit
-        self.mtext = QLineEdit(self)
+        # self.sbutton = QPushButton("Shot!", self)
+        # self.sbutton.clicked.connect(self.shoot_function)
+        #
+        # # Exposition Line Edit
+        # self.tb = QLineEdit(self)
+        #
+        # # Prefix Line Edit
+        # self.pre = QLineEdit(self)
+        #
+        # # Binning ComboBox
+        # self.combo = QComboBox(self)
+        #
+        # # Auto Mode Button
+        # self.abutton = QPushButton("Auto", self)
+        # self.abutton.clicked.connect(self.auto_shoot)
+        #
+        # # Hour Label and Line Edit
+        # self.htext = QLineEdit(self)
+        #
+        # # Minutes Label and Line Edit
+        # self.mtext = QLineEdit(self)
 
         # Label for Image
         self.img = QLabel(self)
@@ -54,29 +54,29 @@ class Shooter(QWidget):
         # Creating a Pallete
         self.pa = QPalette()
 
-        # Labels for Image Info
-        self.prefix = QLabel(self)
-        self.date = QLabel(self)
-        self.hour = QLabel(self)
-        self.config_pallete()
+        # # Labels for Image Info
+        # self.prefix = QLabel(self)
+        # self.date = QLabel(self)
+        # self.hour = QLabel(self)
+        # self.config_pallete()
 
-        set_width(self.htext, self.mtext, self.tb)
+        # set_width(self.htext, self.mtext, self.tb)
 
         self.set_layout()
 
     def set_layout(self):
-        self.fill_combo()
+        # self.fill_combo()
+        #
+        # hbox = set_hbox(self.sbutton, self.tb,
+        #                 QLabel("Prefixo:", self), self.pre,
+        #                 QLabel("Binning:", self), self.combo,
+        #                 self.abutton,
+        #                 QLabel("Hora:", self), self.htext,
+        #                 QLabel("Min:", self), self.mtext)
 
-        hbox = set_hbox(self.sbutton, self.tb,
-                        QLabel("Prefixo:", self), self.pre,
-                        QLabel("Binning:", self), self.combo,
-                        self.abutton,
-                        QLabel("Hora:", self), self.htext,
-                        QLabel("Min:", self), self.mtext)
+        # hb2 = set_hbox(self.prefix, self.date, self.hour)
 
-        hb2 = set_hbox(self.prefix, self.date, self.hour)
-
-        self.setLayout(set_lvbox(hbox, set_hbox(self.img, stretch2=1), hb2))
+        self.setLayout(set_lvbox(set_hbox(self.img)))
 
     def config_img_label(self):
         self.img.setPixmap(QPixmap("noimage.png"))
@@ -92,7 +92,10 @@ class Shooter(QWidget):
         self.set_image()
 
     def auto_shoot(self):
-        self.cam.autoshoot(int(self.htext), int(self.mtext))
+        try:
+            self.cam.autoshoot(int(self.htext.text()), int(self.mtext.text()), int(self.tb.text()), self.pre.text(), int(self.combo.currentIndex()))
+        except Exception as e:
+            print(e)
 
     def set_image(self):
         print("Image Info")

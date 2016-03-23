@@ -1,5 +1,6 @@
 from datetime import datetime
 from time import sleep
+from threading import Thread
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -91,31 +92,30 @@ class Camera(metaclass=Singleton):
         print("Hora agora ->"+str(now))
         print("Hora setada ->"+str(self.settedhour))
         print(now < self.settedhour)
+        ss = SThread(etime, pre, int(binning))
 
-        if now < self.settedhour:
-            ss = SThread(etime, pre, int(binning))
-
+        while datetime.now() < self.settedhour:
+            print("Hora agora ->"+str(datetime.now()))
+            print("Hora setada ->"+str(self.settedhour))
+            print(now < self.settedhour)
             try:
                 ss.start()
+                while ss.isRunning():
+                    sleep(1)
             except Exception as e:
                 print(e)
             finally:
-                while not ss.isFinished:
-                    return ss.get_image_info
-        else:
-            self.job.pause()
-            return False
+                print("Finished")
 
-    def autoshoot(self, h, m):
+        return False
+
+
+    def autoshoot(self, h, m, etime, pre, binning):
 
         now = datetime.now()
         self.settedhour = now.replace(hour=h, minute=m)
-
-        self.schedShooter.print_jobs()
-        if(self.cond == 0):
-            self.job = self.schedShooter.add_job(self.ashoot, 'interval', seconds=10)
-            self.schedShooter.start()
-        else:
-            self.job.resume()
+        t = Thread(target=self.ashoot, args=(etime, pre, binning))
+        t.start()
+        # self.ashoot(etime, pre, binning)
 
         # self.parent.status("Automatic Shooter setted ON ")

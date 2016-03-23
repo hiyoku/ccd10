@@ -22,7 +22,7 @@ class TempRegulation(QWidget):
     def btn_temperature(self):
         try:
             value = self.setField.text()
-            if value is '': value = 20
-            self.cam.set_temperature(float(value))
+            if value is '': pass
+            else: self.cam.set_temperature(float(value))
         except Exception as e:
             print("Exception -> {}".format(e))
