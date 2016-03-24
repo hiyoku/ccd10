@@ -12,6 +12,9 @@ class ConsoleLogWidget(QWidget):
         self.newLine("Oi")
         self.newLine("iu")
 
+    def get_logOutput(self):
+        return self.logOutput
+
     def configLogOutput(self):
         self.logOutput.setReadOnly(True)
         self.logOutput.setLineWrapMode(QTextEdit.NoWrap)
