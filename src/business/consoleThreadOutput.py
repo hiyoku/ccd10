@@ -1,19 +1,27 @@
 from src.utils.singleton import Singleton
+
+from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
+
+from time import sleep
 from threading import Thread
 
 
 class ConsoleThreadOutput(metaclass=Singleton):
     def __init__(self):
-        self.__instance = None
-        self.__thread = None
+        self.log = ConsoleLogWidget()
+        t = Thread(target=self.test_text)
+        t.start()
 
-    def set_instance(self, instance):
-        self.__instance = instance
 
-    def get_instance(self):
-        return self.__instance
+    def get_widget_console(self):
+        return self.log
 
-    def raise_text(self, line):
-        self.__instance.newLine(line)
+    def test_text(self):
+        while(True):
+            sleep(3)
+            self.raise_text("Teste")
+
+    def raise_text(self, text):
+        self.log.newLine(text)
 
 

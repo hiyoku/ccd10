@@ -4,6 +4,7 @@ from src.ui.projectSettingsWindow.widgetsGeography import WidgetsGeography
 from src.ui.projectSettingsWindow.widgetsSite import WidgetsSite
 from src.ui.projectSettingsWindow.widgetsSun import WidgetsSun
 from src.business.configuration.configProject import ConfigProject
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 from src.ui.commons.layout import set_hbox, set_lvbox
 
@@ -12,6 +13,7 @@ class SettingsWindow(QWidget):
     def __init__(self, parent=None):
         super(SettingsWindow, self).__init__(parent)
         self.p = parent
+        self.console = ConsoleThreadOutput()
 
         self.site = WidgetsSite(self)
         self.geo = WidgetsGeography(self)
@@ -32,9 +34,14 @@ class SettingsWindow(QWidget):
         self.clear_all()
 
     def func_ok(self):
-        self.save_settings()
-        self.p.close()
-        self.clear_all()
+        print(self.console.log)
+        try:
+            self.save_settings()
+        except:
+            self.console.raise_text("Não foi possível salvar as configurações do projeto.")
+        finally:
+            self.p.close()
+            self.clear_all()
 
     def clear_all(self):
         self.site.clear_site()

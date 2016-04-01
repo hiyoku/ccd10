@@ -6,7 +6,6 @@ from src.ui.mainWindow.cameraInfo import CameraInfo
 from src.ui.mainWindow.clock import Clock
 from src.ui.mainWindow.shooter import Shooter
 from src.ui.mainWindow.configsInfo import ConfigsInfo
-from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 class MainWindow(QWidget):
@@ -17,14 +16,11 @@ class MainWindow(QWidget):
         self.MainHBox = QHBoxLayout()   # Main Box
         self.VBox = QVBoxLayout()   # Vertical Box in the Left Box
         self.all_h_boxes = []
-        self.log = ConsoleLogWidget(self)
-        self.clog = ConsoleThreadOutput()
-
-        print(self.clog.get_instance())
+        self.console = ConsoleThreadOutput()
 
         self.MainHBox.addLayout(self.VBox)
         self.MainHBox.addStretch(1)
-        self.MainHBox.addLayout(set_wvbox(self.log.get_logOutput(), Shooter(self)))
+        self.MainHBox.addLayout(set_wvbox(self.console.get_widget_console(), Shooter(self)))
 
         add_all_to_vbox(self.VBox, Clock(self), ConfigsInfo(self), CameraInfo(self))
         self.VBox.addStretch(1)

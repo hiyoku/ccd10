@@ -33,7 +33,11 @@ class SettingsWindow(QWidget):
     def set_values(self, prefixo, exposicao, binning):
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
-        self.combo.setCurrentIndex(int(binning))
+        try:
+            b = int(binning)
+        except:
+            b = 0
+        self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
         self.pre = QLabel("Prefixo:", self)

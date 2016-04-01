@@ -6,7 +6,6 @@ class ConsoleLogWidget(QWidget):
         super(ConsoleLogWidget, self).__init__(parent)
 
         self.logOutput = QTextEdit(self)
-        self.logOutput.setMinimumWidth(558)
         self.configLogOutput()
         self.newLine("[CCD Console 1.0]\n")
         self.newLine("Oi")
@@ -17,11 +16,8 @@ class ConsoleLogWidget(QWidget):
 
     def configLogOutput(self):
         self.logOutput.setReadOnly(True)
-        self.logOutput.setLineWrapMode(QTextEdit.NoWrap)
-
-        font = self.logOutput.font()
-        font.setFamily("Courier")
-        font.setPointSize(10)
+        self.logOutput.setMinimumWidth(558)
+        self.logOutput.setMaximumHeight(100)
 
     def scrollDown(self):
         sb = self.logOutput.verticalScrollBar()

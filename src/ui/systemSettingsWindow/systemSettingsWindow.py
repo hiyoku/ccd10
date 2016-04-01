@@ -3,6 +3,7 @@ from PyQt5.Qt import QWidget, QPushButton
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.systemSettingsWindow.widgetsPath import WidgetsPath
 from src.business.configuration.configSystem import ConfigSystem
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class SystemSettingsWindow(QWidget):
@@ -10,6 +11,7 @@ class SystemSettingsWindow(QWidget):
         super(SystemSettingsWindow, self).__init__(parent)
         self.s = parent
         self.cs = ConfigSystem()
+        self.console = ConsoleThreadOutput()
 
         # Creating Widgets
         self.wp = WidgetsPath(self)
@@ -27,8 +29,13 @@ class SystemSettingsWindow(QWidget):
         self.button_ok.clicked.connect(self.ok_button)
 
     def ok_button(self):
-        self.s.close()
-        self.saving_settings()
+        try:
+            self.saving_settings()
+            self.console.raise_text("Oi xD")
+        except:
+            self.console.raise_text("Não foi possível salvar as configurações do sistema.")
+        finally:
+            self.s.close()
 
     def setting_up(self):
         self.setLayout(set_lvbox(set_hbox(self.wp),

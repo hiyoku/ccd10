@@ -1,5 +1,5 @@
 def cb(string):
-    if string.lower() == 'false':
+    if string == 'false':
         return False
     else:
         return True

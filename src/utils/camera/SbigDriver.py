@@ -9,20 +9,23 @@ from ctypes import c_ushort, POINTER, byref
 import numpy as np
 from matplotlib import pyplot
 
-# from astropy.io import fits
 import pyfits as fits
 from time import strftime
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
-
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 # Load Driver (DLL)
-if sys.platform.startswith("linux"):
-    # Linux driver
-    udrv = ctypes.CDLL("libsbigudrv.so")
-elif sys.platform.startswith("win"):
-    # Win Driver
-    udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
+try:
+    if sys.platform.startswith("linux"):
+        # Linux driver
+        udrv = ctypes.CDLL("libsbigudrv.so")
+    elif sys.platform.startswith("win"):
+        # Win Driver
+        udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
+except:
+    ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.")
+
     # import platform
     # bits, linkage = platform.architecture()
     # if bits.startswith("32"):

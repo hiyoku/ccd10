@@ -2,12 +2,14 @@ from PyQt5.Qt import QSettings
 
 from src.business.configuration.constants import system as s
 from src.ui.commons.verification import cb
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class ConfigSystem:
     def __init__(self):
         self._settings = QSettings()
         self.setup_settings()
+        self.console = ConsoleThreadOutput()
 
     def setup_settings(self):
         self._settings = QSettings(s.FILENAME, QSettings.IniFormat)
