@@ -9,7 +9,7 @@ from src.utils.singleton import Singleton
 
 class SchedTemperature(metaclass=Singleton):
 
-    def __init__(self, valor):
+    def __init__(self, valor=None):
         self.scheduler = BackgroundScheduler()
         self.job = self.scheduler.add_job(self.refresh_temp, IntervalTrigger(seconds=1))
         self.object = valor

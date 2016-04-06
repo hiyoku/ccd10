@@ -9,6 +9,7 @@ from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
 from src.utils.camera.SbigDriver import ccdinfo, set_temperature, get_temperature
 from src.utils.singleton import Singleton
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class Camera(metaclass=Singleton):
@@ -17,13 +18,15 @@ class Camera(metaclass=Singleton):
         self.lock = Locker()
         self.schedShooter = BackgroundScheduler()
         info = self.get_info()
+        self.console = ConsoleThreadOutput()
 
         self.firmware = str(info[0])
         self.model = str(info[2])[2:len(str(info[2]))-1]
 
         self.main = Status()
         self.image_info = []
-
+        self.img = ""
+        self.settedhour = datetime.now()
 
     def get_info(self):
         """
@@ -35,7 +38,7 @@ class Camera(metaclass=Singleton):
         try:
             ret = tuple(ccdinfo())
         except Exception as e:
-            print("Exception -> {}".format(e))
+            self.console.raise_text("Falha ao obter informações da câmera.\n{}".format(e))
         finally:
             self.lock.set_release()
         return ret
@@ -45,10 +48,10 @@ class Camera(metaclass=Singleton):
         try:
             set_temperature(regulation=True, setpoint=value, autofreeze=False)
         except Exception as e:
-            print("Exception: {}".format(e))
+            self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e))
         finally:
             self.lock.set_release()
-            self.main.set_status("Temperature setted to {}".format(value))
+            self.console.raise_text("Temperature configurada para {}".format(int(value)))
 
     def get_temperature(self):
         temp = 0
@@ -57,42 +60,30 @@ class Camera(metaclass=Singleton):
             temp = tuple(get_temperature())[3]
             self.lock.set_release()
         except Exception as e:
-            print("Exception on get_temp -> \n{}".format(e))
+            self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e))
 
         return float(temp)
 
-    # def shoot(self, etime, pre, binning):
-    #     s = Thread(target=self.shoot2, args=(etime, pre, binning))
-    #     s.start()
-
-
-    def shoot(self, etime, pre, binning):
+    def shoot(self):
         print("Shoot function!")
         # Creating a instance of SThread
-        ss = SThread(int(etime), str(pre), int(binning))
+        ss = SThread()
 
-        print("Thread Created")
         try:
-            print("trying")
             ss.start()
-            print("started")
-            self.main.set_status("Taking a photo!")
+            self.console.raise_text("Capturando imagem.")
             while ss.isRunning():
                 sleep(1)
 
         except Exception as e:
-            print("Exception on Shoot Function:\n{}".format(e))
+            self.console.raise_text("Não foi possível capturar a imagem.\n{}".format(e))
         finally:
             self.img = ss.get_image_info()
-            print("shoot2 function: image name: {}".format(self.img.png_name))
 
-    def ashoot(self, etime, pre, binning):
-        self.cond = 1
+    def ashoot(self):
         now = datetime.now()
-        print("Hora agora ->"+str(now))
-        print("Hora setada ->"+str(self.settedhour))
-        print(now < self.settedhour)
-        ss = SThread(etime, pre, int(binning))
+        self.console.raise_text("Modo agendado iniciado para terminar em " + str(self.settedhour))
+        ss = SThread()
 
         while datetime.now() < self.settedhour:
             print("Hora agora ->"+str(datetime.now()))
@@ -103,19 +94,12 @@ class Camera(metaclass=Singleton):
                 while ss.isRunning():
                     sleep(1)
             except Exception as e:
-                print(e)
-            finally:
-                print("Finished")
+                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e))
 
         return False
 
-
-    def autoshoot(self, h, m, etime, pre, binning):
-
+    def autoshoot(self, h, m):
         now = datetime.now()
         self.settedhour = now.replace(hour=h, minute=m)
-        t = Thread(target=self.ashoot, args=(etime, pre, binning))
+        t = Thread(target=self.ashoot)
         t.start()
-        # self.ashoot(etime, pre, binning)
-
-        # self.parent.status("Automatic Shooter setted ON ")

@@ -17,7 +17,4 @@ class SchedClock(metaclass=Singleton):
 
     # Refreshing Clock
     def refresh(self):
-        from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
-        self.a = ConsoleLogWidget()
-        self.a.newLine("TEste")
         self.lcd.setText(strftime('%H:%M:%S'))

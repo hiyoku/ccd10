@@ -1,3 +1,5 @@
+from time import strftime
+
 from PyQt5.Qt import QWidget, QTextEdit
 
 
@@ -7,9 +9,6 @@ class ConsoleLogWidget(QWidget):
 
         self.logOutput = QTextEdit(self)
         self.configLogOutput()
-        self.newLine("[CCD Console 1.0]\n")
-        self.newLine("Oi")
-        self.newLine("iu")
 
     def get_logOutput(self):
         return self.logOutput
@@ -24,5 +23,5 @@ class ConsoleLogWidget(QWidget):
         sb.setValue(sb.maximum())
 
     def newLine(self, text):
-        self.logOutput.insertPlainText(text+'\n')
+        self.logOutput.insertPlainText('['+strftime('%H:%M:%S')+'] - '+text+'\n')
         self.scrollDown()

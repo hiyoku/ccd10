@@ -4,16 +4,21 @@ from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.controller.commons.Locker import Locker
 from src.controller.image import Image
 from src.utils.camera import SbigDriver
+from src.business.configuration.settingsCamera import SettingsCamera
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class SThread(QThread):
 
-    def __init__(self, etime, pre, binning):
+    def __init__(self):
         super(SThread, self).__init__()
         self.lock = Locker()
-        self.etime = etime
-        self.pre = pre
-        self.b = binning
+        self.console = ConsoleThreadOutput()
+        settings = SettingsCamera()
+        info = settings.get_camera_settings()
+        self.etime = info[1]
+        self.pre = info[0]
+        self.b = info[2]
         self.sched = SchedTemperature()
         self.info = []
         self.img = None
@@ -24,7 +29,7 @@ class SThread(QThread):
         try:
             self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
         except Exception as e:
-            print("Exception on SThread -> {}".format(e))
+            self.console.raise_text("Erro na QThread.\n{}".format(e))
         finally:
             self.lock.set_release()
             self.sched.start_job()

@@ -8,6 +8,7 @@ from src.ui.mainWindow.shooter import Shooter
 from src.ui.mainWindow.configsInfo import ConfigsInfo
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
+
 class MainWindow(QWidget):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
