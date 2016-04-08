@@ -54,14 +54,6 @@ class Shooter(QWidget):
         # Creating a Pallete
         self.pa = QPalette()
 
-        # # Labels for Image Info
-        # self.prefix = QLabel(self)
-        # self.date = QLabel(self)
-        # self.hour = QLabel(self)
-        # self.config_pallete()
-
-        # set_width(self.htext, self.mtext, self.tb)
-
         self.set_layout()
 
     def set_layout(self):

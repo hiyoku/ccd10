@@ -31,7 +31,7 @@ class SystemSettingsWindow(QWidget):
     def ok_button(self):
         try:
             self.saving_settings()
-            self.console.raise_text("Oi xD")
+            self.console.raise_text("Configurações Salvas com sucesso!")
         except:
             self.console.raise_text("Não foi possível salvar as configurações do sistema.")
         finally:

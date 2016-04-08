@@ -3,6 +3,7 @@ from PyQt5.Qt import QWidget, QLabel, QLineEdit, QComboBox, QPushButton
 from src.controller.camera import Camera
 from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
 from src.business.configuration.settingsCamera import SettingsCamera
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.ui.commons.layout import set_lvbox, set_hbox
 
 
@@ -11,6 +12,7 @@ class SettingsWindow(QWidget):
         super(SettingsWindow, self).__init__(parent)
         self.cam = SettingsCamera()
         self.camera = Camera()
+        self.console = ConsoleThreadOutput()
         self.a = TempRegulation(self)
         self.create_cam_widgets()
         self.p = parent
@@ -57,15 +59,16 @@ class SettingsWindow(QWidget):
         try:
             # Setting the Temperature
             value = self.a.setField.text()
-            if value is '': value = 20
+            if value is '':
+                value = 20
             self.camera.set_temperature(float(value))
 
             # Saving the Settings
             self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex())
             self.cam.save_settings()
-
+            self.console.raise_text("Configurações da Camera salvas com sucesso!")
         except Exception as e:
-            print("Exception -> {}".format(e))
+            self.console.raise_text("Configurações da Camera não foram salvas.")
         finally:
             self.p.close()
 

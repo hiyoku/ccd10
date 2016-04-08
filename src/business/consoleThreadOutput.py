@@ -9,8 +9,8 @@ from threading import Thread
 class ConsoleThreadOutput(metaclass=Singleton):
     def __init__(self):
         self.log = ConsoleLogWidget()
-        self.t = Thread(target=self.test_text)
-        self.t.start()
+        # self.t = Thread(target=self.test_text)
+        # self.t.start()
 
     def thread_join(self):
         self.t.join()
