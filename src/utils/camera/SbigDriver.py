@@ -24,7 +24,7 @@ try:
         # Win Driver
         udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
 except:
-    ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.")
+    ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.", 3)
 
     # import platform
     # bits, linkage = platform.architecture()
@@ -64,23 +64,27 @@ def cmd(ccc, cin, cout):
         cin = cin(errorNo=err)
         cout = cout()
         ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_ERROR_STRING.value, byref(cin), byref(cout))
-        return ret, cout.errorString
+        print(ret, cout.errorString)
+        return False
 
 
 # Beginning Functions
 # Open Driver
 def open_driver():
-    cmd(SbigLib.PAR_COMMAND.CC_OPEN_DRIVER.value, None, None)
-
+    a = cmd(SbigLib.PAR_COMMAND.CC_OPEN_DRIVER.value, None, None)
+    return a
 
 # Open Device USB
 def open_deviceusb():
     cin = SbigStructures.OpenDeviceParams
     cout = None
-    udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
-    cin = cin(deviceType=SbigLib.SBIG_DEVICE_TYPE.DEV_USB.value)
-    udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_OPEN_DEVICE.value, byref(cin), cout)
-
+    try:
+        udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
+        cin = cin(deviceType=SbigLib.SBIG_DEVICE_TYPE.DEV_USB.value)
+        ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_OPEN_DEVICE.value, byref(cin), cout)
+        return ret == 0
+    except Exception as e:
+        return False, e
 
 def close_driver():
     cdp = None
@@ -96,7 +100,7 @@ def close_driver():
             return False
 
     except Exception as e:
-        return e
+        return False, e
 
 
 def close_device():
@@ -112,16 +116,16 @@ def close_device():
         else:
             return False
     except Exception as e:
-        return e
+        return False, e
 
 
 # Open Device Eth
 # def openDevice(ip):
-#     cin = OpenDeviceParams
+#     cin = SbigStructures.OpenDeviceParams
 #     cout = None
 #     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
 #     ip.split(".")
-#     ip_hex = hex(int(ip[0])).split('x')[1].rjust(2, '0') + hex(int(ip[1])).split('x')[1].rjust(2, '0') +
+#     ip_hex = hex(int(ip[0])).split('x')[1].rjust(2, '0') + hex(int(ip[1])).split('x')[1].rjust(2, '0') +\
 #              hex(int(ip[2])).split('x')[1].rjust(2, '0') + hex(int(ip[3])).split('x')[1].rjust(2, '0')
 #     cin = cin(deviceType=SbigLib.SBIG_DEVICE_TYPE.DEV_ETH.value, ipAddress=long(ip_hex, 16))
 #     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_OPEN_DEVICE.value, byref(cin), cout)
@@ -130,12 +134,16 @@ def close_device():
 
 # Establishing Link
 def establishinglink():
-    cin = SbigStructures.EstablishLinkParams
-    cout = SbigStructures.EstablishLinkResults
-    udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
-    cin = cin(sbigUseOnly=0)
-    cout = cout()
-    udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_ESTABLISH_LINK.value, byref(cin), byref(cout))
+    try:
+        cin = SbigStructures.EstablishLinkParams
+        cout = SbigStructures.EstablishLinkResults
+        udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
+        cin = cin(sbigUseOnly=0)
+        cout = cout()
+        ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_ESTABLISH_LINK.value, byref(cin), byref(cout))
+        return ret == 0
+    except Exception as e:
+        return False, e
 
 
 # Getting link status
@@ -144,10 +152,8 @@ def getlinkstatus():
     cout = SbigStructures.GetLinkStatusResults
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
-    udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    # print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
-    # for i in cout:
-    #     print(i)
+    ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
+    print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
 
 
 def set_temperature(regulation, setpoint, autofreeze=True):
@@ -186,10 +192,6 @@ def set_temperature(regulation, setpoint, autofreeze=True):
 
 # Getting Temperature
 def get_temperature():
-    open_driver()
-    open_deviceusb()
-    establishinglink()
-
     qsp = SbigStructures.QueryTemperatureStatusParams
     qtsr = SbigStructures.QueryTemperatureStatusResults2
 
@@ -293,8 +295,6 @@ def get_filterposition():
 
 # Starting Fan
 def start_fan():
-    open_deviceusb()
-    establishinglink()
 
     mcp = SbigStructures.MiscellaneousControlParams
     mcr = None
@@ -312,8 +312,6 @@ def start_fan():
 
 # Stopping Fan
 def stop_fan():
-    open_deviceusb()
-    establishinglink()
 
     mcp = SbigStructures.MiscellaneousControlParams
     mcr = None
@@ -329,9 +327,6 @@ def stop_fan():
 
 # Checking if is Fanning
 def is_fanning():
-    open_driver()
-    open_deviceusb()
-    establishinglink()
 
     qsp = SbigStructures.QueryTemperatureStatusParams
     qtsr = SbigStructures.QueryTemperatureStatusResults2
@@ -350,10 +345,6 @@ def is_fanning():
 
 
 def ccdinfo():
-    open_driver()
-    open_deviceusb()
-    establishinglink()
-
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
         cin = SbigStructures.ReadOutInfo

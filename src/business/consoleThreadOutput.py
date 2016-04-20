@@ -25,7 +25,7 @@ class ConsoleThreadOutput(metaclass=Singleton):
             sleep(3)
             self.raise_text("Teste"+str(count))
 
-    def raise_text(self, text):
-        self.log.newLine(text)
+    def raise_text(self, text, level=0):
+        self.log.newLine(text, level)
 
 

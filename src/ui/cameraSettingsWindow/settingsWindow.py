@@ -66,9 +66,9 @@ class SettingsWindow(QWidget):
             # Saving the Settings
             self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex())
             self.cam.save_settings()
-            self.console.raise_text("Configurações da Camera salvas com sucesso!")
+            self.console.raise_text("Configurações da Camera salvas com sucesso!", 1)
         except Exception as e:
-            self.console.raise_text("Configurações da Camera não foram salvas.")
+            self.console.raise_text("Configurações da Camera não foram salvas.", 3)
         finally:
             self.p.close()
 

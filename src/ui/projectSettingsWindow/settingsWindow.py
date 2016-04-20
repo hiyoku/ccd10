@@ -37,8 +37,9 @@ class SettingsWindow(QWidget):
         print(self.console.log)
         try:
             self.save_settings()
+            self.console.raise_text("Configurações do projeto salvas com sucesso!", 1)
         except:
-            self.console.raise_text("Não foi possível salvar as configurações do projeto.")
+            self.console.raise_text("Não foi possível salvar as configurações do projeto.", 3)
         finally:
             self.p.close()
             self.clear_all()

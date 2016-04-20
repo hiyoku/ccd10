@@ -7,7 +7,9 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from src.business.SThread import SThread
 from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
-from src.utils.camera.SbigDriver import ccdinfo, set_temperature, get_temperature
+from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
+                                         establishinglink, open_deviceusb, open_driver,
+                                         close_device, close_driver, getlinkstatus)
 from src.utils.singleton import Singleton
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
@@ -27,6 +29,7 @@ class Camera(metaclass=Singleton):
         self.image_info = []
         self.img = ""
         self.settedhour = datetime.now()
+        self.continuous = True
 
     def get_info(self):
         """
@@ -43,15 +46,40 @@ class Camera(metaclass=Singleton):
             self.lock.set_release()
         return ret
 
+    def connect(self):
+        try:
+            a = open_driver()
+            open_deviceusb()
+            c = establishinglink()
+            if a == True and c == True:
+                self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 1)
+            else:
+                self.console.raise_text("Erro na conexão", 3)
+        except Exception as e:
+            self.console.raise_text('Houve falha ao se conectar a camera!', 3)
+
+    def disconnect(self):
+        try:
+            cd = close_device()
+            cdr = close_driver()
+
+            if (cd and cdr):
+                self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 1)
+            else:
+                self.console.raise_text("Erro ao desconectar {} {}".format(cd, cdr), 3)
+        except Exception as e:
+            self.console.raise_text("Houve falha ao se desconectar a camera!", 3)
+
+
     def set_temperature(self, value):
         self.lock.set_acquire()
         try:
             set_temperature(regulation=True, setpoint=value, autofreeze=False)
         except Exception as e:
-            self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e))
+            self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e), 3)
         finally:
             self.lock.set_release()
-            self.console.raise_text("Temperature configurada para {}".format(int(value)))
+            self.console.raise_text("Temperature configurada para {}".format(int(value)), 1)
 
     def get_temperature(self):
         temp = 0
@@ -60,7 +88,7 @@ class Camera(metaclass=Singleton):
             temp = tuple(get_temperature())[3]
             self.lock.set_release()
         except Exception as e:
-            self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e))
+            self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e), 3)
 
         return float(temp)
 
@@ -71,18 +99,43 @@ class Camera(metaclass=Singleton):
 
         try:
             ss.start()
-            self.console.raise_text("Capturando imagem.")
+            self.console.raise_text("Capturando imagem.", 1)
             while ss.isRunning():
                 sleep(1)
 
         except Exception as e:
-            self.console.raise_text("Não foi possível capturar a imagem.\n{}".format(e))
+            self.console.raise_text("Não foi possível capturar a imagem.\n{}".format(e), 1)
         finally:
             self.img = ss.get_image_info()
 
+    def start_taking_photo(self):
+        thread = Thread(target=self.continuous_shooter())
+        self.continuous = True
+        thread.start()
+
+    def continuous_shooter(self):
+        ss = SThread()
+        count = 0
+
+        while self.continuous:
+            count += 1
+            try:
+                ss.start()
+                self.console.raise_text("Tirando foto n: {}".format(count), 1)
+                while ss.isRunning():
+                    sleep(1)
+            except Exception as e:
+                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
+            finally:
+                self.img = ss.get_image_info()
+
+    def stop_taking_photo(self):
+        self.continuous = False
+
+
     def ashoot(self):
         now = datetime.now()
-        self.console.raise_text("Modo agendado iniciado para terminar em " + str(self.settedhour))
+        self.console.raise_text("Modo agendado iniciado para terminar em " + str(self.settedhour), 1)
         ss = SThread()
 
         while datetime.now() < self.settedhour:
@@ -94,7 +147,7 @@ class Camera(metaclass=Singleton):
                 while ss.isRunning():
                     sleep(1)
             except Exception as e:
-                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e))
+                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
 
         return False
 
