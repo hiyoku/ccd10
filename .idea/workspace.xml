@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="95b078d8-f5b0-44d7-b902-1a12a3cc72f1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/camera.py" afterPath="$PROJECT_DIR$/src/controller/camera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" afterPath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
     </list>
     <ignored path="ccd10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -628,7 +626,14 @@
       <option name="project" value="LOCAL" />
       <updated>1461687324528</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Continuous Shooter">
+      <created>1461697203931</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1461697203931</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -669,7 +674,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated" />
     <MESSAGE value="Connect and Disconnect function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Connect and Disconnect function" />
+    <MESSAGE value="Continuous Shooter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Continuous Shooter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
