@@ -142,6 +142,7 @@ class Camera(metaclass=Singleton):
 
     def stop_taking_photo(self):
         self.continuous = False
+        self.console.raise_text('Continuous Shooter parado', 1)
 
     def ashoot(self):
         now = datetime.now()

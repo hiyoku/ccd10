@@ -360,7 +360,7 @@ def ccdinfo():
     return cout.firmwareVersion, cout.cameraType, cout.name
 
 
-def set_header(filename, newname):
+def set_header(filename):
     # Abrindo o arquivo
     fits_file = fits.open(filename)
     # Escrevendo o Header
@@ -368,15 +368,11 @@ def set_header(filename, newname):
     fits_file[0].header["DATE"] = strftime('%Y-%m-%d_%H:%M:%S')
 
     # Criando o arquivo final
-    fits.writeto(newname+'.fits', fits_file[0].data, fits_file[0].header)
-
     try:
         print("Tricat do set_header")
         # Fechando e removendo o arquivo tempor�rio
+        fits_file.flush()
         fits_file.close()
-        fits_file.clear()
-        os.remove(filename)
-
     except OSError as e:
         print(filename)
         print("Exception ->" + str(e))
@@ -389,7 +385,7 @@ def set_png(filename, newname):
         print("tricat do set_png")
         pyplot.imshow(fits_file[0].data, cmap='gray')
         pyplot.axis('off')
-        pyplot.savefig(newname+'.png', bbox_inches='tight')
+        pyplot.savefig(newname, bbox_inches='tight')
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
@@ -537,13 +533,15 @@ def photoshoot(etime, pre, binning):
         os.makedirs(path)
     fn = pre+"_"+tempo
     name = path+fn
-    filename = name+"_temp.fits"
+    fitsname = name + '.fits'
+    pngname = name + '.png'
 
     try:
-        os.unlink(filename)
+        os.unlink(fitsname)
     except OSError:
         pass
-    fits.writeto(filename, img)
+
+    fits.writeto(fitsname, img)
 
     print("GRAB IMAGE - End Readout")
 
@@ -560,12 +558,12 @@ def photoshoot(etime, pre, binning):
 
     print("Call set_header")
     try:
-        set_header(filename, name)
+        set_header(fitsname)
     except Exception as e:
         print(e)
     print("Call set_png")
-    set_png(name + ".fits", name)
+    set_png(fitsname, pngname)
 
     data, hora = get_date_hour(tempo)
 
-    return path, fn + ".png", fn + ".fits", data, hora
+    return (path, pngname, fitsname, data, hora)
