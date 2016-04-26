@@ -1,4 +1,4 @@
-#List of constants
+# List of constants
 
 FILENAME = "camera"
 PREFIXO = "prefixo"

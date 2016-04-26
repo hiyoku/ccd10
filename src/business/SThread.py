@@ -16,9 +16,9 @@ class SThread(QThread):
         self.console = ConsoleThreadOutput()
         settings = SettingsCamera()
         info = settings.get_camera_settings()
-        self.etime = info[1]
-        self.pre = info[0]
-        self.b = info[2]
+        self.etime = int(info[1])
+        self.pre = str(info[0])
+        self.b = int(info[2])
         self.sched = SchedTemperature()
         self.info = []
         self.img = None
@@ -36,10 +36,15 @@ class SThread(QThread):
             self.init_image()
 
     def init_image(self):
-        for i in self.info:
-            print(i)
+        try:
+            for i in self.info:
+                print(i)
 
-        self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
+            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
+        except Exception as e:
+            self.console.raise_text('Não foi possível gerar a imagem.\n{}'.format(e), 3)
+            self.img = Image('','','','','')
+        return self.img
 
     def get_image_info(self):
         return self.img

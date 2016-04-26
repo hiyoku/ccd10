@@ -8,7 +8,7 @@ class ConfigProject:
         self._settings = QSettings(name, QSettings.IniFormat)
 
     def get_value(self, menu, value):
-        return self._settings.value(menu+'/'+value)
+        return self._settings.value(menu + '/' + value)
 
     def set_site_settings(self, name, site_id, imager_id):
         self._settings.beginGroup(p.SITE_TITLE)
@@ -45,5 +45,5 @@ class ConfigProject:
 
     def get_moonsun_settings(self):
         m = p.SUN_MOON_TITLE
-        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION),\
+        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION), \
                self.get_value(m, p.MAX_LUNAR_PHASE), self.get_value(m, p.MAX_LUNAR_ELEVATION)

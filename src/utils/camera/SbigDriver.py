@@ -74,6 +74,7 @@ def open_driver():
     a = cmd(SbigLib.PAR_COMMAND.CC_OPEN_DRIVER.value, None, None)
     return a
 
+
 # Open Device USB
 def open_deviceusb():
     cin = SbigStructures.OpenDeviceParams
@@ -85,6 +86,7 @@ def open_deviceusb():
         return ret == 0
     except Exception as e:
         return False, e
+
 
 def close_driver():
     cdp = None
@@ -154,6 +156,7 @@ def getlinkstatus():
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
     print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    return cout.linkEstablished == 1
 
 
 def set_temperature(regulation, setpoint, autofreeze=True):
@@ -360,13 +363,12 @@ def ccdinfo():
 def set_header(filename, newname):
     # Abrindo o arquivo
     fits_file = fits.open(filename)
-
     # Escrevendo o Header
     fits_file[0].header["TEMP"] = tuple(get_temperature())[3]
     fits_file[0].header["DATE"] = strftime('%Y-%m-%d_%H:%M:%S')
 
     # Criando o arquivo final
-    fits.writeto(newname+'.fits', fits_file[0].data, fits_file[0].header, clobber=True)
+    fits.writeto(newname+'.fits', fits_file[0].data, fits_file[0].header)
 
     try:
         print("Tricat do set_header")
@@ -557,7 +559,10 @@ def photoshoot(etime, pre, binning):
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
 
     print("Call set_header")
-    set_header(filename, name)
+    try:
+        set_header(filename, name)
+    except Exception as e:
+        print(e)
     print("Call set_png")
     set_png(name + ".fits", name)
 

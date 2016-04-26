@@ -51,25 +51,27 @@ class Camera(metaclass=Singleton):
             a = open_driver()
             open_deviceusb()
             c = establishinglink()
-            if a == True and c == True:
+            if a is True and c is True:
                 self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 1)
+                return True
             else:
                 self.console.raise_text("Erro na conexão", 3)
         except Exception as e:
-            self.console.raise_text('Houve falha ao se conectar a camera!', 3)
+            self.console.raise_text('Houve falha ao se conectar a camera!\n{}'.format(e), 3)
+
+        return False
 
     def disconnect(self):
         try:
             cd = close_device()
             cdr = close_driver()
 
-            if (cd and cdr):
+            if cd and cdr:
                 self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 1)
             else:
                 self.console.raise_text("Erro ao desconectar {} {}".format(cd, cdr), 3)
         except Exception as e:
-            self.console.raise_text("Houve falha ao se desconectar a camera!", 3)
-
+            self.console.raise_text("Houve falha ao se desconectar a camera!\n{}".format(e), 3)
 
     def set_temperature(self, value):
         self.lock.set_acquire()
@@ -108,10 +110,19 @@ class Camera(metaclass=Singleton):
         finally:
             self.img = ss.get_image_info()
 
+    def check_link(self):
+        if getlinkstatus() is False:
+            return self.connect()
+        else:
+            return True
+
     def start_taking_photo(self):
-        thread = Thread(target=self.continuous_shooter())
-        self.continuous = True
-        thread.start()
+        if self.check_link() is True:
+            thread = Thread(target=self.continuous_shooter)
+            self.continuous = True
+            thread.start()
+        else:
+            self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
 
     def continuous_shooter(self):
         ss = SThread()
@@ -131,7 +142,6 @@ class Camera(metaclass=Singleton):
 
     def stop_taking_photo(self):
         self.continuous = False
-
 
     def ashoot(self):
         now = datetime.now()
