@@ -118,9 +118,12 @@ class Camera(metaclass=Singleton):
 
     def start_taking_photo(self):
         if self.check_link() is True:
-            thread = Thread(target=self.continuous_shooter)
-            self.continuous = True
-            thread.start()
+            try:
+                self.thread = Thread(target=self.continuous_shooter)
+                self.continuous = True
+                self.thread.start()
+            except Exception as e:
+                print(e)
         else:
             self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
 

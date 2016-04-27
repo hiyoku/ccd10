@@ -364,14 +364,15 @@ def set_header(filename):
     # Abrindo o arquivo
     fits_file = fits.open(filename)
     # Escrevendo o Header
-    fits_file[0].header["TEMP"] = tuple(get_temperature())[3]
+    # Can't get the temperature because have a locker locking shooter process
+    # fits_file[0].header["TEMP"] = tuple(get_temperature())[3]
     fits_file[0].header["DATE"] = strftime('%Y-%m-%d_%H:%M:%S')
 
     # Criando o arquivo final
     try:
         print("Tricat do set_header")
         # Fechando e removendo o arquivo tempor�rio
-        fits_file.flush()
+        # fits_file.flush()
         fits_file.close()
     except OSError as e:
         print(filename)
@@ -557,13 +558,10 @@ def photoshoot(etime, pre, binning):
     cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
 
     print("Call set_header")
-    try:
-        set_header(fitsname)
-    except Exception as e:
-        print(e)
+    set_header(fitsname)
     print("Call set_png")
     set_png(fitsname, pngname)
 
     data, hora = get_date_hour(tempo)
 
-    return (path, pngname, fitsname, data, hora)
+    return path, pngname, fitsname, data, hora
