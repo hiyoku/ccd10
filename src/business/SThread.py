@@ -1,7 +1,6 @@
 from PyQt5.QtCore import QThread
 from time import sleep
 
-from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.controller.commons.Locker import Locker
 from src.controller.image import Image
 from src.utils.camera import SbigDriver
@@ -20,12 +19,10 @@ class SThread(QThread):
         self.etime = int(info[1])
         self.pre = str(info[0])
         self.b = int(info[2])
-        self.sched = SchedTemperature()
         self.info = []
         self.img = None
 
     def run(self):
-        self.sched.stop_job()
         self.lock.set_acquire()
         try:
             self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
@@ -33,7 +30,6 @@ class SThread(QThread):
             self.console.raise_text("Erro na QThread.\n{}".format(e))
         finally:
             self.lock.set_release()
-            self.sched.start_job()
 
     def init_image(self):
         try:

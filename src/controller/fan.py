@@ -41,8 +41,10 @@ class Fan(metaclass=Singleton):
         try:
             if SbigDriver.is_fanning():
                 SbigDriver.stop_fan()
+                self.fanField.setText('Fan Off')
             else:
                 SbigDriver.start_fan()
+                self.fanField.setText('Fan On')
         except Exception as e:
             self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
         finally:

@@ -3,7 +3,7 @@ from time import sleep
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-from src.utils.camera.SbigDriver import get_temperature
+from src.controller.camera import Camera
 from src.utils.singleton import Singleton
 
 
@@ -11,6 +11,7 @@ class SchedTemperature(metaclass=Singleton):
 
     def __init__(self, valor=None):
         self.scheduler = BackgroundScheduler()
+        self.cam = Camera()
         self.job = self.scheduler.add_job(self.refresh_temp, IntervalTrigger(seconds=1))
         self.object = valor
 
@@ -18,7 +19,7 @@ class SchedTemperature(metaclass=Singleton):
 
     def refresh_temp(self):
         try:
-            temp = get_temperature()[3]
+            temp = self.cam.get_temperature()
             a = "{0:.2f}".format(temp)
         except:
             a = "None"

@@ -1,6 +1,7 @@
 from PyQt5.Qt import QWidget, QLabel, QLineEdit, QComboBox, QPushButton
 
 from src.controller.camera import Camera
+from src.controller.fan import Fan
 from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -16,6 +17,7 @@ class SettingsWindow(QWidget):
         self.a = TempRegulation(self)
         self.create_cam_widgets()
         self.p = parent
+        self.fan = Fan(self.fanButton)
 
         self.setting_values()
 
@@ -23,6 +25,7 @@ class SettingsWindow(QWidget):
                                  set_hbox(self.pre, self.prel),
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
+                                 set_hbox(self.fanButton),
                                  set_hbox(self.buttonok, stretch2=1)))
 
     def get_values(self):
@@ -52,6 +55,9 @@ class SettingsWindow(QWidget):
         self.combo = QComboBox(self)
         self.fill_combo()
 
+        self.fanButton = QPushButton("Fan")
+        self.fanButton.clicked.connect(self.button_fan_func)
+
         self.buttonok = QPushButton("Salvar", self)
         self.buttonok.clicked.connect(self.button_ok_func)
 
@@ -71,6 +77,13 @@ class SettingsWindow(QWidget):
             self.console.raise_text("Configurações da Camera não foram salvas.", 3)
         finally:
             self.p.close()
+
+    def button_fan_func(self):
+        try:
+            self.fan.set_fan()
+            self.console.raise_text('Estado da Fan alterado!', 2)
+        except Exception as e:
+            self.console.raise_text('Estado da Fan não alterado', 3)
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)

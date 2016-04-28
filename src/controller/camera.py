@@ -86,12 +86,13 @@ class Camera(metaclass=Singleton):
 
     def get_temperature(self):
         temp = 0
+        self.lock.set_acquire()
         try:
-            self.lock.set_acquire()
             temp = tuple(get_temperature())[3]
-            self.lock.set_release()
         except Exception as e:
             self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e), 3)
+        finally:
+            self.lock.set_release()
 
         return float(temp)
 
