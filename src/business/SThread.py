@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QThread
+from time import sleep
 
 from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.controller.commons.Locker import Locker
@@ -33,7 +34,6 @@ class SThread(QThread):
         finally:
             self.lock.set_release()
             self.sched.start_job()
-            self.init_image()
 
     def init_image(self):
         try:

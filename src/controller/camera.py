@@ -30,6 +30,7 @@ class Camera(metaclass=Singleton):
         self.img = ""
         self.settedhour = datetime.now()
         self.continuous = True
+        self.ss = SThread()
 
     def get_info(self):
         """
@@ -128,20 +129,21 @@ class Camera(metaclass=Singleton):
             self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
 
     def continuous_shooter(self):
-        ss = SThread()
         count = 0
-
         while self.continuous:
-            count += 1
+            count += 1 # Contando a quantidade de fotos
             try:
-                ss.start()
+                self.ss.start()
                 self.console.raise_text("Tirando foto n: {}".format(count), 1)
-                while ss.isRunning():
+
+                # enquanto a QThread estiver rodando ele não proseguirá
+                while self.ss.isRunning():
                     sleep(1)
+
+                # gerando a imagem
+                self.img = self.ss.init_image()
             except Exception as e:
                 self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
-            finally:
-                self.img = ss.get_image_info()
 
     def stop_taking_photo(self):
         self.continuous = False

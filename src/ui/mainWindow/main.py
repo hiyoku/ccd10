@@ -7,7 +7,7 @@ from src.ui.mainWindow.mainWindow import MainWindow
 from src.ui.projectSettingsWindow.main import MainWindow as sw
 from src.ui.systemSettingsWindow.main import MainWindow as mw
 from src.ui.cameraSettingsWindow.main import Main as csw
-from src.ui.continuousShooterWindow.main import Main as conts
+from src.ui.continuousShooterWindow.continuousShooterWindow import ContinuousShooterWindow as conts
 from src.controller.camera import Camera
 
 from src.ui.mainWindow.status import Status
