@@ -9,10 +9,9 @@ class TempMonitor(QWidget):
     def __init__(self, parent=None):
         super(TempMonitor, self).__init__(parent)
         self.tempMonitor = QLabel(self)
+        self.Sched = SchedTemperature(self.tempMonitor)
 
         self.label = QLabel("Temperature:", self)
-
-        self.Sched = SchedTemperature(self.tempMonitor)
 
         self.setLayout(set_hbox(self.label, self.tempMonitor, stretch=1))
 

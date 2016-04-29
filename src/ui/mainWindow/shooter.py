@@ -23,30 +23,6 @@ class Shooter(QWidget):
         self.cam = Camera()
         self.cond = 0
 
-        # Creating the first part of layout
-        # Shooter button
-        # self.sbutton = QPushButton("Shot!", self)
-        # self.sbutton.clicked.connect(self.shoot_function)
-        #
-        # # Exposition Line Edit
-        # self.tb = QLineEdit(self)
-        #
-        # # Prefix Line Edit
-        # self.pre = QLineEdit(self)
-        #
-        # # Binning ComboBox
-        # self.combo = QComboBox(self)
-        #
-        # # Auto Mode Button
-        # self.abutton = QPushButton("Auto", self)
-        # self.abutton.clicked.connect(self.auto_shoot)
-        #
-        # # Hour Label and Line Edit
-        # self.htext = QLineEdit(self)
-        #
-        # # Minutes Label and Line Edit
-        # self.mtext = QLineEdit(self)
-
         # Label for Image
         self.img = QLabel(self)
         self.config_img_label()

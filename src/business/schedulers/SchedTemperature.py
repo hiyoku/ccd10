@@ -5,6 +5,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 
 from src.controller.camera import Camera
 from src.utils.singleton import Singleton
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class SchedTemperature(metaclass=Singleton):
@@ -12,6 +13,7 @@ class SchedTemperature(metaclass=Singleton):
     def __init__(self, valor=None):
         self.scheduler = BackgroundScheduler()
         self.cam = Camera()
+        self.console = ConsoleThreadOutput()
         self.job = self.scheduler.add_job(self.refresh_temp, IntervalTrigger(seconds=1))
         self.object = valor
 
@@ -20,8 +22,11 @@ class SchedTemperature(metaclass=Singleton):
     def refresh_temp(self):
         try:
             temp = self.cam.get_temperature()
-            a = "{0:.2f}".format(temp)
-        except:
+            if temp != "None":
+                a = "{0:.2f}".format(float(temp))
+            else:
+                a = "{}".format(str(temp))
+        except Exception as e:
             a = "None"
         self.object.setText(a)
 
