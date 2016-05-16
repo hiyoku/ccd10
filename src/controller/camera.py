@@ -5,11 +5,13 @@ from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from src.business.SThread import SThread
+from src.business.configuration.settingsCamera import SettingsCamera
 from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
 from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
                                          establishinglink, open_deviceusb, open_driver,
-                                         close_device, close_driver, getlinkstatus)
+                                         close_device, close_driver, getlinkstatus,
+                                         photoshoot)
 from src.utils.singleton import Singleton
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
@@ -18,19 +20,15 @@ class Camera(metaclass=Singleton):
 
     def __init__(self):
         self.lock = Locker()
-        self.schedShooter = BackgroundScheduler()
         info = self.get_info()
         self.console = ConsoleThreadOutput()
-
+        self.settings = SettingsCamera()
         self.firmware = str(info[0])
         self.model = str(info[2])[2:len(str(info[2]))-1]
 
         self.main = Status()
-        self.image_info = []
-        self.img = ""
         self.settedhour = datetime.now()
         self.continuous = True
-        self.ss = SThread()
 
     def get_info(self):
         """
@@ -85,73 +83,97 @@ class Camera(metaclass=Singleton):
             self.console.raise_text("Temperature configurada para {}".format(int(value)), 1)
 
     def get_temperature(self):
-        temp = 0
-        if getlinkstatus() is True:
-            self.lock.set_acquire()
-            try:
-                temp = tuple(get_temperature())[3]
-            except Exception as e:
-                self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e), 3)
-            finally:
-                self.lock.set_release()
-        else:
-            temp = "None"
+        temp = "None"
+        try:
+            if getlinkstatus() is True:
+                if not self.lock.is_locked():
+                    self.lock.set_acquire()
+                    temp = tuple(get_temperature())[3]
+                    self.lock.set_release()
+                else:
+                    temp = "None"
+            else:
+                temp = "None"
+        except Exception as e:
+            self.console.raise_text("Não foi possível recuperar a temperatura.", 3)
 
         return temp
 
-    def shoot(self):
-        print("Shoot function!")
-        # Creating a instance of SThread
-        ss = SThread()
-
+    def take_photo(self, pre, etime, b):
         try:
-            ss.start()
-            self.console.raise_text("Capturando imagem.", 1)
-            while ss.isRunning():
-                sleep(1)
-
+            self.info = photoshoot(etime * 100, pre, b)
         except Exception as e:
-            self.console.raise_text("Não foi possível capturar a imagem.\n{}".format(e), 1)
-        finally:
-            self.img = ss.get_image_info()
+            self.console.raise_text("Erro na QThread.\n{}".format(e))
+
 
     def check_link(self):
         if getlinkstatus() is False:
-            return self.connect()
+            return False
         else:
             return True
 
     def start_taking_photo(self):
-        if self.check_link() is True:
-            try:
-                self.thread = Thread(target=self.continuous_shooter)
-                self.continuous = True
-                self.thread.start()
-            except Exception as e:
-                print(e)
-        else:
-            self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
+        self.t = Thread(target=self.start_continuous_photo)
+        self.continuous = True
+        self.t.start()
 
-    def continuous_shooter(self):
-        count = 0
-        while self.continuous:
-            count += 1 # Contando a quantidade de fotos
-            try:
-                self.ss.start()
-                self.console.raise_text("Tirando foto n: {}".format(count), 1)
+    def start_continuous_photo(self):
+        if self.check_link():
+            self.lock.set_acquire()
+            info = self.settings.get_camera_settings()
+            count = 0
+            while self.continuous:
+                count += 1
+                self.console.raise_text('Tirando foto numero: {}'.format(count), level=2)
+                try:
+                    self.take_photo(str(info[0]), int(info[1]), int(info[2]))
+                except:
+                    self.take_photo("test", 1, 1)
 
-                # enquanto a QThread estiver rodando ele não proseguirá
-                while self.ss.isRunning():
-                    sleep(1)
+            self.lock.set_release()
 
-                # gerando a imagem
-                self.img = self.ss.init_image()
-            except Exception as e:
-                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
+    # def start_taking_photo(self):
+    #     if self.check_link() is True:
+    #         try:
+    #             self.thread = Thread(target=self.continuous_shooter)
+    #             self.continuous = True
+    #             self.thread.start()
+    #         except Exception as e:
+    #             print(e)
+    #     else:
+    #         self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
+    #
+    # def continuous_shooter(self):
+    #     self.lock.set_acquire()
+    #     while self.continuous:
+    #         self.take_photo()
+    #     self.lock.set_release()
+
+    # def continuous_shooter(self):
+    #     count = 0
+    #     while self.continuous:
+    #         count += 1 # Contando a quantidade de fotos
+    #         try:
+    #             self.ss.start()
+    #             self.console.raise_text("Tirando foto n: {}".format(count), 1)
+    #
+    #             # enquanto a QThread estiver rodando ele não proseguirá
+    #             while self.ss.isRunning():
+    #                 sleep(1)
+    #
+    #             # gerando a imagem
+    #             self.img = self.ss.init_image()
+    #         except Exception as e:
+    #             self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
 
     def stop_taking_photo(self):
         self.continuous = False
+        self.t.join()
         self.console.raise_text('Continuous Shooter parado', 1)
+
+    def start_checking_ephemerides(self):
+        pass
+
 
     def ashoot(self):
         now = datetime.now()

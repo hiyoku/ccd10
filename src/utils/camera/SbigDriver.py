@@ -315,7 +315,6 @@ def start_fan():
 
 # Stopping Fan
 def stop_fan():
-
     mcp = SbigStructures.MiscellaneousControlParams
     mcr = None
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(mcp), POINTER(mcr)]
@@ -382,6 +381,7 @@ def set_header(filename):
 def set_png(filename, newname):
     print("abrindo filename")
     fits_file = fits.open(filename)
+
     try:
         print("tricat do set_png")
         pyplot.imshow(fits_file[0].data, cmap='gray')
@@ -553,9 +553,9 @@ def photoshoot(etime, pre, binning):
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_END_READOUT.value, byref(cin), cout)
     print("ret", ret)
 
-    cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DEVICE.value, None, None)
+    # cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DEVICE.value, None, None)
 
-    cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
+    # cmd(SbigLib.PAR_COMMAND.CC_CLOSE_DRIVER.value, None, None)
 
     print("Call set_header")
     set_header(fitsname)
@@ -563,5 +563,5 @@ def photoshoot(etime, pre, binning):
     set_png(fitsname, pngname)
 
     data, hora = get_date_hour(tempo)
-
+    print("Final do processo")
     return path, pngname, fitsname, data, hora
