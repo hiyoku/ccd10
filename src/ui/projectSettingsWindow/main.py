@@ -3,8 +3,8 @@ from PyQt5.Qt import QMainWindow
 from src.ui.projectSettingsWindow.settingsWindow import SettingsWindow
 
 class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
         self.init_widget()
         self.init_window_geometry()
 

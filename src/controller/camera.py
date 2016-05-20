@@ -2,9 +2,8 @@ from datetime import datetime
 from time import sleep
 from threading import Thread
 
-from apscheduler.schedulers.background import BackgroundScheduler
 
-from src.business.SThread import SThread
+from src.business.ContinuousShooterThread import ContinuousShooterThread
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
@@ -12,23 +11,41 @@ from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperatu
                                          establishinglink, open_deviceusb, open_driver,
                                          close_device, close_driver, getlinkstatus,
                                          photoshoot)
-from src.utils.singleton import Singleton
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.utils.singleton import Singleton
 
 
 class Camera(metaclass=Singleton):
 
     def __init__(self):
         self.lock = Locker()
-        info = self.get_info()
         self.console = ConsoleThreadOutput()
         self.settings = SettingsCamera()
-        self.firmware = str(info[0])
-        self.model = str(info[2])[2:len(str(info[2]))-1]
+
+        # Campos da janela principal para as informações da câmera
+        self.firmware_field = None
+        self.model_field = None
 
         self.main = Status()
         self.settedhour = datetime.now()
         self.continuous = True
+
+    def get_firmware_and_model(self):
+        info = self.get_info()
+        return str(info[0]), str(info[2])[2:len(str(info[2]))-1]
+
+    def set_firmware_and_model_fields(self, firmwareField, modelField):
+        self.firmware_field = firmwareField
+        self.model_field = modelField
+
+    def set_firmware_and_model_values(self):
+        firmware, model = self.get_firmware_and_model()
+        self.firmware_field.setText("Firmware: " + firmware)
+        self.model_field.setText("Camera: " + model)
+
+    def clear_firmware_and_model_values(self):
+        self.firmware_field.setText("Firmware: ")
+        self.model_field.setText("Camera: ")
 
     def get_info(self):
         """
@@ -52,6 +69,7 @@ class Camera(metaclass=Singleton):
             c = establishinglink()
             if a is True and c is True:
                 self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 1)
+                self.set_firmware_and_model_values()
                 return True
             else:
                 self.console.raise_text("Erro na conexão", 3)
@@ -67,6 +85,7 @@ class Camera(metaclass=Singleton):
 
             if cd and cdr:
                 self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 1)
+                self.clear_firmware_and_model_values()
             else:
                 self.console.raise_text("Erro ao desconectar {} {}".format(cd, cdr), 3)
         except Exception as e:
@@ -113,63 +132,12 @@ class Camera(metaclass=Singleton):
             return True
 
     def start_taking_photo(self):
-        self.t = Thread(target=self.start_continuous_photo)
-        self.continuous = True
-        self.t.start()
-
-    def start_continuous_photo(self):
-        if self.check_link():
-            self.lock.set_acquire()
-            info = self.settings.get_camera_settings()
-            count = 0
-            while self.continuous:
-                count += 1
-                self.console.raise_text('Tirando foto numero: {}'.format(count), level=2)
-                try:
-                    self.take_photo(str(info[0]), int(info[1]), int(info[2]))
-                except:
-                    self.take_photo("test", 1, 1)
-
-            self.lock.set_release()
-
-    # def start_taking_photo(self):
-    #     if self.check_link() is True:
-    #         try:
-    #             self.thread = Thread(target=self.continuous_shooter)
-    #             self.continuous = True
-    #             self.thread.start()
-    #         except Exception as e:
-    #             print(e)
-    #     else:
-    #         self.console.raise_text('Não foi possível iniciar a Thread para tirar fotos.', 3)
-    #
-    # def continuous_shooter(self):
-    #     self.lock.set_acquire()
-    #     while self.continuous:
-    #         self.take_photo()
-    #     self.lock.set_release()
-
-    # def continuous_shooter(self):
-    #     count = 0
-    #     while self.continuous:
-    #         count += 1 # Contando a quantidade de fotos
-    #         try:
-    #             self.ss.start()
-    #             self.console.raise_text("Tirando foto n: {}".format(count), 1)
-    #
-    #             # enquanto a QThread estiver rodando ele não proseguirá
-    #             while self.ss.isRunning():
-    #                 sleep(1)
-    #
-    #             # gerando a imagem
-    #             self.img = self.ss.init_image()
-    #         except Exception as e:
-    #             self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
+        self.continuousShooterThread = ContinuousShooterThread()
+        self.continuousShooterThread.start_continuous_shooter()
+        self.continuousShooterThread.start()
 
     def stop_taking_photo(self):
-        self.continuous = False
-        self.t.join()
-        self.console.raise_text('Continuous Shooter parado', 1)
+        self.continuousShooterThread.stop_continuous_shooter()
 
     def start_checking_ephemerides(self):
         pass

@@ -1,5 +1,4 @@
 from PyQt5.QtCore import QThread
-from time import sleep
 
 from src.controller.commons.Locker import Locker
 from src.controller.image import Image

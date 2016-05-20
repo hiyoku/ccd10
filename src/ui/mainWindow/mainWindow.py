@@ -7,6 +7,7 @@ from src.ui.mainWindow.clock import Clock
 from src.ui.mainWindow.shooter import Shooter
 from src.ui.mainWindow.configsInfo import ConfigsInfo
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
 
 
 class MainWindow(QWidget):
@@ -18,6 +19,7 @@ class MainWindow(QWidget):
         self.VBox = QVBoxLayout()   # Vertical Box in the Left Box
         self.all_h_boxes = []
         self.console = ConsoleThreadOutput()
+        self.console.set_widget_console(ConsoleLogWidget(self))
 
         self.MainHBox.addLayout(self.VBox)
         self.MainHBox.addStretch(1)

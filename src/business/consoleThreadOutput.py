@@ -1,8 +1,5 @@
 from src.utils.singleton import Singleton
-
 from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
-
-from time import sleep
 from threading import Thread
 
 
@@ -13,8 +10,11 @@ class ConsoleThreadOutput(metaclass=Singleton):
     def get_widget_console(self):
         return self.log
 
+    def set_widget_console(self, c):
+        self.log = c
+
     def raise_text(self, text, level=0):
-        print(text)
         self.log.newLine(text, level)
+        print(text)
 
 

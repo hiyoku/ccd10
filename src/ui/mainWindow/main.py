@@ -18,18 +18,25 @@ from src.business.configuration.configProject import ConfigProject
 class Main(QMainWindow):
 
     def __init__(self):
-        super().__init__()
+        super(Main, self).__init__()
         # Init the Status Singleton
         Status(self)
         # Init Layouts
         try:
+            self.init_widgets()
             self.init_user_interface()
+            # Initiating all windows
+
         except Exception as e:
             print(e)
 
     def init_user_interface(self):
+        self.cont = conts(self)
+        self.a = sw(self)
+        self.b = mw(self)
+        self.c = csw(self)
+        self.cam = Camera()
         self.init_menu()
-        self.init_widgets()
         self.init_window_geometry()
 
     def init_widgets(self):
@@ -71,7 +78,6 @@ class Main(QMainWindow):
 
     def action_continuous_shooter(self):
         ac = QAction('&Manual', self)
-        self.cont = conts()
 
         ac.triggered.connect(self.cont.show)
 
@@ -81,7 +87,6 @@ class Main(QMainWindow):
         settings = QAction('Project Settings', self)
         settings.setShortcut("Ctrl+P")
         settings.setStatusTip("Open Settings window")
-        self.a = sw()
 
         settings.triggered.connect(self.a.show)
 
@@ -90,7 +95,6 @@ class Main(QMainWindow):
     def open_settings_system(self):
         setS = QAction('System Settings', self)
         setS.setShortcut('Ctrl+T')
-        self.b = mw()
 
         setS.triggered.connect(self.b.show)
 
@@ -99,7 +103,6 @@ class Main(QMainWindow):
     def open_settings_camera(self):
         setC = QAction('Camera Settings', self)
         setC.setShortcut("Ctrl+C")
-        self.c = csw()
 
         setC.triggered.connect(self.c.show)
 
@@ -108,7 +111,6 @@ class Main(QMainWindow):
     def action_connect_disconnect(self):
         setAC = QAction('Connect', self)
         setAD = QAction('Disconnect', self)
-        self.cam = Camera()
 
         setAC.triggered.connect(self.cam.connect)
 

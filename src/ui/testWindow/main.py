@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QAction
 import sys
 from src.ui.testWindow.MainWindow2 import MainWindow2
+from src.ui.mainWindow.tempMonitor import TempMonitor
 
 
 class Main(QMainWindow):
@@ -16,6 +17,7 @@ class Main(QMainWindow):
         m = menu.addMenu("&File")
         m.addAction(ac)
 
+        self.temp = TempMonitor()
         self.setWindowTitle("Main")
         self.show()
 

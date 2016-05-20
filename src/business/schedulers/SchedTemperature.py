@@ -28,6 +28,7 @@ class SchedTemperature(metaclass=Singleton):
                 a = "{}".format(str(temp))
         except Exception as e:
             a = "None"
+            print("ERRO NO SCHEDULER TEMP")
         self.object.setText(a)
 
     def stop_job(self):

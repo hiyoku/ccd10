@@ -422,9 +422,9 @@ def get_date_hour(tempo):
 
 
 def photoshoot(etime, pre, binning):
-    open_driver()
-    open_deviceusb()
-    establishinglink()
+    # open_driver()
+    # open_deviceusb()
+    # establishinglink()
 
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
