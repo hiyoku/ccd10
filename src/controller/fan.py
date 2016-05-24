@@ -1,6 +1,5 @@
 from threading import Thread
 
-from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.controller.commons.Locker import Locker
 from src.utils.camera import SbigDriver
 from src.utils.singleton import Singleton
@@ -35,8 +34,6 @@ class Fan(metaclass=Singleton):
         t.start()
 
     def s_fan(self):
-        st = SchedTemperature()
-        st.stop_job()
         self.lock.set_acquire()
         try:
             if SbigDriver.is_fanning():
@@ -50,4 +47,3 @@ class Fan(metaclass=Singleton):
         finally:
             self.lock.set_release()
             self.fanField.setText(self.fan_status())
-            st.start_job()
