@@ -118,13 +118,6 @@ class Camera(metaclass=Singleton):
 
         return temp
 
-    def take_photo(self, pre, etime, b):
-        try:
-            self.info = photoshoot(etime * 100, pre, b)
-        except Exception as e:
-            self.console.raise_text("Erro na QThread.\n{}".format(e))
-
-
     def check_link(self):
         if getlinkstatus() is False:
             return False
@@ -141,28 +134,3 @@ class Camera(metaclass=Singleton):
 
     def start_checking_ephemerides(self):
         pass
-
-
-    def ashoot(self):
-        now = datetime.now()
-        self.console.raise_text("Modo agendado iniciado para terminar em " + str(self.settedhour), 1)
-        ss = SThread()
-
-        while datetime.now() < self.settedhour:
-            print("Hora agora ->"+str(datetime.now()))
-            print("Hora setada ->"+str(self.settedhour))
-            print(now < self.settedhour)
-            try:
-                ss.start()
-                while ss.isRunning():
-                    sleep(1)
-            except Exception as e:
-                self.console.raise_text("Não foi possível capturar a imagem.{}".format(e), 3)
-
-        return False
-
-    def autoshoot(self, h, m):
-        now = datetime.now()
-        self.settedhour = now.replace(hour=h, minute=m)
-        t = Thread(target=self.ashoot)
-        t.start()

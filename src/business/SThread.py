@@ -13,13 +13,19 @@ class SThread(QThread):
         super(SThread, self).__init__()
         self.lock = Locker()
         self.console = ConsoleThreadOutput()
+        self.info = []
+        self.img = None
+
+    def get_camera_settings(self):
         settings = SettingsCamera()
         info = settings.get_camera_settings()
+        return info
+
+    def set_etime_pre_binning(self):
+        info = self.get_camera_settings()
         self.etime = int(info[1])
         self.pre = str(info[0])
         self.b = int(info[2])
-        self.info = []
-        self.img = None
 
     def run(self):
         self.lock.set_acquire()
