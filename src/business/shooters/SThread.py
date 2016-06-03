@@ -1,10 +1,10 @@
 from PyQt5.QtCore import QThread
 
-from src.controller.commons.Locker import Locker
-from src.controller.image import Image
-from src.utils.camera import SbigDriver
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.business.models.image import Image
+from src.controller.commons.Locker import Locker
+from src.utils.camera import SbigDriver
 
 
 class SThread(QThread):

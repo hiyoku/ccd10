@@ -1,6 +1,8 @@
-from PyQt5.Qt import QThread
 from time import sleep
-from src.business.SThread import SThread
+
+from PyQt5.Qt import QThread
+
+from src.business.shooters.SThread import SThread
 
 
 class ContinuousShooterThread(QThread):

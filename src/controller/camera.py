@@ -1,17 +1,14 @@
 from datetime import datetime
-from time import sleep
-from threading import Thread
 
-
-from src.business.ContinuousShooterThread import ContinuousShooterThread
 from src.business.configuration.settingsCamera import SettingsCamera
+from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
+from src.business.shooters.EphemerisShooter import EphemerisShooter
 from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
 from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
                                          establishinglink, open_deviceusb, open_driver,
-                                         close_device, close_driver, getlinkstatus,
-                                         photoshoot)
-from src.business.consoleThreadOutput import ConsoleThreadOutput
+                                         close_device, close_driver, getlinkstatus)
 from src.utils.singleton import Singleton
 
 
@@ -131,6 +128,13 @@ class Camera(metaclass=Singleton):
 
     def stop_taking_photo(self):
         self.continuousShooterThread.stop_continuous_shooter()
+
+    def start_ephemeris_shooter(self):
+        self.ephemerisShooterThread = EphemerisShooter()
+        self.ephemerisShooterThread.start()
+
+    def stop_ephemeris_shooter(self):
+        self.ephemerisShooterThread.stop_shooter()
 
     def start_checking_ephemerides(self):
         pass

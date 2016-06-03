@@ -9,6 +9,7 @@ from src.ui.systemSettingsWindow.main import MainWindow as mw
 from src.ui.cameraSettingsWindow.main import Main as csw
 # from src.ui.continuousShooterWindow.continuousShooterWindow import ContinuousShooterWindow as conts
 from src.ui.testWindow.MainWindow2 import MainWindow2 as conts
+from src.ui.ephemerisShooterWindow.main import Main as eph
 from src.controller.camera import Camera
 
 from src.ui.mainWindow.status import Status
@@ -32,6 +33,7 @@ class Main(QMainWindow):
 
     def init_user_interface(self):
         self.cont = conts(self)
+        self.ephem = eph(self)
         self.a = sw(self)
         self.b = mw(self)
         self.c = csw(self)
@@ -61,7 +63,8 @@ class Main(QMainWindow):
         a3 = self.action_connect_disconnect()
         self.add_to_menu(menubar, a3[0], a3[1], a3[2])
         a4 = self.action_continuous_shooter()
-        self.add_to_menu(menubar, 'Shooters', a4)
+        a5 = self.action_ephemeris_shooter()
+        self.add_to_menu(menubar, 'Shooters', a4, a5)
         # add_to_menu(menubar, open_settings_system(self))
 
     # All actions needs return a QAction and a menuType, line '&File'
@@ -82,6 +85,12 @@ class Main(QMainWindow):
         ac.triggered.connect(self.cont.show)
 
         return ac
+
+    def action_ephemeris_shooter(self):
+        ac2 = QAction('&Ephemeris', self)
+        ac2.triggered.connect(self.ephem.show)
+
+        return ac2
 
     def open_settings(self):
         settings = QAction('Project Settings', self)
