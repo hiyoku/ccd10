@@ -6,8 +6,9 @@ from src.business.shooters.SThread import SThread
 
 
 class ContinuousShooterThread(QThread):
-    def __init__(self):
+    def __init__(self, sleep=0):
         super(ContinuousShooterThread, self).__init__()
+        self.sleep = 0
         self.continuous = True
     
     def run(self):
@@ -20,6 +21,7 @@ class ContinuousShooterThread(QThread):
                     sleep(1)
             except Exception as e:
                 print(e)
+            sleep(self.sleep)
 
     def start_continuous_shooter(self):
         self.continuous = True

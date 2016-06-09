@@ -7,6 +7,7 @@ from PyQt5.Qt import QThread
 
 from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
 
 
 class EphemerisShooter(QThread):
@@ -20,6 +21,7 @@ class EphemerisShooter(QThread):
         self.max_solar_elevation = -12
         self.max_lunar_elevation = 8
         self.max_lunar_phase = 1
+        self.s = 40
 
         self.shootOn = False
         self.controller = True
@@ -53,22 +55,27 @@ class EphemerisShooter(QThread):
         try:
             while self.controller:
                 now_datetime = datetime.datetime.utcnow()
-                now_localtime = datetime.datetime.now()
+                # now_localtime = datetime.datetime.now()
                 obs.date = ephem.date(now_datetime)
 
                 sun = ephem.Sun(obs)
 
                 moon = ephem.Moon(obs)
-                frac = moon.moon_phase
+                # frac = moon.moon_phase
 
                 a = ephem.degrees(sun.alt)
                 b = ephem.degrees(str(moon.alt))
-                if(degrees(a) < self.max_solar_elevation and degrees(b) < self.max_lunar_elevation):
+                # if(degrees(a) < self.max_solar_elevation and degrees(b) < self.max_lunar_elevation):
+                if(degrees(a) < self.max_solar_elevation):
                     if not self.shootOn:
+                        # Iniciar as Observações
+                        self.start_taking_photo()
                         self.console.raise_text("Observação Iniciada", 2)
                         self.shootOn = True
                 else:
                     if self.shootOn:
+                        # Finalizar as Observações
+                        self.stop_taking_photo()
                         text = self.calculate_moon(obs)
                         text2 = self.calculate_sun(obs)
                         self.console.raise_text("Observação Finalizada", 2)
@@ -82,3 +89,11 @@ class EphemerisShooter(QThread):
     def stop_shooter(self):
         self.controller = False
         self.console.raise_text('Shooter finalizado',1)
+
+    def start_taking_photo(self):
+        self.continuousShooterThread = ContinuousShooterThread(sleep=self.s)
+        self.continuousShooterThread.start_continuous_shooter()
+        self.continuousShooterThread.start()
+
+    def stop_taking_photo(self):
+        self.continuousShooterThread.stop_continuous_shooter()

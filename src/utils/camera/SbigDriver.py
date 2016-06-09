@@ -399,7 +399,7 @@ def set_path(pre):
 
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
-    path = "images/"
+    path = "/run/media/hideki/EFI/i/"
     if int(tempo[9:11]) > 12:
         path = path+pre+"_"+data+"/"
     else:

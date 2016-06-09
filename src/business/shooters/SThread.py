@@ -28,6 +28,7 @@ class SThread(QThread):
         self.b = int(info[2])
 
     def run(self):
+        self.set_etime_pre_binning()
         self.lock.set_acquire()
         try:
             self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
