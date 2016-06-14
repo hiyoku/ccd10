@@ -1,7 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QAction, qApp
 from PyQt5.QtGui import QIcon
-from threading import Thread
-
 # Importing the widgets
 from src.ui.mainWindow.mainWindow import MainWindow
 from src.ui.projectSettingsWindow.main import MainWindow as sw
@@ -13,7 +11,6 @@ from src.ui.ephemerisShooterWindow.main import Main as eph
 from src.controller.camera import Camera
 
 from src.ui.mainWindow.status import Status
-from src.business.configuration.configProject import ConfigProject
 
 
 class Main(QMainWindow):
@@ -131,3 +128,4 @@ class Main(QMainWindow):
         m = menubar.addMenu(menu)
         for w in args:
             m.addAction(w)
+

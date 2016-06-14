@@ -2,7 +2,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel
 
 from src.controller.camera import Camera
-from src.controller.commons.Locker import Locker
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 

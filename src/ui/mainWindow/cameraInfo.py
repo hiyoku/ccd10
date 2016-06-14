@@ -1,4 +1,4 @@
-from PyQt5.Qt import QFrame
+from PyQt5.QtWidgets import QFrame
 
 from src.ui.mainWindow.ccdInfo import CCDInfo
 from src.ui.mainWindow.tempMonitor import TempMonitor

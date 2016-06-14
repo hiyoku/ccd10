@@ -2,8 +2,6 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout
 from threading import Thread
 from time import sleep
 from src.controller.camera import Camera
-from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
 
 
 class EphemerisShooterWindow(QWidget):

@@ -1,4 +1,4 @@
-from PyQt5.Qt import QFont
+from PyQt5.QtGui import QFont
 
 
 def get_qfont(bold):

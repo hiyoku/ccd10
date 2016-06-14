@@ -3,7 +3,7 @@ from math import degrees
 from time import sleep
 
 import ephem
-from PyQt5.Qt import QThread
+from PyQt5.QtCore import QThread
 
 from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.consoleThreadOutput import ConsoleThreadOutput

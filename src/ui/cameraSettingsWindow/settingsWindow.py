@@ -1,4 +1,4 @@
-from PyQt5.Qt import QWidget, QLabel, QLineEdit, QComboBox, QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QComboBox, QPushButton
 
 from src.controller.camera import Camera
 from src.controller.fan import Fan

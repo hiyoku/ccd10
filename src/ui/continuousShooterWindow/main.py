@@ -1,4 +1,4 @@
-from PyQt5.Qt import QMainWindow
+from PyQt5.QtWidgets import QMainWindow
 
 from src.ui.continuousShooterWindow.continuousShooterWindow import ContinuousShooterWindow
 

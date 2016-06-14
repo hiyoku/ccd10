@@ -1,4 +1,4 @@
-from PyQt5.Qt import QWidget, QPushButton
+from PyQt5.QtWidgets import QWidget, QPushButton
 
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.systemSettingsWindow.widgetsPath import WidgetsPath

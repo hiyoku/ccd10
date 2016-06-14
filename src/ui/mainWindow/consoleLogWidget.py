@@ -1,6 +1,6 @@
 from time import strftime
 
-from PyQt5.Qt import QWidget, QTextEdit
+from PyQt5.QtWidgets import QWidget, QTextEdit
 
 
 class ConsoleLogWidget(QWidget):

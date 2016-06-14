@@ -1,6 +1,6 @@
 from time import sleep
 
-from PyQt5.Qt import QThread
+from PyQt5.QtCore import QThread
 
 from src.business.shooters.SThread import SThread
 

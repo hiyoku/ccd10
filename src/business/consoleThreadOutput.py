@@ -1,6 +1,5 @@
 from src.utils.singleton import Singleton
 from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
-from threading import Thread
 
 
 class ConsoleThreadOutput(metaclass=Singleton):

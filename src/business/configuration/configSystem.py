@@ -1,4 +1,4 @@
-from PyQt5.Qt import QSettings
+from PyQt5.QtCore import QSettings
 
 from src.business.configuration.constants import system as s
 from src.ui.commons.verification import cb

@@ -1,4 +1,4 @@
-from PyQt5.Qt import QSettings
+from PyQt5.QtCore import QSettings
 
 from src.business.configuration.constants import camera as c
 
