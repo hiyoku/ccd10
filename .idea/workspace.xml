@@ -2,40 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95b078d8-f5b0-44d7-b902-1a12a3cc72f1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/logger.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/cameraQThread.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/commons/cameraActions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/EphemObserverFactory.py" afterPath="$PROJECT_DIR$/src/business/EphemObserverFactory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/configProject.py" afterPath="$PROJECT_DIR$/src/business/configuration/configProject.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/configSystem.py" afterPath="$PROJECT_DIR$/src/business/configuration/configSystem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/constants/project.py" afterPath="$PROJECT_DIR$/src/business/configuration/constants/project.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/constants/system.py" afterPath="$PROJECT_DIR$/src/business/configuration/constants/system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/consoleThreadOutput.py" afterPath="$PROJECT_DIR$/src/business/consoleThreadOutput.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/schedClock.py" afterPath="$PROJECT_DIR$/src/business/schedulers/schedClock.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py" afterPath="$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" afterPath="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/SThread.py" afterPath="$PROJECT_DIR$/src/business/shooters/SThread.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/Ephemeris.py" afterPath="$PROJECT_DIR$/src/controller/Ephemeris.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/camera.py" afterPath="$PROJECT_DIR$/src/controller/camera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/fan.py" afterPath="$PROJECT_DIR$/src/controller/fan.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test.py" afterPath="$PROJECT_DIR$/src/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/ephemerisShooterWindow.py" afterPath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/ephemerisShooterWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/clock.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/clock.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/consoleLogWidget.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/consoleLogWidget.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/siteInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/siteInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/settingsWindow.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/settingsWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsGeography.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsGeography.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSun.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSun.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/systemSettingsWindow/systemSettingsWindow.py" afterPath="$PROJECT_DIR$/src/ui/systemSettingsWindow/systemSettingsWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/systemSettingsWindow/widgetsPath.py" afterPath="$PROJECT_DIR$/src/ui/systemSettingsWindow/widgetsPath.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/testWindow/MainWindow.py" afterPath="$PROJECT_DIR$/src/ui/testWindow/MainWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" afterPath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/cameraQThread.py" afterPath="$PROJECT_DIR$/src/controller/cameraQThread.py" />
     </list>
     <ignored path="ccd10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,26 +26,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EphemerisShooter.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py">
+      <file leaf-file-name="cameraQThread.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/controller/cameraQThread.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1695">
-              <caret line="113" column="32" selection-start-line="113" selection-start-column="32" selection-end-line="113" selection-end-column="32" />
+            <state relative-caret-position="45">
+              <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cameraQThread.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/controller/cameraQThread.py">
+      <file leaf-file-name="cameraActions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/commons/cameraActions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="45">
+              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,8 +51,8 @@
       <file leaf-file-name="camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2130">
-              <caret line="151" column="63" selection-start-line="151" selection-start-column="63" selection-end-line="151" selection-end-column="63" />
+            <state relative-caret-position="270">
+              <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -95,43 +63,9 @@
       <file leaf-file-name="fan.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/fan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="72" column="16" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
+            <state relative-caret-position="285">
+              <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="singleton.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/singleton.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logger.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/business/logger.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContinuousShooterThread.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -158,7 +92,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py" />
         <option value="$PROJECT_DIR$/src/business/SThread.py" />
         <option value="$PROJECT_DIR$/src/business/shooters/EphemeridesShooter.py" />
         <option value="$PROJECT_DIR$/src/business/models/EphemObserver.py" />
@@ -206,8 +139,9 @@
         <option value="$PROJECT_DIR$/src/business/logger.py" />
         <option value="$PROJECT_DIR$/src/business/consoleThreadOutput.py" />
         <option value="$PROJECT_DIR$/src/controller/fan.py" />
-        <option value="$PROJECT_DIR$/src/controller/camera.py" />
         <option value="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" />
+        <option value="$PROJECT_DIR$/src/controller/commons/cameraActions.py" />
+        <option value="$PROJECT_DIR$/src/controller/camera.py" />
         <option value="$PROJECT_DIR$/src/controller/cameraQThread.py" />
       </list>
     </option>
@@ -351,6 +285,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ccd10" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ccd10" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="commons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -781,7 +737,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465912771602</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Inserido rotinas do shooter de efemérides">
+      <created>1467218492068</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1467218492068</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -828,7 +791,8 @@
     <MESSAGE value="Classe Camera refatorado" />
     <MESSAGE value="Ephemeris Checker." />
     <MESSAGE value="Código Parcialmente Refatorado" />
-    <option name="LAST_COMMIT_MESSAGE" value="Código Parcialmente Refatorado" />
+    <MESSAGE value="Inserido rotinas do shooter de efemérides" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inserido rotinas do shooter de efemérides" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -837,13 +801,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/status.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -968,6 +925,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#27#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -997,6 +957,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1025,6 +986,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-341">
           <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1032,6 +994,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1039,6 +1002,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1054,6 +1020,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="84" column="22" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1068,6 +1035,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1075,6 +1045,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="32" column="104" selection-start-line="32" selection-start-column="104" selection-end-line="32" selection-end-column="104" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1089,6 +1062,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-30">
           <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1096,6 +1070,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-180">
           <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1110,6 +1085,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1130,16 +1106,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/logger.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/business/consoleThreadOutput.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1150,30 +1116,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/singleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1695">
-          <caret line="113" column="32" selection-start-line="113" selection-start-column="32" selection-end-line="113" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1198,18 +1146,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/logger.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/singleton.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-435">
+          <caret line="10" column="66" selection-start-line="10" selection-start-column="66" selection-end-line="10" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/fan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="72" column="16" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
+        <state relative-caret-position="285">
+          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/commons/cameraActions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2130">
-          <caret line="151" column="63" selection-start-line="151" selection-start-column="63" selection-end-line="151" selection-end-column="63" />
+        <state relative-caret-position="270">
+          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -1218,10 +1202,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/cameraQThread.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state relative-caret-position="45">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
