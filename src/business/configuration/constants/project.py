@@ -1,5 +1,5 @@
 # List of constants used on project configuration file
-
+CONFIG_FILE = 'config'
 NAME = 'project_name'
 
 SITE_TITLE = 'site_options'

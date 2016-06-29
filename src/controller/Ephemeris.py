@@ -4,18 +4,29 @@ from time import sleep
 import sys
 from math import degrees
 from threading import Thread
+
+from src.business.configuration.configProject import ConfigProject
 # from src.utils.singleton import Singleton
 
 
 class Ephemeris():
     def __init__(self):
-        self.longitude = '-23.12'
-        self.latitude = '-45.51'
-        self.elev = 350
+        self.config = ConfigProject()
+        info = self.config.get_geographic_settings()
+        self.latitude = info[0] #'-45.51'
+        self.longitude = info[1] #'-23.12'
+        self.elev = info[2] #350
         self.shootOn = False
 
         t = Thread(target=self.check_all)
         t.start()
+
+    def refresh_data(self):
+        info = self.config.get_geographic_settings()
+        self.latitude = info[0]  # '-45.51'
+        self.longitude = info[1]  # '-23.12'
+        self.elev = info[2]  # 350
+
 
     def print_time_elapsed(self):
         init_time = datetime.datetime.utcnow()

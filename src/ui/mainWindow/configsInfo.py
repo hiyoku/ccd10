@@ -15,7 +15,7 @@ class ConfigsInfo(QFrame):
 
         # Initing Widgets
         p = cs()
-        self.confs = ConfigProject(p.project_path())
+        self.confs = ConfigProject()
 
         # Init Widget Site Info
         infoSite = self.confs.get_site_settings()

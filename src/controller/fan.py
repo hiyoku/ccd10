@@ -8,10 +8,13 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 class Fan(metaclass=Singleton):
 
-    def __init__(self, fanfield):
+    def __init__(self, fanfield=None):
         self.lock = Locker()
         self.fanField = fanfield
         self.console = ConsoleThreadOutput()
+
+    def set_fanField(self, fanField):
+        self.fanField = fanField
 
     def fan_status(self):
         # Acquiring the Lock
@@ -29,6 +32,9 @@ class Fan(metaclass=Singleton):
 
         return "ON" if status else "OFF"
 
+    def refresh_fan_status(self):
+        self.fanField.setText(self.fan_status())
+
     def set_fan(self):
         t = Thread(target=self.s_fan)
         t.start()
@@ -42,6 +48,26 @@ class Fan(metaclass=Singleton):
             else:
                 SbigDriver.start_fan()
                 self.fanField.setText('Fan On')
+        except Exception as e:
+            self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
+        finally:
+            self.lock.set_release()
+            self.fanField.setText(self.fan_status())
+
+    def set_fan_off(self):
+        self.lock.set_acquire()
+        try:
+            SbigDriver.stop_fan()
+        except Exception as e:
+            self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
+        finally:
+            self.lock.set_release()
+            self.fanField.setText(self.fan_status())
+
+    def set_fan_on(self):
+        self.lock.set_acquire()
+        try:
+            SbigDriver.start_fan()
         except Exception as e:
             self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
         finally:

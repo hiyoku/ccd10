@@ -15,7 +15,6 @@ class EphemerisShooterWindow(QWidget):
         self.control = False
         self.count = 0
         self.setWindowTitle("Ephemeris Shooter")
-        self.cam.connect()
 
     def set_layout(self):
         self.line1_layout = QHBoxLayout()
@@ -28,20 +27,3 @@ class EphemerisShooterWindow(QWidget):
         self.button_stop_count.clicked.connect(self.cam.stop_ephemeris_shooter)
 
         self.setLayout(self.line1_layout)
-
-    def function_start_thread(self):
-        t = Thread(target=self.start_count)
-        self.control = True
-        t.start()
-
-    def function_stop_thread(self):
-        self.control = False
-        print("Stopped")
-
-    def start_count(self):
-        while self.control:
-            self.count += 1
-            print(self.count)
-            sleep(1)
-
-

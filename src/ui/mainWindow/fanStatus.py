@@ -19,6 +19,7 @@ class FanStatus(QWidget):
 
         # Creating a Fan Object
         self.fan = Fan(self.FanField)
+        self.fan.set_fanField(self.FanField)
 
         # Setting up
         self.setting_up()

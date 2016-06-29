@@ -17,7 +17,6 @@ class MainWindow(QWidget):
         self.control = False
         self.count = 0
         self.setWindowTitle("oi")
-        self.cam.connect()
 
     def set_layout(self):
         self.line1_layout = QHBoxLayout()

@@ -1,4 +1,5 @@
 from datetime import datetime
+from PyQt5.QtCore import pyqtSignal
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -6,6 +7,7 @@ from src.business.shooters.ContinuousShooterThread import ContinuousShooterThrea
 from src.business.shooters.EphemerisShooter import EphemerisShooter
 from src.controller.commons.Locker import Locker
 from src.ui.mainWindow.status import Status
+from src.controller.fan import Fan
 from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
                                          establishinglink, open_deviceusb, open_driver,
                                          close_device, close_driver, getlinkstatus)
@@ -18,6 +20,7 @@ class Camera(metaclass=Singleton):
         self.lock = Locker()
         self.console = ConsoleThreadOutput()
         self.settings = SettingsCamera()
+        self.fan = Fan()
 
         # Campos da janela principal para as informações da câmera
         self.firmware_field = None
@@ -25,7 +28,21 @@ class Camera(metaclass=Singleton):
 
         self.main = Status()
         self.settedhour = datetime.now()
-        self.continuous = True
+        self.continuousShooterThread = ContinuousShooterThread()
+        self.ephemerisShooterThread = EphemerisShooter()
+
+        # Initiating the Slots
+        self.init_slots()
+
+    def init_slots(self):
+        # Ephemeris Shooter Slots
+        self.ephemerisShooterThread.started.connect(self.eshooter_started)
+        self.ephemerisShooterThread.finished.connect(self.eshooter_finished)
+        self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
+        self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
+
+    def teste(self):
+        print("Testando! 1 2 3!")
 
     def get_firmware_and_model(self):
         info = self.get_info()
@@ -67,9 +84,12 @@ class Camera(metaclass=Singleton):
             if a is True and c is True:
                 self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 1)
                 self.set_firmware_and_model_values()
+                self.fan.refresh_fan_status()
                 return True
             else:
                 self.console.raise_text("Erro na conexão", 3)
+
+
         except Exception as e:
             self.console.raise_text('Houve falha ao se conectar a camera!\n{}'.format(e), 3)
 
@@ -111,18 +131,24 @@ class Camera(metaclass=Singleton):
             else:
                 temp = "None"
         except Exception as e:
-            self.console.raise_text("Não foi possível recuperar a temperatura.", 3)
+            self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e), 3)
 
         return temp
 
     def check_link(self):
-        if getlinkstatus() is False:
-            return False
-        else:
-            return True
+        return getlinkstatus()
 
+    # Camera Mode
+    def standby_mode(self):
+        self.set_temperature(15.00)
+        self.fan.set_fan_off()
+
+    def shooter_mode(self):
+        self.set_temperature(-10.00)
+        self.fan.set_fan_on()
+
+    # Shooters
     def start_taking_photo(self):
-        self.continuousShooterThread = ContinuousShooterThread()
         self.continuousShooterThread.start_continuous_shooter()
         self.continuousShooterThread.start()
 
@@ -130,11 +156,24 @@ class Camera(metaclass=Singleton):
         self.continuousShooterThread.stop_continuous_shooter()
 
     def start_ephemeris_shooter(self):
-        self.ephemerisShooterThread = EphemerisShooter()
         self.ephemerisShooterThread.start()
 
     def stop_ephemeris_shooter(self):
         self.ephemerisShooterThread.stop_shooter()
 
-    def start_checking_ephemerides(self):
-        pass
+    # All PyQt Slots
+
+    def eshooter_started(self):
+        self.console.raise_text("Shooter de Efemérides Iniciado!", 1)
+        self.standby_mode()
+
+    def eshooter_finished(self):
+        self.console.raise_text('Shooter finalizado', 1)
+
+    def eshooter_observation_started(self):
+        self.console.raise_text("Observação Iniciada\n", 2)
+        self.shooter_mode()
+
+    def eshooter_observation_finished(self):
+        self.console.raise_text("Observação Finalizada\n", 2)
+        self.standby_mode()

@@ -24,6 +24,7 @@ class SettingsWindow(QWidget):
 
         # Init Interface
         self.setting_up()
+        self.refresh_all_fields()
 
     def button_settings(self):
         self.button_cancel.clicked.connect(self.func_cancel)
@@ -34,7 +35,6 @@ class SettingsWindow(QWidget):
         self.clear_all()
 
     def func_ok(self):
-        print(self.console.log)
         try:
             self.save_settings()
             self.console.raise_text("Configurações do projeto salvas com sucesso!", 1)
@@ -43,18 +43,32 @@ class SettingsWindow(QWidget):
         finally:
             self.p.close()
             self.clear_all()
+            self.refresh_all_fields()
 
     def clear_all(self):
         self.site.clear_site()
         self.geo.clear_geography()
         self.sun.clear_sun()
 
+    def refresh_all_fields(self):
+        try:
+            st = ConfigProject()
+            infoSite = st.get_site_settings()
+            self.site.set_site_info(infoSite[0], infoSite[1], infoSite[2])
+            infoGeo = st.get_geographic_settings()
+            self.geo.set_geography(infoGeo[0], infoGeo[1], infoGeo[2], infoGeo[3], '10')
+            infoSun = st.get_moonsun_settings()
+            self.sun.set_sun(str(infoSun[0]), bool(infoSun[1]), str(infoSun[2]), str(infoSun[3]))
+        except Exception as e:
+            print(e)
+
     def save_settings(self):
         try:
-            st = ConfigProject(str(self.site.get_name()))
+            st = ConfigProject()
             self.save_site(st)
             self.save_geo(st)
             self.save_sun(st)
+            st.save_settings()
         except Exception as e:
             print(e)
 

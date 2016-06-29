@@ -8,11 +8,11 @@ class WidgetsGeography(QWidget):
         super(WidgetsGeography, self).__init__(parent)
 
         # Creating Labels
-        self.lLat = QLabel("Latitude:", self)
-        self.lLon = QLabel("Longitude:", self)
-        self.lElev = QLabel("Elevation:", self)
-        self.lPres = QLabel("Pressure:", self)
-        self.lTemp = QLabel("Temperature:", self)
+        self.lLat = QLabel("Latitude (º):", self)
+        self.lLon = QLabel("Longitude (º):", self)
+        self.lElev = QLabel("Elevation (M):", self)
+        self.lPres = QLabel("Pressure (MB):", self)
+        self.lTemp = QLabel("Temperature (ºC):", self)
 
         # Creating Input Fields
         self.eLat = QLineEdit(self)

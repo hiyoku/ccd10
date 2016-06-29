@@ -9,7 +9,7 @@ class Clock(QFrame):
     
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
-        self.title = QLabel('Local Time', self)
+        self.title = QLabel('Universal Time Coordinated', self)
 
         self.lcd = QLabel(self)
         self.sc = SchedClock(lcd_display=self.lcd)

@@ -1,5 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp
+import sys
+from multiprocessing import freeze_support
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication
 from PyQt5.QtGui import QIcon
+
 # Importing the widgets
 from src.ui.mainWindow.mainWindow import MainWindow
 from src.ui.projectSettingsWindow.main import MainWindow as sw
@@ -14,19 +17,18 @@ from src.ui.mainWindow.status import Status
 
 
 class Main(QMainWindow):
-
     def __init__(self):
-        super(Main, self).__init__()
-        # Init the Status Singleton
+        super().__init__()
         Status(self)
         # Init Layouts
+        self.init_widgets()
+        self.init_user_interface()
         try:
-            self.init_widgets()
-            self.init_user_interface()
+            # Init the Status Singleton
+            print("Eita")
             # Initiating all windows
-
         except Exception as e:
-            print(e)
+            print("Exception da Main Main -> " + str(e))
 
     def init_user_interface(self):
         self.cont = conts(self)

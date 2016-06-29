@@ -1,10 +1,10 @@
 from src.utils.singleton import Singleton
-from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
+from src.business.logger import Logger
 
 
 class ConsoleThreadOutput(metaclass=Singleton):
     def __init__(self):
-        self.log = ConsoleLogWidget()
+        self.logger = Logger()
 
     def get_widget_console(self):
         return self.log
@@ -14,6 +14,9 @@ class ConsoleThreadOutput(metaclass=Singleton):
 
     def raise_text(self, text, level=0):
         self.log.newLine(text, level)
+        self.save_log(text)
         print(text)
 
-
+    def save_log(self, text):
+        self.logger.set_text(text)
+        self.logger.start()

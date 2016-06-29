@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QFrame, QLabel
 from PyQt5.QtCore import Qt
 
 from src.ui.commons.layout import set_lvbox, set_hbox
+
 from src.ui.commons.widgets import get_qfont
 
 
@@ -16,6 +17,7 @@ class SiteInfo(QFrame):
 
         self.make_layout()
 
+
     def init_site_widgets(self, sitename, imagername):
         self.title = QLabel("Site Information", self)
         self.site = QLabel("Site Name:", self)
@@ -29,10 +31,10 @@ class SiteInfo(QFrame):
         self.elev = QLabel("Evelation:", self)
         self.press = QLabel("Pressure:", self)
 
-        self.latr = QLabel(str(lat), self)
-        self.longr = QLabel(str(long), self)
-        self.elevr = QLabel(str(elev), self)
-        self.pressr = QLabel(str(press), self)
+        self.latr = QLabel(str(lat) + "º", self)
+        self.longr = QLabel(str(long) + "º", self)
+        self.elevr = QLabel(str(elev) + "M", self)
+        self.pressr = QLabel(str(press) + "MB", self)
 
 
     def set_site_values(self, sitename, imagername):

@@ -1,4 +1,4 @@
-from time import strftime
+from datetime import datetime
 
 from PyQt5.QtWidgets import QWidget, QTextEdit
 
@@ -34,5 +34,5 @@ class ConsoleLogWidget(QWidget):
         else:
             self.setStyleSheet("background-color: rgb(255, 5, 0); border-radius: 10px; color: black;")
 
-        self.logOutput.insertPlainText('['+strftime('%H:%M:%S')+'] - '+text+'\n')
+        self.logOutput.insertPlainText(datetime.utcnow().strftime('[%Y-%m-%d @ %H:%M:%S UTC]')+' - '+text+'\n')
         self.scrollDown()

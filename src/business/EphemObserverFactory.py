@@ -9,10 +9,10 @@ class EphemObserverFactory:
         o = ephem.Observer()
         o.lon = longitude
         o.lat = latitude
-        o.elevation = elevation
+        o.elevation = float(elevation)
         return o
 
     def set_observer_parameters(self, observer, obsLongitude, obsLatitude, obsElevation):
         observer.lon = obsLongitude
         observer.lat = obsLatitude
-        observer.elevation = obsElevation
+        observer.elevation = float(obsElevation)

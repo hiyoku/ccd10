@@ -4,8 +4,8 @@ from src.business.configuration.constants import project as p
 
 
 class ConfigProject:
-    def __init__(self, name):
-        self._settings = QSettings(name, QSettings.IniFormat)
+    def __init__(self):
+        self._settings = QSettings(p.CONFIG_FILE, QSettings.IniFormat)
 
     def get_value(self, menu, value):
         return self._settings.value(menu + '/' + value)
@@ -27,12 +27,16 @@ class ConfigProject:
         self._settings.endGroup()
 
     def set_moonsun_settings(self, solarelev, ignorel, lunarph, lunarpos):
+        if ignorel == 'false': ignorel = ''
         self._settings.beginGroup(p.SUN_MOON_TITLE)
         self._settings.setValue(p.MAX_SOLAR_ELEVATION, solarelev)
         self._settings.setValue(p.IGNORE_LUNAR_POSITION, ignorel)
         self._settings.setValue(p.MAX_LUNAR_PHASE, lunarph)
         self._settings.setValue(p.MAX_LUNAR_ELEVATION, lunarpos)
         self._settings.endGroup()
+
+    def save_settings(self):
+        self._settings.sync()
 
     def get_site_settings(self):
         return self.get_value(p.SITE_TITLE, p.NAME), self.get_value(p.SITE_TITLE, p.SITE_ID), \

@@ -399,15 +399,17 @@ def set_path(pre):
 
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
-    path = "/run/media/hideki/EFI/i/"
+    from src.business.configuration.configSystem import ConfigSystem
+    cs = ConfigSystem()
+    path = str(cs.get_image_path()) + "/"
     if int(tempo[9:11]) > 12:
         path = path+pre+"_"+data+"/"
     else:
         day = int(tempo[6:8])
         if 0 < day < 10:
-            day = "0" + str(int(day)-1)
+            day = "0" + str(day - 1)
         else:
-            day = str(day)
+            day = str(day - 1)
 
         path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+day+"/"
 
@@ -529,6 +531,8 @@ def photoshoot(etime, pre, binning):
         img[i_line] = cout
 
     path, tempo = set_path(pre)
+
+    # path, tempo = "/home/hiyoku/Imagens/images/", strftime('%Y%m%d_%H%M%S')
 
     if not os.path.isdir(path):
         os.makedirs(path)

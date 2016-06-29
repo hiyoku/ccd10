@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.commons.widgets import get_qfont
+from src.business.schedulers.schedSunMoonPositions import SchedSunMoonPositions
 
 
 class EphemInfo(QFrame):
@@ -13,6 +14,8 @@ class EphemInfo(QFrame):
 
         self.config_widgets()
         self.set_layout()
+        self.schedInfo = SchedSunMoonPositions(self.sunER, self.moonER, self.moonPR)
+        self.schedInfo.start_job()
 
     def init_widgets_ephem(self, sune, moone, moonp):
         self.sunE = QLabel("Sun Elevation:", self)

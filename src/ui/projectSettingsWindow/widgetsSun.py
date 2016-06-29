@@ -8,9 +8,9 @@ class WidgetsSun(QWidget):
         super(WidgetsSun, self).__init__(parent)
 
         # Creating Labels
-        self.lmse = QLabel("Max Solar Elevation:", self)
-        self.lmle = QLabel("Max Lunar Elevation:", self)
-        self.lmlp = QLabel("Max Lunar Phase:", self)
+        self.lmse = QLabel("Max Solar Elevation (º):", self)
+        self.lmle = QLabel("Max Lunar Elevation (º):", self)
+        self.lmlp = QLabel("Max Lunar Phase (%):", self)
 
         # Creating Input Line
         self.emse = QLineEdit(self)
@@ -32,10 +32,10 @@ class WidgetsSun(QWidget):
         return self.emse.text(), self.eilp.isChecked(), self.emle.text(), self.emlp.text()
 
     def set_sun(self, mse, ilp, mle, mlp):
-        self.emse = mse
+        self.emse.setText(mse)
         self.eilp.setChecked(ilp)
-        self.emle = mle
-        self.emlp = mlp
+        self.emle.setText(mle)
+        self.emlp.setText(mlp)
 
     def clear_sun(self):
         self.emse.clear()
