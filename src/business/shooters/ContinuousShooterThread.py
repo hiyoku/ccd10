@@ -1,12 +1,12 @@
-from time import sleep
+import time
 
-from PyQt5.QtCore import QThread
+from PyQt5 import QtCore
 
 from src.business.shooters.SThread import SThread
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
-class ContinuousShooterThread(QThread):
+class ContinuousShooterThread(QtCore.QThread):
     def __init__(self, timeSleep=0):
         super(ContinuousShooterThread, self).__init__()
         self.continuous = True
@@ -26,9 +26,9 @@ class ContinuousShooterThread(QThread):
             try:
                 self.ss.start()
                 while self.ss.isRunning():
-                    sleep(1)
+                    time.sleep(1)
 
-                sleep(self.s)
+                    time.sleep(self.s)
             except Exception as e:
                 print(e)
 

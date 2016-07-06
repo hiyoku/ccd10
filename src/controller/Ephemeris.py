@@ -6,7 +6,6 @@ from math import degrees
 from threading import Thread
 
 from src.business.configuration.configProject import ConfigProject
-# from src.utils.singleton import Singleton
 
 
 class Ephemeris():

@@ -1,17 +1,17 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout
+from PyQt5 import QtWidgets
+
 from threading import Thread
-from time import sleep
+import time
+
 from src.controller.camera import Camera
-from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
 
 
-class MainWindow(QWidget):
+class MainWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.cam = Camera()
-        self.button_start_count = QPushButton('Start', self)
-        self.button_stop_count = QPushButton('Stop', self)
+        self.button_start_count = QtWidgets.QPushButton('Start', self)
+        self.button_stop_count = QtWidgets.QPushButton('Stop', self)
 
         self.set_layout()
         self.control = False
@@ -19,7 +19,7 @@ class MainWindow(QWidget):
         self.setWindowTitle("oi")
 
     def set_layout(self):
-        self.line1_layout = QHBoxLayout()
+        self.line1_layout = QtWidgets.QHBoxLayout()
 
         self.line1_layout.addWidget(self.button_start_count)
         self.line1_layout.addStretch(1)
@@ -43,6 +43,6 @@ class MainWindow(QWidget):
         while self.control:
             self.count += 1
             print(self.count)
-            sleep(1)
+            time.sleep(1)
 
 

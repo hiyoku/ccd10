@@ -1,17 +1,21 @@
-import src.utils.camera.SbigDriver as SbigDriver
-from time import sleep
+import os
+import sys
+from PyQt5 import QtWidgets
 
-c = 0
-while c < 3:
-    print("photo {}".format(c))
-    SbigDriver.open_driver()
-    SbigDriver.open_deviceusb()
-    SbigDriver.establishinglink()
 
-    SbigDriver.photoshoot(1 * 100, "oi", 1)
+class Main(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Main, self).__init__()
+        QtWidgets.QPushButton('Test', self)
 
-    SbigDriver.close_device()
-    SbigDriver.close_driver()
 
-    c+=1
-    sleep(2)
+# Initiating the application
+if __name__ == '__main__':
+    os.getcwd()
+    print(os.path.dirname(os.getcwd()))
+    print(os.getcwd())
+    # -m PyInstaller -y -w
+    # app = QtWidgets.QApplication(sys.argv)
+    # ex = Main()
+    # ex.show()
+    # sys.exit(app.exec_())

@@ -1,6 +1,6 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QPalette
-from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QComboBox
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 from src.ui.commons.layout import set_hbox, set_lvbox
@@ -13,7 +13,7 @@ def set_width(*s):
         o.setMaxLength(2)
 
 
-class Shooter(QWidget):
+class Shooter(QtWidgets.QWidget):
     """
         Class for Taking photo Widget
     """
@@ -24,11 +24,11 @@ class Shooter(QWidget):
         self.cond = 0
 
         # Label for Image
-        self.img = QLabel(self)
+        self.img = QtWidgets.QLabel(self)
         self.config_img_label()
 
         # Creating a Pallete
-        self.pa = QPalette()
+        self.pa = QtGui.QPalette()
 
         self.set_layout()
 
@@ -47,10 +47,10 @@ class Shooter(QWidget):
         self.setLayout(set_lvbox(set_hbox(self.img)))
 
     def config_img_label(self):
-        self.img.setPixmap(QPixmap("noimage.png"))
+        self.img.setPixmap(QtGui.QPixmap("noimage.png"))
 
     def config_pallete(self):
-        self.pa.setColor(QPalette.Foreground, Qt.red)  # Setting the style
+        self.pa.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)  # Setting the style
         self.prefix.setPalette(self.pa)
         self.date.setPalette(self.pa)
         self.hour.setPalette(self.pa)
@@ -70,7 +70,7 @@ class Shooter(QWidget):
         img = self.cam.img
 
         print("Setando os Pixmap")
-        self.img.setPixmap(QPixmap((img.path + img.png_name)))
+        self.img.setPixmap(QtGui.QPixmap((img.path + img.png_name)))
         self.fill_image_info(img.png_name, img.date, img.hour)
 
     def fill_combo(self):

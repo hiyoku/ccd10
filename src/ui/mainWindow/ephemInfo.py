@@ -1,15 +1,15 @@
-from PyQt5.QtWidgets import QFrame, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
 
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.commons.widgets import get_qfont
 from src.business.schedulers.schedSunMoonPositions import SchedSunMoonPositions
 
 
-class EphemInfo(QFrame):
+class EphemInfo(QtWidgets.QFrame):
     def __init__(self, sune, moone, moonp, parent=None):
         super(EphemInfo, self).__init__(parent)
-        self.title = QLabel("Sun/Moon Position", self)
+        self.title = QtWidgets.QLabel("Sun/Moon Position", self)
         self.init_widgets_ephem(sune, moone, moonp)
 
         self.config_widgets()
@@ -18,12 +18,12 @@ class EphemInfo(QFrame):
         self.schedInfo.start_job()
 
     def init_widgets_ephem(self, sune, moone, moonp):
-        self.sunE = QLabel("Sun Elevation:", self)
-        self.sunER = QLabel(sune, self)
-        self.moonE = QLabel("Moon Elevation:", self)
-        self.moonER = QLabel(moone, self)
-        self.moonP = QLabel("Moon Phase:", self)
-        self.moonPR = QLabel(moonp, self)
+        self.sunE = QtWidgets.QLabel("Sun Elevation:", self)
+        self.sunER = QtWidgets.QLabel(sune, self)
+        self.moonE = QtWidgets.QLabel("Moon Elevation:", self)
+        self.moonER = QtWidgets.QLabel(moone, self)
+        self.moonP = QtWidgets.QLabel("Moon Phase:", self)
+        self.moonPR = QtWidgets.QLabel(moonp, self)
 
     def set_values(self, sune, moone, moonp):
         self.sunER.setText(sune)
@@ -37,7 +37,7 @@ class EphemInfo(QFrame):
                                  set_hbox(self.moonP, self.moonPR)))
 
     def config_widgets(self):
-        self.title.setAlignment(Qt.AlignCenter)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.setFont(get_qfont(True))
 
         self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")

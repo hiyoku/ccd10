@@ -1,25 +1,25 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
+from PyQt5 import QtWidgets
 
 from src.ui.commons.layout import set_hbox, set_lvbox, add_widget_to_vbox
 
 
-class WidgetsGeography(QWidget):
+class WidgetsGeography(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(WidgetsGeography, self).__init__(parent)
 
         # Creating Labels
-        self.lLat = QLabel("Latitude (º):", self)
-        self.lLon = QLabel("Longitude (º):", self)
-        self.lElev = QLabel("Elevation (M):", self)
-        self.lPres = QLabel("Pressure (MB):", self)
-        self.lTemp = QLabel("Temperature (ºC):", self)
+        self.lLat = QtWidgets.QLabel("Latitude (º):", self)
+        self.lLon = QtWidgets.QLabel("Longitude (º):", self)
+        self.lElev = QtWidgets.QLabel("Elevation (M):", self)
+        self.lPres = QtWidgets.QLabel("Pressure (MB):", self)
+        self.lTemp = QtWidgets.QLabel("Temperature (ºC):", self)
 
         # Creating Input Fields
-        self.eLat = QLineEdit(self)
-        self.eLon = QLineEdit(self)
-        self.eElev = QLineEdit(self)
-        self.ePres = QLineEdit(self)
-        self.eTemp = QLineEdit(self)
+        self.eLat = QtWidgets.QLineEdit(self)
+        self.eLon = QtWidgets.QLineEdit(self)
+        self.eElev = QtWidgets.QLineEdit(self)
+        self.ePres = QtWidgets.QLineEdit(self)
+        self.eTemp = QtWidgets.QLineEdit(self)
 
         self.setting_up()
 

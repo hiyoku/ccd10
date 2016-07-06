@@ -1,12 +1,12 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QWidget, QLabel)
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
 
 from src.controller.fan import Fan
 from src.ui.commons.layout import set_hbox
 from src.ui.mainWindow.status import Status
 
 
-class FanStatus(QWidget):
+class FanStatus(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(FanStatus, self).__init__(parent)
@@ -14,8 +14,8 @@ class FanStatus(QWidget):
         self.status = Status()
 
         # Creating the Widgets
-        self.FanField = QLabel(self)
-        self.FanLabel = QLabel("Fan: ", self)
+        self.FanField = QtWidgets.QLabel(self)
+        self.FanLabel = QtWidgets.QLabel("Fan: ", self)
 
         # Creating a Fan Object
         self.fan = Fan(self.FanField)
@@ -28,6 +28,6 @@ class FanStatus(QWidget):
         self.setLayout(set_hbox(self.FanLabel, self.FanField))
 
     def setting_up(self):
-        self.FanField.setAlignment(Qt.AlignCenter)
+        self.FanField.setAlignment(QtCore.Qt.AlignCenter)
 
         self.FanField.setText(self.fan.fan_status())

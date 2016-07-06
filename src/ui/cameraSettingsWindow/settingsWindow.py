@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QComboBox, QPushButton
+from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 from src.controller.fan import Fan
@@ -8,7 +8,7 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.ui.commons.layout import set_lvbox, set_hbox
 
 
-class SettingsWindow(QWidget):
+class SettingsWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(SettingsWindow, self).__init__(parent)
         self.cam = SettingsCamera()
@@ -45,20 +45,20 @@ class SettingsWindow(QWidget):
         self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
-        self.pre = QLabel("Prefixo:", self)
-        self.exp = QLabel("Tempo de Exposição:", self)
-        self.binning = QLabel("Binning:", self)
+        self.pre = QtWidgets.QLabel("Prefixo:", self)
+        self.exp = QtWidgets.QLabel("Tempo de Exposição:", self)
+        self.binning = QtWidgets.QLabel("Binning:", self)
 
-        self.prel = QLineEdit(self)
-        self.expl = QLineEdit(self)
+        self.prel = QtWidgets.QLineEdit(self)
+        self.expl = QtWidgets.QLineEdit(self)
 
-        self.combo = QComboBox(self)
+        self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
 
-        self.fanButton = QPushButton("Fan")
+        self.fanButton = QtWidgets.QPushButton("Fan")
         self.fanButton.clicked.connect(self.button_fan_func)
 
-        self.buttonok = QPushButton("Salvar", self)
+        self.buttonok = QtWidgets.QPushButton("Salvar", self)
         self.buttonok.clicked.connect(self.button_ok_func)
 
     def button_ok_func(self):

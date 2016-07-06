@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QFrame
+from PyQt5 import QtWidgets
 
 
 from src.business.configuration.configProject import ConfigProject
@@ -9,7 +9,7 @@ from src.ui.mainWindow.ephemInfo import EphemInfo
 from src.ui.commons.layout import set_wvbox
 
 
-class ConfigsInfo(QFrame):
+class ConfigsInfo(QtWidgets.QFrame):
     def __init__(self, parent=None):
         super(ConfigsInfo, self).__init__(parent)
 

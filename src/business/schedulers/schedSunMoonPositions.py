@@ -3,7 +3,7 @@ import ephem
 import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-from math import degrees
+import math
 
 from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.configuration.configProject import ConfigProject
@@ -53,8 +53,8 @@ class SchedSunMoonPositions(metaclass=Singleton):
 
             a = ephem.degrees(sun.alt)
             b = ephem.degrees(str(moon.alt))
-            self.sunElevationField.setText("{:.4f}º".format(float(degrees(a))))
-            self.moonElevationField.setText("{:.4f}º".format(float(degrees(b))))
+            self.sunElevationField.setText("{:.4f}º".format(float(math.degrees(a))))
+            self.moonElevationField.setText("{:.4f}º".format(float(math.degrees(b))))
             self.moonPhaseField.setText("{0:.6f}%".format(frac * 100))
 
         except Exception as e:

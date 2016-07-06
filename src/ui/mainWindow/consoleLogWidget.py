@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from PyQt5.QtWidgets import QWidget, QTextEdit
+from PyQt5 import QtWidgets
 
 
-class ConsoleLogWidget(QWidget):
+class ConsoleLogWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(ConsoleLogWidget, self).__init__(parent)
 
-        self.logOutput = QTextEdit(self)
+        self.logOutput = QtWidgets.QTextEdit(self)
         self.configLogOutput()
 
         self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")
@@ -34,5 +34,5 @@ class ConsoleLogWidget(QWidget):
         else:
             self.setStyleSheet("background-color: rgb(255, 5, 0); border-radius: 10px; color: black;")
 
-        self.logOutput.insertPlainText(datetime.utcnow().strftime('[%Y-%m-%d @ %H:%M:%S UTC]')+' - '+text+'\n')
+        self.logOutput.insertPlainText(datetime.utcnow().strftime('[%Y-%m-%d @ %H:%M:%S UTC]') + ' - ' + text + '\n')
         self.scrollDown()

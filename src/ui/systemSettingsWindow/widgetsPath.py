@@ -1,24 +1,24 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QCheckBox, QFileDialog, QPushButton
+from PyQt5 import QtWidgets
 
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 
-class WidgetsPath(QWidget):
+class WidgetsPath(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(WidgetsPath, self).__init__(parent)
 
-        self.cStart = QCheckBox('Automatically start at Windows Logon', self)
-        self.cLog = QCheckBox('Create and save a LOG file', self)
-        self.lLog = QLabel('Log Path:', self)
-        self.eLog = QLineEdit(self)
+        self.cStart = QtWidgets.QCheckBox('Automatically start at Windows Logon', self)
+        self.cLog = QtWidgets.QCheckBox('Create and save a LOG file', self)
+        self.lLog = QtWidgets.QLabel('Log Path:', self)
+        self.eLog = QtWidgets.QLineEdit(self)
 
-        self.lProjPath = QLabel('Project Path:')
-        self.eProjPath = QLineEdit(self)
-        self.pbutton = QPushButton("Open File", self)
+        self.lProjPath = QtWidgets.QLabel('Project Path:')
+        self.eProjPath = QtWidgets.QLineEdit(self)
+        self.pbutton = QtWidgets.QPushButton("Open File", self)
 
-        self.lImagesPath = QLabel('Images Path:')
-        self.eImagesPath = QLineEdit(self)
-        self.ibutton = QPushButton('Open Path', self)
+        self.lImagesPath = QtWidgets.QLabel('Images Path:')
+        self.eImagesPath = QtWidgets.QLineEdit(self)
+        self.ibutton = QtWidgets.QPushButton('Open Path', self)
 
         self.filename = ""
         self.path = ""
@@ -50,7 +50,7 @@ class WidgetsPath(QWidget):
 
     def open_projectpath(self):
         try:
-            filename = QFileDialog.getOpenFileName(self, 'OpenFile')
+            filename = QtWidgets.QFileDialog.getOpenFileName(self, 'OpenFile')
             self.eProjPath.setText(str(filename[0]))
 
             self.filename = filename[0]
@@ -59,7 +59,7 @@ class WidgetsPath(QWidget):
 
     def open_imagepath(self):
         try:
-            path = QFileDialog.getExistingDirectory(self, 'Select a Folder')
+            path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select a Folder')
             self.eImagesPath.setText(str(path))
 
             self.path = path

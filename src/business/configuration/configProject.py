@@ -1,11 +1,11 @@
-from PyQt5.QtCore import QSettings
+from PyQt5 import QtCore
 
 from src.business.configuration.constants import project as p
 
 
 class ConfigProject:
     def __init__(self):
-        self._settings = QSettings(p.CONFIG_FILE, QSettings.IniFormat)
+        self._settings = QtCore.QSettings(p.CONFIG_FILE, QtCore.QSettings.IniFormat)
 
     def get_value(self, menu, value):
         return self._settings.value(menu + '/' + value)

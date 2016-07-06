@@ -1,5 +1,4 @@
 from datetime import datetime
-from PyQt5.QtCore import pyqtSignal
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput

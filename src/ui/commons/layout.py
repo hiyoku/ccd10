@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
+from PyQt5 import QtWidgets
 
 # Function that create a HBox Layout
 def set_hbox(*args, stretch=None, stretch2=None):
-    hbox = QHBoxLayout()
+    hbox = QtWidgets.QHBoxLayout()
 
     if stretch2 is not None:
         hbox.addStretch(stretch2)
@@ -16,7 +16,7 @@ def set_hbox(*args, stretch=None, stretch2=None):
     return hbox
 
 def set_wvbox(*args, stretch=None):
-    vbox = QVBoxLayout()
+    vbox = QtWidgets.QVBoxLayout()
     for widget in args:
         vbox.addWidget(widget)
 
@@ -25,7 +25,7 @@ def set_wvbox(*args, stretch=None):
     return vbox
 
 def set_lvbox(*args):
-    vbox = QVBoxLayout()
+    vbox = QtWidgets.QVBoxLayout()
     for layout in args:
         vbox.addLayout(layout)
 

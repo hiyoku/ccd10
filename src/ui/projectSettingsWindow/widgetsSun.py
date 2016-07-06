@@ -1,22 +1,22 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QCheckBox
+from PyQt5 import QtWidgets
 
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 
-class WidgetsSun(QWidget):
+class WidgetsSun(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(WidgetsSun, self).__init__(parent)
 
         # Creating Labels
-        self.lmse = QLabel("Max Solar Elevation (º):", self)
-        self.lmle = QLabel("Max Lunar Elevation (º):", self)
-        self.lmlp = QLabel("Max Lunar Phase (%):", self)
+        self.lmse = QtWidgets.QLabel("Max Solar Elevation (º):", self)
+        self.lmle = QtWidgets.QLabel("Max Lunar Elevation (º):", self)
+        self.lmlp = QtWidgets.QLabel("Max Lunar Phase (%):", self)
 
         # Creating Input Line
-        self.emse = QLineEdit(self)
-        self.eilp = QCheckBox('Ignore Lunar Position', self)
-        self.emle = QLineEdit(self)
-        self.emlp = QLineEdit(self)
+        self.emse = QtWidgets.QLineEdit(self)
+        self.eilp = QtWidgets.QCheckBox('Ignore Lunar Position', self)
+        self.emle = QtWidgets.QLineEdit(self)
+        self.emlp = QtWidgets.QLineEdit(self)
 
         self.setting_up()
 

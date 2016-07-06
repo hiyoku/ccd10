@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton
+from PyQt5 import QtWidgets
 
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.systemSettingsWindow.widgetsPath import WidgetsPath
@@ -6,7 +6,7 @@ from src.business.configuration.configSystem import ConfigSystem
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
-class SystemSettingsWindow(QWidget):
+class SystemSettingsWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(SystemSettingsWindow, self).__init__(parent)
         self.s = parent
@@ -15,8 +15,8 @@ class SystemSettingsWindow(QWidget):
 
         # Creating Widgets
         self.wp = WidgetsPath(self)
-        self.button_ok = QPushButton('Salvar', self)
-        self.button_cancel = QPushButton('Cancelar', self)
+        self.button_ok = QtWidgets.QPushButton('Salvar', self)
+        self.button_cancel = QtWidgets.QPushButton('Cancelar', self)
 
         # Setting Up
         self.button_settings()

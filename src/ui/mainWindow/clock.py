@@ -1,17 +1,17 @@
-from PyQt5.QtWidgets import QLabel, QFrame
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
 
 from src.business.schedulers.schedClock import SchedClock
 from src.ui.commons.layout import set_wvbox
 from src.ui.commons.widgets import get_qfont
 
-class Clock(QFrame):
+class Clock(QtWidgets.QFrame):
     
     def __init__(self, parent=None):
         super(Clock, self).__init__(parent)
-        self.title = QLabel('Universal Time Coordinated', self)
+        self.title = QtWidgets.QLabel('Universal Time Coordinated', self)
 
-        self.lcd = QLabel(self)
+        self.lcd = QtWidgets.QLabel(self)
         self.sc = SchedClock(lcd_display=self.lcd)
 
         self.init_ui()
@@ -24,8 +24,8 @@ class Clock(QFrame):
         self.sc.start_scheduler()
 
     def config_widgets(self):
-        self.title.setAlignment(Qt.AlignCenter)
-        self.lcd.setAlignment(Qt.AlignCenter)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
+        self.lcd.setAlignment(QtCore.Qt.AlignCenter)
 
         self.title.setFont(get_qfont(True))
         self.lcd.setFont(get_qfont(False))

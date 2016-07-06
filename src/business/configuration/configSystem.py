@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QSettings
+from PyQt5 import QtCore
 
 from src.business.configuration.constants import system as s
 from src.ui.commons.verification import cb
@@ -7,12 +7,12 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 class ConfigSystem:
     def __init__(self):
-        self._settings = QSettings()
+        self._settings = QtCore.QSettings()
         self.setup_settings()
         self.console = ConsoleThreadOutput()
 
     def setup_settings(self):
-        self._settings = QSettings(s.FILENAME, QSettings.IniFormat)
+        self._settings = QtCore.QSettings(s.FILENAME, QtCore.QSettings.IniFormat)
         self._settings.setFallbacksEnabled(False)
 
     def save_settings(self):

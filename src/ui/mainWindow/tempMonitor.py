@@ -1,17 +1,17 @@
-from PyQt5.QtWidgets import QWidget, QLabel
+from PyQt5 import QtWidgets
 
 from src.business.schedulers.SchedTemperature import SchedTemperature
 from src.ui.commons.layout import set_hbox
 
 
-class TempMonitor(QWidget):
+class TempMonitor(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(TempMonitor, self).__init__(parent)
-        self.tempMonitor = QLabel(self)
+        self.tempMonitor = QtWidgets.QLabel(self)
         self.Sched = SchedTemperature(self.tempMonitor)
 
-        self.label = QLabel("Temperature:", self)
+        self.label = QtWidgets.QLabel("Temperature:", self)
 
         self.setLayout(set_hbox(self.label, self.tempMonitor, stretch=1))
 

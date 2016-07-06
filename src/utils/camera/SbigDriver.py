@@ -1,16 +1,14 @@
-#! /usr/bin/env python3
-
 import ctypes
 import os
 import sys
-import time
 from ctypes import c_ushort, POINTER, byref
 
 import numpy as np
 from matplotlib import pyplot
 
 import pyfits as fits
-from time import strftime
+import time
+
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -365,7 +363,7 @@ def set_header(filename):
     # Escrevendo o Header
     # Can't get the temperature because have a locker locking shooter process
     # fits_file[0].header["TEMP"] = tuple(get_temperature())[3]
-    fits_file[0].header["DATE"] = strftime('%Y-%m-%d_%H:%M:%S')
+    fits_file[0].header["DATE"] = time.strftime('%Y-%m-%d_%H:%M:%S')
 
     # Criando o arquivo final
     try:
@@ -395,7 +393,7 @@ def set_png(filename, newname):
 
 
 def set_path(pre):
-    tempo = strftime('%Y%m%d_%H%M%S')
+    tempo = time.strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
@@ -532,7 +530,7 @@ def photoshoot(etime, pre, binning):
 
     path, tempo = set_path(pre)
 
-    # path, tempo = "/home/hiyoku/Imagens/images/", strftime('%Y%m%d_%H%M%S')
+    # path, tempo = "/home/hiyoku/Imagens/images/", time.strftime('%Y%m%d_%H%M%S')
 
     if not os.path.isdir(path):
         os.makedirs(path)

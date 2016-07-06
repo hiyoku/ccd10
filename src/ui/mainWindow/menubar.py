@@ -1,5 +1,5 @@
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QAction, qApp
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
 from src.ui.projectSettingsWindow.main import MainWindow
 from src.ui.systemSettingsWindow.main import MainWindow as mw
@@ -18,7 +18,7 @@ def init_menu(self):
     add_to_menu(menubar, a2[1], a2[0], open_settings_system(self)[0], open_settings_camera(self)[0])
     a3 = action_connect_disconnect(self)
     add_to_menu(menubar, a3[0], a3[1], a3[2])
-    a4 = action_shooter_cont = action_continuous_shooter(self)
+    a4 = action_continuous_shooter(self)
     add_to_menu(menubar, 'Shooters', a4)
     # add_to_menu(menubar, open_settings_system(self))
 
@@ -26,7 +26,7 @@ def init_menu(self):
 # All actions needs return a QAction and a menuType, line '&File'
 def action_close(self):
     # Creating the button to close the application
-    aexit = QAction(QIcon('\icons\exit.png'), "&Exit", self)
+    aexit = QtWidgets.QAction(QtGui.QIcon('\icons\exit.png'), "&Exit", self)
     aexit.setShortcut("Ctrl+Q")
     aexit.setStatusTip("Exit Application")
 
@@ -36,7 +36,7 @@ def action_close(self):
     return aexit, "&File"
 
 def action_continuous_shooter(self):
-    ac = QAction('&Manual', self)
+    ac = QtWidgets.QAction('&Manual', self)
     self.cont = conts()
 
     ac.triggered.connect(self.cont.show)
@@ -44,7 +44,7 @@ def action_continuous_shooter(self):
     return ac
 
 def open_settings(self):
-    settings = QAction('Project Settings', self)
+    settings = QtWidgets.QAction('Project Settings', self)
     settings.setShortcut("Ctrl+P")
     settings.setStatusTip("Open Settings window")
     self.a = MainWindow()
@@ -54,7 +54,7 @@ def open_settings(self):
     return settings, "&Options"
 
 def open_settings_system(self):
-    setS = QAction('System Settings', self)
+    setS = QtWidgets.QAction('System Settings', self)
     setS.setShortcut('Ctrl+T')
     self.b = mw()
 
@@ -63,7 +63,7 @@ def open_settings_system(self):
     return setS, "&Options"
 
 def open_settings_camera(self):
-    setC = QAction('Camera Settings', self)
+    setC = QtWidgets.QAction('Camera Settings', self)
     setC.setShortcut("Ctrl+C")
     self.c = csw()
 
@@ -72,8 +72,8 @@ def open_settings_camera(self):
     return setC, "&Options"
 
 def action_connect_disconnect(self):
-    setAC = QAction('Connect', self)
-    setAD = QAction('Disconnect', self)
+    setAC = QtWidgets.QAction('Connect', self)
+    setAD = QtWidgets.QAction('Disconnect', self)
     self.cam = Camera()
 
     setAC.triggered.connect(self.cam.connect)

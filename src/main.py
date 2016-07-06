@@ -1,13 +1,15 @@
 import sys
-from multiprocessing import freeze_support
-from PyQt5.QtWidgets import QApplication
+
+import os
+sys.path.append(os.path.dirname(os.getcwd()))
+
+from PyQt5 import QtWidgets
 
 from src.ui.mainWindow.main import Main
 
-
+# sudo -u hiyoku python main.py
 # Initiating the application
-freeze_support()  # cx_freeze support
-app = QApplication(sys.argv)
+app = QtWidgets.QApplication(sys.argv)
 ex = Main()
 ex.show()
 sys.exit(app.exec_())

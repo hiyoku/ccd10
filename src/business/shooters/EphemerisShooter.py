@@ -1,9 +1,9 @@
 import datetime
-from math import degrees
-from time import sleep
+import math
+import time
 
 import ephem
-from PyQt5.QtCore import QThread
+from PyQt5 import QtCore
 
 from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -11,7 +11,7 @@ from src.business.shooters.ContinuousShooterThread import ContinuousShooterThrea
 from src.business.configuration.configProject import ConfigProject
 
 
-class EphemerisShooter(QThread):
+class EphemerisShooter(QtCore.QThread):
     def __init__(self):
         super(EphemerisShooter, self).__init__()
         self.ObserverFactory = EphemObserverFactory()
@@ -86,7 +86,7 @@ class EphemerisShooter(QThread):
                 b = ephem.degrees(str(moon.alt))
 
                 t = 0
-                if((degrees(a) < self.max_solar_elevation and degrees(b) < self.max_lunar_elevation
+                if((math.degrees(a) < self.max_solar_elevation and math.degrees(b) < self.max_lunar_elevation
                    and frac < self.max_lunar_phase) or t == 1):
 
                     if not self.shootOn:
@@ -99,7 +99,7 @@ class EphemerisShooter(QThread):
                         self.stop_taking_photo()
                         self.shootOn = False
 
-                sleep(60)
+                time.sleep(60)
         except Exception as e:
             self.console.raise_text("Exception no Ephemeris Shooter -> " + str(e))
 

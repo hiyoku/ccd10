@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QPushButton
+from PyQt5 import QtWidgets
 
 from src.ui.projectSettingsWindow.widgetsGeography import WidgetsGeography
 from src.ui.projectSettingsWindow.widgetsSite import WidgetsSite
@@ -9,7 +9,7 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 
-class SettingsWindow(QWidget):
+class SettingsWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(SettingsWindow, self).__init__(parent)
         self.p = parent
@@ -18,8 +18,8 @@ class SettingsWindow(QWidget):
         self.site = WidgetsSite(self)
         self.geo = WidgetsGeography(self)
         self.sun = WidgetsSun(self)
-        self.button_ok = QPushButton('Salvar', self)
-        self.button_cancel = QPushButton('Cancelar', self)
+        self.button_ok = QtWidgets.QPushButton('Salvar', self)
+        self.button_cancel = QtWidgets.QPushButton('Cancelar', self)
         self.button_settings()
 
         # Init Interface

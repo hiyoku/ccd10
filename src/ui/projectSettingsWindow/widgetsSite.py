@@ -1,21 +1,21 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
+from PyQt5 import QtWidgets
 
 from src.ui.commons.layout import set_hbox, set_lvbox
 
 
-class WidgetsSite(QWidget):
+class WidgetsSite(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(WidgetsSite, self).__init__(parent)
 
         # Creating Labels
-        self.lPName = QLabel("Project Name:", self)
-        self.lSite = QLabel("Site ID:", self)
-        self.lImager = QLabel("Imager ID:", self)
+        self.lPName = QtWidgets.QLabel("Project Name:", self)
+        self.lSite = QtWidgets.QLabel("Site ID:", self)
+        self.lImager = QtWidgets.QLabel("Imager ID:", self)
 
         # Creating Input Line
-        self.ePName = QLineEdit(self)
-        self.eSite = QLineEdit(self)
-        self.eImager = QLineEdit(self)
+        self.ePName = QtWidgets.QLineEdit(self)
+        self.eSite = QtWidgets.QLineEdit(self)
+        self.eImager = QtWidgets.QLineEdit(self)
 
         self.setting_up()
 

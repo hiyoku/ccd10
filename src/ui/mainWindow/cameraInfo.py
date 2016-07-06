@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QFrame
+from PyQt5 import QtWidgets
 
 from src.ui.mainWindow.ccdInfo import CCDInfo
 from src.ui.mainWindow.tempMonitor import TempMonitor
@@ -6,7 +6,7 @@ from src.ui.mainWindow.fanStatus import FanStatus
 from src.ui.commons.layout import set_wvbox
 
 
-class CameraInfo(QFrame):
+class CameraInfo(QtWidgets.QFrame):
     def __init__(self, parent=None):
         super(CameraInfo, self).__init__(parent)
 

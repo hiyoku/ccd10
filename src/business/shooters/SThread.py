@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5 import QtCore
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -7,7 +7,7 @@ from src.controller.commons.Locker import Locker
 from src.utils.camera import SbigDriver
 
 
-class SThread(QThread):
+class SThread(QtCore.QThread):
 
     def __init__(self):
         super(SThread, self).__init__()

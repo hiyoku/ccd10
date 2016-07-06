@@ -1,4 +1,4 @@
-from time import strftime
+import time
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -17,4 +17,4 @@ class SchedClock(metaclass=Singleton):
 
     # Refreshing Clock
     def refresh(self):
-        self.lcd.setText(strftime('%H:%M:%S'))
+        self.lcd.setText(time.strftime('%H:%M:%S'))

@@ -1,9 +1,9 @@
-from PyQt5.QtCore import QThread
+from PyQt5 import QtCore
 
 from datetime import datetime
 
 
-class Logger(QThread):
+class Logger(QtCore.QThread):
     def __init__(self):
         super(Logger, self).__init__()
         self.text = None

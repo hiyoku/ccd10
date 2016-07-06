@@ -1,15 +1,15 @@
-from PyQt5.QtCore import QSettings
+from PyQt5 import QtCore
 
 from src.business.configuration.constants import camera as c
 
 
 class SettingsCamera:
     def __init__(self):
-        self._settings = QSettings()
+        self._settings = QtCore.QSettings()
         self.setup_settings()
 
     def setup_settings(self):
-        self._settings = QSettings(c.FILENAME, QSettings.IniFormat)
+        self._settings = QtCore.QSettings(c.FILENAME, QtCore.QSettings.IniFormat)
         self._settings.setFallbacksEnabled(False)
 
     def save_settings(self):

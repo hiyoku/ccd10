@@ -1,12 +1,12 @@
-from PyQt5.QtWidgets import QFrame, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
 
 from src.ui.commons.layout import set_lvbox, set_hbox
 
 from src.ui.commons.widgets import get_qfont
 
 
-class SiteInfo(QFrame):
+class SiteInfo(QtWidgets.QFrame):
     def __init__(self, sitename, imagername, lat, long, elev, press, parent=None):
         super(SiteInfo, self).__init__(parent)
 
@@ -19,22 +19,22 @@ class SiteInfo(QFrame):
 
 
     def init_site_widgets(self, sitename, imagername):
-        self.title = QLabel("Site Information", self)
-        self.site = QLabel("Site Name:", self)
-        self.imager = QLabel("Label Name:", self)
-        self.siter = QLabel(str(sitename), self)
-        self.imagerr = QLabel(str(imagername), self)
+        self.title = QtWidgets.QLabel("Site Information", self)
+        self.site = QtWidgets.QLabel("Site Name:", self)
+        self.imager = QtWidgets.QLabel("Label Name:", self)
+        self.siter = QtWidgets.QLabel(str(sitename), self)
+        self.imagerr = QtWidgets.QLabel(str(imagername), self)
 
     def init_geo_widgets(self, lat, long, elev, press):
-        self.lat = QLabel("Latitude:", self)
-        self.long = QLabel("Longitude:", self)
-        self.elev = QLabel("Evelation:", self)
-        self.press = QLabel("Pressure:", self)
+        self.lat = QtWidgets.QLabel("Latitude:", self)
+        self.long = QtWidgets.QLabel("Longitude:", self)
+        self.elev = QtWidgets.QLabel("Evelation:", self)
+        self.press = QtWidgets.QLabel("Pressure:", self)
 
-        self.latr = QLabel(str(lat) + "º", self)
-        self.longr = QLabel(str(long) + "º", self)
-        self.elevr = QLabel(str(elev) + "M", self)
-        self.pressr = QLabel(str(press) + "MB", self)
+        self.latr = QtWidgets.QLabel(str(lat) + "º", self)
+        self.longr = QtWidgets.QLabel(str(long) + "º", self)
+        self.elevr = QtWidgets.QLabel(str(elev) + "M", self)
+        self.pressr = QtWidgets.QLabel(str(press) + "MB", self)
 
 
     def set_site_values(self, sitename, imagername):
@@ -58,6 +58,6 @@ class SiteInfo(QFrame):
 
     def config_widget(self):
         self.title.setFont(get_qfont(True))
-        self.title.setAlignment(Qt.AlignCenter)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
 
         self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")
