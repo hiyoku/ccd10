@@ -8,9 +8,8 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 class Fan(metaclass=Singleton):
 
-    def __init__(self, fanfield=None):
+    def __init__(self):
         self.lock = Locker()
-        self.fanField = fanfield
         self.console = ConsoleThreadOutput()
 
     def set_fanField(self, fanField):

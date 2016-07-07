@@ -15,7 +15,6 @@ class EphemInfo(QtWidgets.QFrame):
         self.config_widgets()
         self.set_layout()
         self.schedInfo = SchedSunMoonPositions(self.sunER, self.moonER, self.moonPR)
-        self.schedInfo.start_job()
 
     def init_widgets_ephem(self, sune, moone, moonp):
         self.sunE = QtWidgets.QLabel("Sun Elevation:", self)

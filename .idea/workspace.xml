@@ -2,59 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95b078d8-f5b0-44d7-b902-1a12a3cc72f1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ccd10.iml" afterPath="$PROJECT_DIR$/.idea/ccd10.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/schedulers/qthreadClock.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/schedulers/qthreadSunMoon.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/configProject.py" afterPath="$PROJECT_DIR$/src/business/configuration/configProject.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/configSystem.py" afterPath="$PROJECT_DIR$/src/business/configuration/configSystem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/configuration/settingsCamera.py" afterPath="$PROJECT_DIR$/src/business/configuration/settingsCamera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/logger.py" afterPath="$PROJECT_DIR$/src/business/logger.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py" afterPath="$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py" afterPath="$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py" afterPath="$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/schedClock.py" afterPath="$PROJECT_DIR$/src/business/schedulers/schedClock.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py" afterPath="$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py" afterPath="$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" afterPath="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/shooters/SThread.py" afterPath="$PROJECT_DIR$/src/business/shooters/SThread.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/Ephemeris.py" afterPath="$PROJECT_DIR$/src/controller/Ephemeris.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/camera.py" afterPath="$PROJECT_DIR$/src/controller/camera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/cameraQThread.py" afterPath="$PROJECT_DIR$/src/controller/cameraQThread.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test.py" afterPath="$PROJECT_DIR$/src/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/settingsWindow.py" afterPath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/settingsWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/tempRegulation.py" afterPath="$PROJECT_DIR$/src/ui/cameraSettingsWindow/tempRegulation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/commons/layout.py" afterPath="$PROJECT_DIR$/src/ui/commons/layout.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/commons/widgets.py" afterPath="$PROJECT_DIR$/src/ui/commons/widgets.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/continuousShooterWindow/continuousShooterWindow.py" afterPath="$PROJECT_DIR$/src/ui/continuousShooterWindow/continuousShooterWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/continuousShooterWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/continuousShooterWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/ephemerisShooterWindow.py" afterPath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/ephemerisShooterWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/ephemerisShooterWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/cameraInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/cameraInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/ccdInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/ccdInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/clock.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/clock.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/consoleLogWidget.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/consoleLogWidget.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/fan.py" afterPath="$PROJECT_DIR$/src/controller/fan.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/mainWindow.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/mainWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/menubar.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/menubar.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/shooter.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/shooter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/siteInfo.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/siteInfo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/mainWindow/tempMonitor.py" afterPath="$PROJECT_DIR$/src/ui/mainWindow/tempMonitor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/settingsWindow.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/settingsWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsGeography.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsGeography.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSite.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSite.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSun.py" afterPath="$PROJECT_DIR$/src/ui/projectSettingsWindow/widgetsSun.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/systemSettingsWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/systemSettingsWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/systemSettingsWindow/systemSettingsWindow.py" afterPath="$PROJECT_DIR$/src/ui/systemSettingsWindow/systemSettingsWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/systemSettingsWindow/widgetsPath.py" afterPath="$PROJECT_DIR$/src/ui/systemSettingsWindow/widgetsPath.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/testWindow/MainWindow.py" afterPath="$PROJECT_DIR$/src/ui/testWindow/MainWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/testWindow/MainWindow2.py" afterPath="$PROJECT_DIR$/src/ui/testWindow/MainWindow2.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/testWindow/main.py" afterPath="$PROJECT_DIR$/src/ui/testWindow/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" afterPath="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
     </list>
     <ignored path="ccd10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,26 +34,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="qthreadTemperature.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py">
+      <file leaf-file-name="schedSunMoonPositions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+            <state relative-caret-position="30">
+              <caret line="2" column="65" selection-start-line="2" selection-start-column="65" selection-end-line="2" selection-end-column="65" />
               <folding>
-                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SchedTemperature.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py">
+      <file leaf-file-name="qthreadSunMoon.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/business/schedulers/qthreadSunMoon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+            <state relative-caret-position="298">
+              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fanStatus.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fan.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/fan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="camera.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="155" column="23" selection-start-line="155" selection-start-column="23" selection-end-line="155" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ephemInfo.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -121,17 +120,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/controller/commons/cameraActions.py" />
-        <option value="$PROJECT_DIR$/src/business/configuration/configProject.py" />
-        <option value="$PROJECT_DIR$/src/business/configuration/configSystem.py" />
-        <option value="$PROJECT_DIR$/src/business/configuration/settingsCamera.py" />
-        <option value="$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py" />
-        <option value="$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py" />
         <option value="$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py" />
         <option value="$PROJECT_DIR$/src/business/shooters/EphemerisShooter.py" />
         <option value="$PROJECT_DIR$/src/business/shooters/SThread.py" />
         <option value="$PROJECT_DIR$/src/business/logger.py" />
-        <option value="$PROJECT_DIR$/src/controller/camera.py" />
         <option value="$PROJECT_DIR$/src/controller/cameraQThread.py" />
         <option value="$PROJECT_DIR$/src/controller/Ephemeris.py" />
         <option value="$PROJECT_DIR$/src/ui/cameraSettingsWindow/main.py" />
@@ -148,8 +140,6 @@
         <option value="$PROJECT_DIR$/src/ui/mainWindow/clock.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/configsInfo.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/consoleLogWidget.py" />
-        <option value="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" />
-        <option value="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/mainWindow.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/menubar.py" />
         <option value="$PROJECT_DIR$/src/ui/mainWindow/shooter.py" />
@@ -170,8 +160,17 @@
         <option value="$PROJECT_DIR$/src/utils/camera/SbigDriver.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
-        <option value="$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py" />
         <option value="$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/qthreadClock.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/schedClock.py" />
+        <option value="$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py" />
+        <option value="$PROJECT_DIR$/src/business/schedulers/qthreadSunMoon.py" />
+        <option value="$PROJECT_DIR$/src/controller/camera.py" />
+        <option value="$PROJECT_DIR$/src/controller/fan.py" />
+        <option value="$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py" />
       </list>
     </option>
   </component>
@@ -205,8 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -603,6 +600,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1022,14 +1021,21 @@
       <option name="project" value="LOCAL" />
       <updated>1467226973192</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Correção de módulos dos Schedulers">
+      <created>1467806827433</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1467806827433</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1600" height="873" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20050761" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20050761" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33333334" sideWeight="0.5075" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292517" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1071,7 +1077,8 @@
     <MESSAGE value="Código Parcialmente Refatorado" />
     <MESSAGE value="Inserido rotinas do shooter de efemérides" />
     <MESSAGE value="Implementando Thread para realizar as funções da câmera." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementando Thread para realizar as funções da câmera." />
+    <MESSAGE value="Correção de módulos dos Schedulers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correção de módulos dos Schedulers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1086,42 +1093,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/controller/commons/cameraActions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/commons/Locker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Ephemeris.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-330">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/fan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="44" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/cameraSettingsWindow/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/cameraSettingsWindow/tempRegulation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1217,20 +1188,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
           <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="36" column="58" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -1388,27 +1345,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedClock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1423,17 +1359,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
+    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedCameraInfo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1599">
-          <caret line="128" column="8" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+        <state relative-caret-position="180">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/business/schedulers/qthreadTemperature.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+        <state relative-caret-position="180">
+          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/schedulers/qthreadClock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
@@ -1442,11 +1389,91 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/business/schedulers/SchedTemperature.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+        <state relative-caret-position="165">
+          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedClock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/ephemInfo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/schedulers/schedSunMoonPositions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="65" selection-start-line="2" selection-start-column="65" selection-end-line="2" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/shooters/SThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-195">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/shooters/ContinuousShooterThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/business/schedulers/qthreadSunMoon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/fan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="155" column="23" selection-start-line="155" selection-start-column="23" selection-end-line="155" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/mainWindow/fanStatus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>

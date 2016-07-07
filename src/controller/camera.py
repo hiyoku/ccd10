@@ -162,6 +162,7 @@ class Camera(metaclass=Singleton):
 
     def stop_taking_photo(self):
         self.continuousShooterThread.stop_continuous_shooter()
+        self.standby_mode()
 
     def start_ephemeris_shooter(self):
         self.ephemerisShooterThread.start()

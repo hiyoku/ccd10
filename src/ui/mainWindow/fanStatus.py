@@ -18,7 +18,7 @@ class FanStatus(QtWidgets.QWidget):
         self.FanLabel = QtWidgets.QLabel("Fan: ", self)
 
         # Creating a Fan Object
-        self.fan = Fan(self.FanField)
+        self.fan = Fan()
         self.fan.set_fanField(self.FanField)
 
         # Setting up
