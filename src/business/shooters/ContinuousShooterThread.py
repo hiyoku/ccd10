@@ -28,7 +28,7 @@ class ContinuousShooterThread(QtCore.QThread):
                 while self.ss.isRunning():
                     time.sleep(1)
 
-                    time.sleep(self.s)
+                time.sleep(self.s)
             except Exception as e:
                 print(e)
 

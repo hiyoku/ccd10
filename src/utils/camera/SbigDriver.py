@@ -21,15 +21,18 @@ try:
     elif sys.platform.startswith("win"):
         # Win Driver
         udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
-except:
-    ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.", 3)
-
-    # import platform
-    # bits, linkage = platform.architecture()
-    # if bits.startswith("32"):
-    #     udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
-    # else:
-    #     print("Invalid Python distributionm Should be 32bits")
+except Exception as e:
+    print(e)
+    # ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.", 3)
+    import platform
+    try:
+        bits, linkage = platform.architecture()
+        if bits.startswith("32"):
+            udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
+        else:
+            print("Invalid Python distributionm Should be 32bits")
+    except Exception as e:
+        print(e)
 
 
 def cmd(ccc, cin, cout):

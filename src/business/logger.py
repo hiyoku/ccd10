@@ -12,6 +12,6 @@ class Logger(QtCore.QThread):
         self.text = text
 
     def run(self):
-        log = open('/home/hiyoku/MEGA/ccdlog/logCCD/' + str(datetime.utcnow().strftime('%Y-%m-%d') + '.txt'), 'a')
+        log = open('C:\\ccd\\' + str(datetime.utcnow().strftime('%Y-%m-%d') + '.txt'), 'a')
         log.write(str(datetime.utcnow().strftime('[%Y-%m-%d @ %H:%M:%S]')) + " - " + str(self.text) + "\n")
         log.close()

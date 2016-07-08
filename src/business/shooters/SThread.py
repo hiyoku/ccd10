@@ -12,7 +12,6 @@ class SThread(QtCore.QThread):
     def __init__(self):
         super(SThread, self).__init__()
         self.lock = Locker()
-        self.console = ConsoleThreadOutput()
         self.info = []
         self.img = None
 
@@ -22,10 +21,16 @@ class SThread(QtCore.QThread):
         return info
 
     def set_etime_pre_binning(self):
-        info = self.get_camera_settings()
-        self.etime = int(info[1])
-        self.pre = str(info[0])
-        self.b = int(info[2])
+        try:
+            info = self.get_camera_settings()
+            self.etime = int(info[1])
+            self.pre = str(info[0])
+            self.b = int(info[2])
+        except Exception as e:
+            print(e)
+            self.etime = 1
+            self.pre = "pre"
+            self.b = 2
 
     def run(self):
         self.set_etime_pre_binning()
@@ -33,7 +38,7 @@ class SThread(QtCore.QThread):
         try:
             self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
         except Exception as e:
-            self.console.raise_text("Erro na QThread.\n{}".format(e))
+            print(e)
         finally:
             self.lock.set_release()
 
@@ -44,7 +49,6 @@ class SThread(QtCore.QThread):
 
             self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
         except Exception as e:
-            self.console.raise_text('Não foi possível gerar a imagem.\n{}'.format(e), 3)
             self.img = Image('','','','','')
         return self.img
 

@@ -157,8 +157,11 @@ class Camera(metaclass=Singleton):
 
     # Shooters
     def start_taking_photo(self):
-        self.continuousShooterThread.start_continuous_shooter()
-        self.continuousShooterThread.start()
+        try:
+            self.continuousShooterThread.start_continuous_shooter()
+            self.continuousShooterThread.start()
+        except Exception as e:
+            print(e)
 
     def stop_taking_photo(self):
         self.continuousShooterThread.stop_continuous_shooter()

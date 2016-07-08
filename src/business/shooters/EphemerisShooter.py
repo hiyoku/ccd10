@@ -25,9 +25,10 @@ class EphemerisShooter(QtCore.QThread):
         self.longitude = info[1]  # '-23.12'
         self.elevation = info[2]  # 350
 
-        self.max_solar_elevation = float(infosun[0])# -12
-        self.max_lunar_elevation = float(infosun[2])# 8
-        self.max_lunar_phase = float(infosun[3]) #1
+        self.max_solar_elevation = infosun[0]# -12
+        self.max_lunar_elevation = infosun[2]# 8
+        self.max_lunar_phase = infosun[3] #1
+
         self.s = 120
 
         self.shootOn = False
@@ -35,15 +36,24 @@ class EphemerisShooter(QtCore.QThread):
         self.count = 1
 
     def refresh_data(self):
-        info = self.config.get_geographic_settings()
-        self.latitude = info[0]  # '-45.51'
-        self.longitude = info[1]  # '-23.12'
-        self.elevation = info[2]  # 350
+        try:
+            info = self.config.get_geographic_settings()
+            self.latitude = float(info[0])  # '-45.51'
+            self.longitude = float(info[1])  # '-23.12'
+            self.elevation = float(info[2])  # 350
 
-        infosun = self.config.get_moonsun_settings()
-        self.max_solar_elevation = float(infosun[0])  # -12
-        self.max_lunar_elevation = float(infosun[2])  # 8
-        self.max_lunar_phase = float(infosun[3])  # 1
+            infosun = self.config.get_moonsun_settings()
+            self.max_solar_elevation = float(infosun[0])  # -12
+            self.max_lunar_elevation = float(infosun[2])  # 8
+            self.max_lunar_phase = float(infosun[3])  # 1
+        except Exception as e:
+            self.console.raise_text("Excessão lançada ao adquirir informações\n" + str(e), level=3)
+            self.latitude = 0
+            self.longitude = 0
+            self.elevation = 0
+            self.max_solar_elevation = 0
+            self.max_lunar_elevation = 0
+            self.max_lunar_phase = 0
 
     def calculate_moon(self, obs):
         aux = obs
