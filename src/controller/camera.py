@@ -32,6 +32,7 @@ class Camera(metaclass=Singleton):
         self.ephemerisShooterThread = EphemerisShooter()
 
         self.commands = CameraQThread(self)
+        self.shooting = False
 
         # Initiating the Slots
         self.init_slots()
@@ -40,6 +41,8 @@ class Camera(metaclass=Singleton):
         # Ephemeris Shooter Slots
         self.ephemerisShooterThread.started.connect(self.eshooter_started)
         self.ephemerisShooterThread.finished.connect(self.eshooter_finished)
+        self.ephemerisShooterThread.signal_started_shooting.connect(self.shooter_mode)
+
         self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
         self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
 
@@ -117,19 +120,22 @@ class Camera(metaclass=Singleton):
             self.console.raise_text("Houve falha ao se desconectar a camera!\n{}".format(e), 3)
 
     def set_temperature(self, value):
-        self.lock.set_acquire()
-        try:
-            set_temperature(regulation=True, setpoint=value, autofreeze=False)
-        except Exception as e:
-            self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e), 3)
-        finally:
-            self.lock.set_release()
-            self.console.raise_text("Temperature configurada para {}".format(int(value)), 1)
+        if getlinkstatus() is True:
+            self.lock.set_acquire()
+            try:
+                set_temperature(regulation=True, setpoint=value, autofreeze=False)
+            except Exception as e:
+                self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e), 3)
+            finally:
+                self.lock.set_release()
+                self.console.raise_text("Temperature configurada para {}".format(int(value)), 1)
+        else:
+            self.console.raise_text("A camera não está conectada!", 3)
 
     def get_temperature(self):
         temp = "None"
         try:
-            if getlinkstatus() is True:
+            if getlinkstatus() is True and self.shooting is False:
                 if not self.lock.is_locked():
                     self.lock.set_acquire()
                     temp = tuple(get_temperature())[3]
@@ -158,20 +164,32 @@ class Camera(metaclass=Singleton):
     # Shooters
     def start_taking_photo(self):
         try:
-            self.continuousShooterThread.start_continuous_shooter()
-            self.continuousShooterThread.start()
+            if getlinkstatus() is True:
+                self.continuousShooterThread.start_continuous_shooter()
+                self.continuousShooterThread.start()
+            else:
+                self.console.raise_text("A camera não está conectada!", 3)
         except Exception as e:
             print(e)
 
     def stop_taking_photo(self):
-        self.continuousShooterThread.stop_continuous_shooter()
-        self.standby_mode()
+        if getlinkstatus() is True:
+            self.continuousShooterThread.stop_continuous_shooter()
+            self.standby_mode()
+        else:
+            self.console.raise_text("A camera não está conectada!", 3)
 
     def start_ephemeris_shooter(self):
-        self.ephemerisShooterThread.start()
+        if getlinkstatus() is True:
+            self.ephemerisShooterThread.start()
+        else:
+            self.console.raise_text("A camera não está conectada!", 3)
 
     def stop_ephemeris_shooter(self):
-        self.ephemerisShooterThread.stop_shooter()
+        if getlinkstatus() is True:
+            self.ephemerisShooterThread.stop_shooter()
+        else:
+            self.console.raise_text("A camera não está conectada!", 3)
 
     # All PyQt Slots
 
@@ -183,12 +201,13 @@ class Camera(metaclass=Singleton):
         self.console.raise_text('Shooter finalizado', 1)
 
     def eshooter_observation_started(self):
+        self.shooting = True
         self.console.raise_text("Observação Iniciada\n", 2)
-        self.shooter_mode()
 
     def eshooter_observation_finished(self):
         self.console.raise_text("Observação Finalizada\n", 2)
         self.standby_mode()
+        self.shooting = False
 
     # Commands Slots
 

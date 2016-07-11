@@ -14,7 +14,7 @@ class QThreadTemperature(QtCore.QThread):
 
     def run(self):
         while True:
-            time.sleep(1)
+            time.sleep(2)
             self.temperatura = self.cam.get_temperature()
             if self.temperatura != "None":
                 self.temperatura = "{0:.2f}".format(float(self.temperatura))
