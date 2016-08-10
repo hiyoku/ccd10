@@ -9,6 +9,7 @@ from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
 from src.business.configuration.configProject import ConfigProject
+from src.business.configuration.settingsCamera import SettingsCamera
 
 
 class EphemerisShooter(QtCore.QThread):
@@ -20,6 +21,7 @@ class EphemerisShooter(QtCore.QThread):
         self.continuousShooterThread = ContinuousShooterThread()
         self.console = ConsoleThreadOutput()
         self.config = ConfigProject()
+        self.camconfig = SettingsCamera()
 
         info = self.config.get_geographic_settings()
         infosun = self.config.get_moonsun_settings()
@@ -31,7 +33,11 @@ class EphemerisShooter(QtCore.QThread):
         self.max_lunar_elevation = infosun[2]# 8
         self.max_lunar_phase = infosun[3] #1
 
-        self.s = 120
+        infocam = self.camconfig.get_camera_settings()
+        try:
+            self.s = int(infocam[3])
+        except Exception as e:
+            self.s = 0
 
         self.shootOn = False
         self.controller = True
@@ -46,6 +52,7 @@ class EphemerisShooter(QtCore.QThread):
 
             infosun = self.config.get_moonsun_settings()
             self.max_solar_elevation = float(infosun[0])  # -12
+            self.ignoreMoon = True if infosun[1] == 1 else False
             self.max_lunar_elevation = float(infosun[2])  # 8
             self.max_lunar_phase = float(infosun[3])  # 1
 
@@ -57,6 +64,12 @@ class EphemerisShooter(QtCore.QThread):
             self.max_solar_elevation = 0
             self.max_lunar_elevation = 0
             self.max_lunar_phase = 0
+
+        infocam = self.camconfig.get_camera_settings()
+        try:
+            self.s = int(infocam[3])
+        except Exception as e:
+            self.s = 0
 
     def calculate_moon(self, obs):
         aux = obs
@@ -100,16 +113,17 @@ class EphemerisShooter(QtCore.QThread):
                 b = ephem.degrees(str(moon.alt))
 
                 t = 0
-                if((float(math.degrees(a)) < self.max_solar_elevation and float(math.degrees(b)) < self.max_lunar_elevation
-                   and frac < self.max_lunar_phase) or t == 1):
+                if (float(math.degrees(a)) < self.max_solar_elevation or t == 1):
+                    if (self.ignoreMoon == False and float(math.degrees(b)) < self.max_lunar_elevation
+                            and frac < self.max_lunar_phase) or (self.ignoreMoon):
 
+                        if not self.shootOn:
+                            self.signal_started_shooting.emit()
+                            time.sleep(5)
+                            # Iniciar as Observações
+                            self.start_taking_photo()
+                            self.shootOn = True
 
-                    if not self.shootOn:
-                        self.signal_started_shooting.emit()
-                        time.sleep(5)
-                        # Iniciar as Observações
-                        self.start_taking_photo()
-                        self.shootOn = True
                 else:
                     if self.shootOn:
                         # Finalizar as Observações

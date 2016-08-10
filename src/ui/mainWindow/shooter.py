@@ -19,7 +19,7 @@ class Shooter(QtWidgets.QWidget):
     """
 
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super(Shooter, self).__init__(parent)
         self.cam = Camera()
         self.cond = 0
 
@@ -31,6 +31,19 @@ class Shooter(QtWidgets.QWidget):
         self.pa = QtGui.QPalette()
 
         self.set_layout()
+        self.link_signals()
+
+    def link_signals(self):
+        self.cam.ephemerisShooterThread.continuousShooterThread.ss.finished.connect(self.get_image_automatic)
+        self.cam.continuousShooterThread.ss.finished.connect(self.get_image_manual)
+
+    def get_image_automatic(self):
+        img = self.cam.ephemerisShooterThread.continuousShooterThread.ss.get_image_info()
+        self.set_image(img)
+
+    def get_image_manual(self):
+        img = self.cam.continuousShooterThread.ss.get_image_info()
+        self.set_image(img)
 
     def set_layout(self):
         # self.fill_combo()
@@ -42,12 +55,16 @@ class Shooter(QtWidgets.QWidget):
         #                 QLabel("Hora:", self), self.htext,
         #                 QLabel("Min:", self), self.mtext)
 
-        # hb2 = set_hbox(self.prefix, self.date, self.hour)
+        hb2 = set_hbox(self.prefix, self.date, self.hour)
 
-        self.setLayout(set_lvbox(set_hbox(self.img)))
+        self.setLayout(set_lvbox(set_hbox(self.img), hb2))
+        self.config_pallete()
 
     def config_img_label(self):
         self.img.setPixmap(QtGui.QPixmap("noimage.png"))
+        self.prefix = QtWidgets.QLabel(self)
+        self.date = QtWidgets.QLabel(self)
+        self.hour = QtWidgets.QLabel(self)
 
     def config_pallete(self):
         self.pa.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)  # Setting the style
@@ -65,13 +82,16 @@ class Shooter(QtWidgets.QWidget):
         except Exception as e:
             print(e)
 
-    def set_image(self):
-        print("Image Info")
-        img = self.cam.img
-
+    def set_image(self, img):
         print("Setando os Pixmap")
-        self.img.setPixmap(QtGui.QPixmap((img.path + img.png_name)))
-        self.fill_image_info(img.png_name, img.date, img.hour)
+        try:
+            path = img.path + img.png_name
+            self.img.setPixmap(QtGui.QPixmap(path))
+            print(path)
+            self.fill_image_info(img.png_name, img.date, img.hour)
+
+        except Exception as e:
+            print(e)
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)

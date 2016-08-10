@@ -8,6 +8,7 @@ from matplotlib import pyplot
 
 import pyfits as fits
 import time
+from datetime import datetime
 
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
@@ -366,7 +367,7 @@ def set_header(filename):
     # Escrevendo o Header
     # Can't get the temperature because have a locker locking shooter process
     # fits_file[0].header["TEMP"] = tuple(get_temperature())[3]
-    fits_file[0].header["DATE"] = time.strftime('%Y-%m-%d_%H:%M:%S')
+    fits_file[0].header["DATE"] = datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S')
 
     # Criando o arquivo final
     try:
@@ -396,7 +397,7 @@ def set_png(filename, newname):
 
 
 def set_path(pre):
-    tempo = time.strftime('%Y%m%d_%H%M%S')
+    tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
@@ -541,6 +542,8 @@ def photoshoot(etime, pre, binning):
     name = path+fn
     fitsname = name + '.fits'
     pngname = name + '.png'
+    fitsname_final = fn + '.fits'
+    pngname_final = fn + '.png'
 
     try:
         os.unlink(fitsname)
@@ -569,4 +572,4 @@ def photoshoot(etime, pre, binning):
 
     data, hora = get_date_hour(tempo)
     print("Final do processo")
-    return path, pngname, fitsname, data, hora
+    return path, pngname_final, fitsname_final, data, hora

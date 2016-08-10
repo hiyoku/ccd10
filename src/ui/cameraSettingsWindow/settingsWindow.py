@@ -25,6 +25,7 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.pre, self.prel),
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
+                                 set_hbox(self.tempo_fotos_label, self.tempo_fotos),
                                  set_hbox(self.fanButton),
                                  set_hbox(self.buttonok, stretch2=1)))
 
@@ -61,6 +62,9 @@ class SettingsWindow(QtWidgets.QWidget):
         self.buttonok = QtWidgets.QPushButton("Salvar", self)
         self.buttonok.clicked.connect(self.button_ok_func)
 
+        self.tempo_fotos = QtWidgets.QLineEdit(self)
+        self.tempo_fotos_label = QtWidgets.QLabel("Tempo entre as fotos:", self)
+
     def button_ok_func(self):
         try:
             # Setting the Temperature
@@ -70,7 +74,7 @@ class SettingsWindow(QtWidgets.QWidget):
             self.camera.set_temperature(float(value))
 
             # Saving the Settings
-            self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex())
+            self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
             self.cam.save_settings()
             self.console.raise_text("Configurações da Camera salvas com sucesso!", 1)
         except Exception as e:

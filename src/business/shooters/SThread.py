@@ -37,6 +37,7 @@ class SThread(QtCore.QThread):
         self.lock.set_acquire()
         try:
             self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b)
+            self.init_image()
         except Exception as e:
             print(e)
         finally:

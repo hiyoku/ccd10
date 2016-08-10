@@ -27,10 +27,14 @@ class ConfigProject:
         self._settings.endGroup()
 
     def set_moonsun_settings(self, solarelev, ignorel, lunarph, lunarpos):
-        if ignorel == 'false': ignorel = ''
+        if ignorel:
+            ignoreLunar = 1
+        else:
+            ignoreLunar = 0
+
         self._settings.beginGroup(p.SUN_MOON_TITLE)
         self._settings.setValue(p.MAX_SOLAR_ELEVATION, solarelev)
-        self._settings.setValue(p.IGNORE_LUNAR_POSITION, ignorel)
+        self._settings.setValue(p.IGNORE_LUNAR_POSITION, ignoreLunar)
         self._settings.setValue(p.MAX_LUNAR_PHASE, lunarph)
         self._settings.setValue(p.MAX_LUNAR_ELEVATION, lunarpos)
         self._settings.endGroup()
@@ -49,5 +53,11 @@ class ConfigProject:
 
     def get_moonsun_settings(self):
         m = p.SUN_MOON_TITLE
-        return self.get_value(m, p.MAX_SOLAR_ELEVATION), self.get_value(m, p.IGNORE_LUNAR_POSITION), \
+        lunarConditional = self.get_value(m, p.IGNORE_LUNAR_POSITION)
+        if lunarConditional == 1:
+            lc = True
+        else:
+            lc = False
+
+        return self.get_value(m, p.MAX_SOLAR_ELEVATION), lc, \
                self.get_value(m, p.MAX_LUNAR_PHASE), self.get_value(m, p.MAX_LUNAR_ELEVATION)

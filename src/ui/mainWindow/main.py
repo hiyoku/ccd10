@@ -16,17 +16,11 @@ from src.ui.mainWindow.status import Status
 
 class Main(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(Main, self).__init__()
         Status(self)
         # Init Layouts
         self.init_widgets()
         self.init_user_interface()
-        try:
-            # Init the Status Singleton
-            print("Eita")
-            # Initiating all windows
-        except Exception as e:
-            print("Exception da Main Main -> " + str(e))
 
     def init_user_interface(self):
         self.cont = conts(self)
@@ -55,13 +49,16 @@ class Main(QtWidgets.QMainWindow):
 
         a1 = self.action_close()
         self.add_to_menu(menubar, a1[1], a1[0])
-        a2 = self.open_settings()
-        self.add_to_menu(menubar, a2[1], a2[0], self.open_settings_system()[0], self.open_settings_camera()[0])
         a3 = self.action_connect_disconnect()
         self.add_to_menu(menubar, a3[0], a3[1], a3[2])
         a4 = self.action_continuous_shooter()
         a5 = self.action_ephemeris_shooter()
-        self.add_to_menu(menubar, 'Shooters', a4, a5)
+        m = self.add_to_menu(menubar, 'Operation Mode')
+        self.add_to_menu(m, 'Manual', a4[0], a4[1])
+        self.add_to_menu(m, 'Automatic', a5[0], a5[1])
+        a2 = self.open_settings()
+        self.add_to_menu(menubar, a2[1], a2[0], self.open_settings_system()[0], self.open_settings_camera()[0])
+
         # add_to_menu(menubar, open_settings_system(self))
 
     # All actions needs return a QAction and a menuType, line '&File'
@@ -77,17 +74,22 @@ class Main(QtWidgets.QMainWindow):
         return aexit, "&File"
 
     def action_continuous_shooter(self):
-        ac = QtWidgets.QAction('&Manual', self)
+        actionStart = QtWidgets.QAction('&Start', self)
+        actionStop = QtWidgets.QAction('&Stop', self)
 
-        ac.triggered.connect(self.cont.show)
+        actionStart.triggered.connect(self.cam.start_taking_photo)
+        actionStop.triggered.connect(self.cam.stop_taking_photo)
 
-        return ac
+        return actionStart, actionStop
 
     def action_ephemeris_shooter(self):
-        ac2 = QtWidgets.QAction('&Ephemeris', self)
-        ac2.triggered.connect(self.ephem.show)
+        actionStart = QtWidgets.QAction('&Start', self)
+        actionStop = QtWidgets.QAction('&Stop', self)
 
-        return ac2
+        actionStart.triggered.connect(self.cam.start_ephemeris_shooter)
+        actionStop.triggered.connect(self.cam.stop_ephemeris_shooter)
+
+        return actionStart, actionStop
 
     def open_settings(self):
         settings = QtWidgets.QAction('Project Settings', self)
@@ -128,4 +130,6 @@ class Main(QtWidgets.QMainWindow):
         m = menubar.addMenu(menu)
         for w in args:
             m.addAction(w)
+
+        return m
 

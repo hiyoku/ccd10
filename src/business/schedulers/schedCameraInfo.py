@@ -15,6 +15,5 @@ class SchedClock(metaclass=Singleton):
         scheduler.add_job(self.refresh, IntervalTrigger(seconds=1))
         scheduler.start()
 
-
     def refresh(self):
         self.lcd.setText(time.strftime('%H:%M:%S'))

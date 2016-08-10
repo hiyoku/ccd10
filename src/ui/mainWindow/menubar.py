@@ -18,10 +18,14 @@ def init_menu(self):
     add_to_menu(menubar, a2[1], a2[0], open_settings_system(self)[0], open_settings_camera(self)[0])
     a3 = action_connect_disconnect(self)
     add_to_menu(menubar, a3[0], a3[1], a3[2])
-    a4 = action_continuous_shooter(self)
-    add_to_menu(menubar, 'Shooters', a4)
+
+    a4 = action_continuous_shooter(self, menubar)
+    add_to_menu(menubar, 'Operation Mode', a4)
     # add_to_menu(menubar, open_settings_system(self))
 
+
+def menu_operation_mode(self, menubar):
+    pass
 
 # All actions needs return a QAction and a menuType, line '&File'
 def action_close(self):
@@ -35,13 +39,12 @@ def action_close(self):
 
     return aexit, "&File"
 
-def action_continuous_shooter(self):
+def action_continuous_shooter(self, menubar):
+    menubar.addMenu('Operation Mode')
     ac = QtWidgets.QAction('&Manual', self)
     self.cont = conts()
 
     ac.triggered.connect(self.cont.show)
-
-    return ac
 
 def open_settings(self):
     settings = QtWidgets.QAction('Project Settings', self)

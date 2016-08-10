@@ -10,8 +10,8 @@ class WidgetsGeography(QtWidgets.QWidget):
         # Creating Labels
         self.lLat = QtWidgets.QLabel("Latitude (º):", self)
         self.lLon = QtWidgets.QLabel("Longitude (º):", self)
-        self.lElev = QtWidgets.QLabel("Elevation (M):", self)
-        self.lPres = QtWidgets.QLabel("Pressure (MB):", self)
+        self.lElev = QtWidgets.QLabel("Elevation (m):", self)
+        self.lPres = QtWidgets.QLabel("Pressure (mb):", self)
         self.lTemp = QtWidgets.QLabel("Temperature (ºC):", self)
 
         # Creating Input Fields

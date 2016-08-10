@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
@@ -45,13 +46,11 @@ class Camera(metaclass=Singleton):
 
         self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
         self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
+        self.continuousShooterThread.finished.connect(self.standby_mode)
 
         # Camera Commands Slots
         self.commands.finished.connect(self.eita)
         self.commands.connectSignal.connect(self.connect_mainwindow_update)
-
-    def teste(self):
-        print("Testando! 1 2 3!")
 
     def get_firmware_and_model(self):
         info = self.get_info()
@@ -86,33 +85,31 @@ class Camera(metaclass=Singleton):
         return ret
 
     def connect(self):
-        self.commands.set_conditional('connect')
-        self.commands.start()
-        # try:
-        #     a = open_driver()
-        #     open_deviceusb()
-        #     c = establishinglink()
-        #     if a is True and c is True:
-        #         self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 1)
-        #         self.set_firmware_and_model_values()
-        #         self.fan.refresh_fan_status()
-        #         return True
-        #     else:
-        #         self.console.raise_text("Erro na conexão", 3)
-        #
-        #
-        # except Exception as e:
-        #     self.console.raise_text('Houve falha ao se conectar a camera!\n{}'.format(e), 3)
-        #
-        # return False
+        try:
+            a = open_driver()
+            open_deviceusb()
+            c = establishinglink()
+            if a is True and c is True:
+                self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 2)
+                self.set_firmware_and_model_values()
+                self.fan.refresh_fan_status()
+                return True
+            else:
+                self.console.raise_text("Erro na conexão", 3)
+
+        except Exception as e:
+            self.console.raise_text('Houve falha ao se conectar a camera!\n{}'.format(e), 3)
+
+        return False
 
     def disconnect(self):
         try:
+            self.standby_mode()
             cd = close_device()
             cdr = close_driver()
 
             if cd and cdr:
-                self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 1)
+                self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 2)
                 self.clear_firmware_and_model_values()
             else:
                 self.console.raise_text("Erro ao desconectar {} {}".format(cd, cdr), 3)
@@ -158,8 +155,10 @@ class Camera(metaclass=Singleton):
         self.fan.set_fan_off()
 
     def shooter_mode(self):
-        self.set_temperature(-10.00)
+        self.set_temperature(-16.00)
         self.fan.set_fan_on()
+        while self.get_temperature() < -15:
+            sleep(1)
 
     # Shooters
     def start_taking_photo(self):
@@ -175,7 +174,6 @@ class Camera(metaclass=Singleton):
     def stop_taking_photo(self):
         if getlinkstatus() is True:
             self.continuousShooterThread.stop_continuous_shooter()
-            self.standby_mode()
         else:
             self.console.raise_text("A camera não está conectada!", 3)
 
@@ -202,10 +200,10 @@ class Camera(metaclass=Singleton):
 
     def eshooter_observation_started(self):
         self.shooting = True
-        self.console.raise_text("Observação Iniciada\n", 2)
+        self.console.raise_text("Observação Iniciada", 1)
 
     def eshooter_observation_finished(self):
-        self.console.raise_text("Observação Finalizada\n", 2)
+        self.console.raise_text("Observação Finalizada", 1)
         self.standby_mode()
         self.shooting = False
 
