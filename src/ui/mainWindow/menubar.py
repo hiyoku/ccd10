@@ -19,8 +19,9 @@ def init_menu(self):
     a3 = action_connect_disconnect(self)
     add_to_menu(menubar, a3[0], a3[1], a3[2])
 
-    a4 = action_continuous_shooter(self, menubar)
-    add_to_menu(menubar, 'Operation Mode', a4)
+    #Doesn't return anything
+    #a4 = action_continuous_shooter(self, menubar)
+    #add_to_menu(menubar, 'Operation Mode', a4)
     # add_to_menu(menubar, open_settings_system(self))
 
 
