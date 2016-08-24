@@ -349,6 +349,7 @@ def is_fanning():
 
 
 def ccdinfo():
+    global cout
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
         cin = SbigStructures.ReadOutInfo
@@ -430,6 +431,7 @@ def photoshoot(etime, pre, binning):
     # open_deviceusb()
     # establishinglink()
 
+    global readout_mode
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
         cin = SbigStructures.ReadOutInfo

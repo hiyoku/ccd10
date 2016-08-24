@@ -7,6 +7,7 @@ class EphemObserverFactory:
 
     @staticmethod
     def create_observer(longitude=None, latitude=None, elevation=None):
+        global o
         try:
             o = ephem.Observer()
             o.lon = longitude
