@@ -76,14 +76,16 @@ class EphemerisShooter(QtCore.QThread):
         '''except Exception as e:
             self.s = 0'''
 
-    def calculate_moon(self, obs):
+    @staticmethod
+    def calculate_moon(obs):
         aux = obs
         aux.compute_pressure()
         aux.horizon = '8'
         moon = ephem.Moon(aux)
         return aux.previous_setting(moon), aux.next_rising(moon)
 
-    def calculate_sun(self, obs):
+    @staticmethod
+    def calculate_sun(obs):
         aux = obs
         aux.compute_pressure()
         aux.horizon = '-12'

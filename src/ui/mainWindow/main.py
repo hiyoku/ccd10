@@ -126,7 +126,8 @@ class Main(QtWidgets.QMainWindow):
 
         return 'Connection', setAC, setAD
 
-    def add_to_menu(self, menubar, menu, *args):
+    @staticmethod
+    def add_to_menu(menubar, menu, *args):
         m = menubar.addMenu(menu)
         for w in args:
             m.addAction(w)

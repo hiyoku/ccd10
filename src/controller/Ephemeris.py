@@ -27,7 +27,8 @@ class Ephemeris():
         self.elev = info[2]  # 350
 
 
-    def print_time_elapsed(self):
+    @staticmethod
+    def print_time_elapsed():
         init_time = datetime.datetime.utcnow()
 
         while True:

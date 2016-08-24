@@ -528,7 +528,9 @@ def photoshoot(etime, pre, binning):
         udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
         cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, readoutMode=v_read, pixelStart=0,
                   pixelLength=v_w)
-        cout = cout()
+        '''Trying to call a non-callable object inspection'''
+        '''This inspection highlights attempts to call objects wich are not callable, like, for example, tuples.'''
+        #cout = cout
         udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_READOUT_LINE.value, byref(cin), byref(cout))
         img[i_line] = cout
 

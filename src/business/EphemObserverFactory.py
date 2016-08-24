@@ -5,7 +5,8 @@ class EphemObserverFactory:
     def __init__(self):
         pass
 
-    def create_observer(self, longitude=None, latitude=None, elevation=None):
+    @staticmethod
+    def create_observer(longitude=None, latitude=None, elevation=None):
         try:
             o = ephem.Observer()
             o.lon = longitude
@@ -18,7 +19,8 @@ class EphemObserverFactory:
             o.elevation = 0
         return o
 
-    def set_observer_parameters(self, observer, obsLongitude, obsLatitude, obsElevation):
+    @staticmethod
+    def set_observer_parameters(observer, obsLongitude, obsLatitude, obsElevation):
         try:
             observer.lon = obsLongitude
             observer.lat = obsLatitude

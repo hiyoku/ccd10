@@ -15,7 +15,8 @@ class SThread(QtCore.QThread):
         self.info = []
         self.img = None
 
-    def get_camera_settings(self):
+    @staticmethod
+    def get_camera_settings():
         settings = SettingsCamera()
         info = settings.get_camera_settings()
         return info
