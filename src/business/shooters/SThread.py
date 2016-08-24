@@ -49,9 +49,15 @@ class SThread(QtCore.QThread):
                 print(i)
 
             self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
-        except Exception as e:
+        except Exception:
             self.img = Image('','','','','')
         return self.img
 
     def get_image_info(self):
         return self.img
+
+'''Local variable 'e' value is not used
+    except Exception as e:
+        self.img = Image('','','','','')
+    return self.img
+'''

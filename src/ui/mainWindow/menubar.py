@@ -24,9 +24,10 @@ def init_menu(self):
     #add_to_menu(menubar, 'Operation Mode', a4)
     # add_to_menu(menubar, open_settings_system(self))
 
-
-def menu_operation_mode(self, menubar):
-    pass
+'''Parameter 'self value is not used
+   Parameter 'menubar' value is not used'''
+'''def menu_operation_mode(self, menubar):
+    pass'''
 
 # All actions needs return a QAction and a menuType, line '&File'
 def action_close(self):

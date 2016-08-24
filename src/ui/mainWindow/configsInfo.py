@@ -14,7 +14,8 @@ class ConfigsInfo(QtWidgets.QFrame):
         super(ConfigsInfo, self).__init__(parent)
 
         # Initing Widgets
-        p = cs()
+        '''Local variable 'p' value is not used'''
+        #p = cs()
         self.confs = ConfigProject()
 
         # Init Widget Site Info

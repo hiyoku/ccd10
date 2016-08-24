@@ -56,7 +56,8 @@ class Ephemeris():
 
                 moon = ephem.Moon()
                 moon.compute(obs)
-                frac=moon.moon_phase
+                '''Local variable 'frac' value is not used'''
+                #frac=moon.moon_phase
 
                 a = ephem.degrees(str(sun.alt))
                 b = ephem.degrees(str(moon.alt))

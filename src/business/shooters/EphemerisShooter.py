@@ -36,8 +36,10 @@ class EphemerisShooter(QtCore.QThread):
         infocam = self.camconfig.get_camera_settings()
         try:
             self.s = int(infocam[3])
-        except Exception as e:
+        except Exception:
             self.s = 0
+        '''except Exception as e:
+            self.s = 0'''
 
         self.shootOn = False
         self.controller = True
@@ -68,8 +70,11 @@ class EphemerisShooter(QtCore.QThread):
         infocam = self.camconfig.get_camera_settings()
         try:
             self.s = int(infocam[3])
-        except Exception as e:
+
+        except Exception:
             self.s = 0
+        '''except Exception as e:
+            self.s = 0'''
 
     def calculate_moon(self, obs):
         aux = obs
