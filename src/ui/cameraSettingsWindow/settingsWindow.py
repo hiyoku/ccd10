@@ -77,33 +77,19 @@ class SettingsWindow(QtWidgets.QWidget):
             self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
             self.cam.save_settings()
             self.console.raise_text("Configurações da Camera salvas com sucesso!", 1)
-        except Exception:
+        except Exception as e:
             self.console.raise_text("Configurações da Camera não foram salvas.", 3)
         finally:
             self.p.close()
-
-
 
     def button_fan_func(self):
         try:
             self.fan.set_fan()
             self.console.raise_text('Estado da Fan alterado!', 2)
-        except Exception:
+        except Exception as e:
             self.console.raise_text('Estado da Fan não alterado', 3)
-
-
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)
         self.combo.addItem("2x2", 1)
         self.combo.addItem("3x3", 2)
-
-'''Local variable 'e' value is not used
-    except Exception as e:
-        self.console.raise_text("Configurações da Camera não foram salvas.", 3)
-'''
-
-'''Local variable 'e' value is not used
-    except Exception as e:
-        self.console.raise_text('Estado da Fan não alterado', 3)
-'''

@@ -36,10 +36,8 @@ class EphemerisShooter(QtCore.QThread):
         infocam = self.camconfig.get_camera_settings()
         try:
             self.s = int(infocam[3])
-        except Exception:
+        except Exception as e:
             self.s = 0
-        '''except Exception as e:
-            self.s = 0'''
 
         self.shootOn = False
         self.controller = True
@@ -70,22 +68,17 @@ class EphemerisShooter(QtCore.QThread):
         infocam = self.camconfig.get_camera_settings()
         try:
             self.s = int(infocam[3])
-
-        except Exception:
+        except Exception as e:
             self.s = 0
-        '''except Exception as e:
-            self.s = 0'''
 
-    @staticmethod
-    def calculate_moon(obs):
+    def calculate_moon(self, obs):
         aux = obs
         aux.compute_pressure()
         aux.horizon = '8'
         moon = ephem.Moon(aux)
         return aux.previous_setting(moon), aux.next_rising(moon)
 
-    @staticmethod
-    def calculate_sun(obs):
+    def calculate_sun(self, obs):
         aux = obs
         aux.compute_pressure()
         aux.horizon = '-12'

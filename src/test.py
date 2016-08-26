@@ -7,8 +7,7 @@ class Main(QtWidgets.QMainWindow):
     def __init__(self):
         super(Main, self).__init__()
         QtWidgets.QPushButton('Test', self)
-        QtWidgets.QPushButton('Test2', self)
-        QtWidgets.QPushButton('Test3', self)
+
 
 # Initiating the application
 if __name__ == '__main__':

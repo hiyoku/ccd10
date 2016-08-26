@@ -157,7 +157,7 @@ def getlinkstatus():
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    # print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
     return cout.linkEstablished == 1
 
 
@@ -349,7 +349,6 @@ def is_fanning():
 
 
 def ccdinfo():
-    global cout
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
         cin = SbigStructures.ReadOutInfo
@@ -431,7 +430,6 @@ def photoshoot(etime, pre, binning):
     # open_deviceusb()
     # establishinglink()
 
-    global readout_mode
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
 
         cin = SbigStructures.ReadOutInfo
@@ -530,9 +528,7 @@ def photoshoot(etime, pre, binning):
         udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
         cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, readoutMode=v_read, pixelStart=0,
                   pixelLength=v_w)
-        '''Trying to call a non-callable object inspection'''
-        '''This inspection highlights attempts to call objects wich are not callable, like, for example, tuples.'''
-        #cout = cout
+        cout = cout()
         udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_READOUT_LINE.value, byref(cin), byref(cout))
         img[i_line] = cout
 

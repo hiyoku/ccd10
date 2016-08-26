@@ -15,8 +15,7 @@ class SThread(QtCore.QThread):
         self.info = []
         self.img = None
 
-    @staticmethod
-    def get_camera_settings():
+    def get_camera_settings(self):
         settings = SettingsCamera()
         info = settings.get_camera_settings()
         return info
@@ -50,15 +49,9 @@ class SThread(QtCore.QThread):
                 print(i)
 
             self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
-        except Exception:
+        except Exception as e:
             self.img = Image('','','','','')
         return self.img
 
     def get_image_info(self):
         return self.img
-
-'''Local variable 'e' value is not used
-    except Exception as e:
-        self.img = Image('','','','','')
-    return self.img
-'''

@@ -146,8 +146,7 @@ class Camera(metaclass=Singleton):
 
         return temp
 
-    @staticmethod
-    def check_link():
+    def check_link(self):
         return getlinkstatus()
 
     # Camera Mode

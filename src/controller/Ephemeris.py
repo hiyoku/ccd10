@@ -27,8 +27,7 @@ class Ephemeris():
         self.elev = info[2]  # 350
 
 
-    @staticmethod
-    def print_time_elapsed():
+    def print_time_elapsed(self):
         init_time = datetime.datetime.utcnow()
 
         while True:
@@ -57,8 +56,7 @@ class Ephemeris():
 
                 moon = ephem.Moon()
                 moon.compute(obs)
-                '''Local variable 'frac' value is not used'''
-                #frac=moon.moon_phase
+                frac=moon.moon_phase
 
                 a = ephem.degrees(str(sun.alt))
                 b = ephem.degrees(str(moon.alt))
