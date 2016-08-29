@@ -422,7 +422,11 @@ def get_date_hour(tempo):
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
-    return data, hora
+    dia = data[7:9]
+    mes = data[5:7]
+    ano = data[0:4]
+
+    return data, hora, dia, mes, ano
 
 
 def photoshoot(etime, pre, binning):
@@ -570,6 +574,7 @@ def photoshoot(etime, pre, binning):
     print("Call set_png")
     set_png(fitsname, pngname)
 
-    data, hora = get_date_hour(tempo)
+    data, hora, dia, mes, ano = get_date_hour(tempo)
+
     print("Final do processo")
     return path, pngname_final, fitsname_final, data, hora
