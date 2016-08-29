@@ -372,7 +372,7 @@ def set_header(filename):
     # Criando o arquivo final
     try:
         print("Tricat do set_header")
-        # Fechando e removendo o arquivo tempor�rio
+        # Fechando e removendo o arquivo temporário
         # fits_file.flush()
         fits_file.close()
     except OSError as e:
@@ -385,10 +385,10 @@ def set_png(filename, newname):
     fits_file = fits.open(filename)
 
     try:
-        print("tricat do set_png")
+        '''print("tricat do set_png")
         pyplot.imshow(fits_file[0].data, cmap='gray')
         pyplot.axis('off')
-        pyplot.savefig(newname, bbox_inches='tight')
+        pyplot.savefig(newname, bbox_inches='tight')'''
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
