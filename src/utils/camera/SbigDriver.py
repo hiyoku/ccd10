@@ -4,6 +4,7 @@ import sys
 from ctypes import c_ushort, POINTER, byref
 
 import numpy as np
+import subprocess
 from matplotlib import pyplot
 
 import pyfits as fits
@@ -13,6 +14,9 @@ from datetime import datetime
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+
+from PIL import Image
+
 
 # Load Driver (DLL)
 try:
@@ -381,19 +385,21 @@ def set_header(filename):
 
 
 def set_png(filename, newname):
-    print("abrindo filename")
+    print("Abrindo filename")
     fits_file = fits.open(filename)
 
     try:
-        '''print("tricat do set_png")
-        pyplot.imshow(fits_file[0].data, cmap='gray')
-        pyplot.axis('off')
-        pyplot.savefig(newname, bbox_inches='tight')'''
+        subprocess.call('convert ' + filename + " -resize 512x512 " + newname, shell=True)
+        copy_for_png = Image.open(newname)
+        print("4")
+        copy_for_png.save(newname)
+        print("5")
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
         pyplot.close()
+
 
 
 def set_path(pre):
@@ -575,6 +581,9 @@ def photoshoot(etime, pre, binning):
     set_png(fitsname, pngname)
 
     data, hora, dia, mes, ano = get_date_hour(tempo)
+
+    print("\n\nHora = " + hora)
+    print("Data = " + dia + "/" + mes + "/" + ano + "\n\n")
 
     print("Final do processo")
     return path, pngname_final, fitsname_final, data, hora
