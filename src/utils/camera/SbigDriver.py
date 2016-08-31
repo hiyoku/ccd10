@@ -401,12 +401,12 @@ def set_png(filename, newname):
         pyplot.savefig(newname, bbox_inches='tight')
         '''
 
-        newname_aux = str(newname[19:])
+        #newname_aux = str(newname[19:])
         subprocess.call('convert ' + filename + ' -depth 8 -size 512x512 ' + newname, shell=True)
 
         '''Desenhando na imagem png'''
 
-        data_img, hora_img, dia_img, mes_img, ano_img = get_date_hour_image(newname_aux)
+        hora_img, dia_img, mes_img, ano_img = get_date_hour_image(newname)
 
         img = Image.open(newname)
         draw = ImageDraw.Draw(img)
@@ -455,16 +455,19 @@ def get_date_hour(tempo):
 
     return data, hora, dia, mes, ano
 
-#pre_20160830_204831
+#pre_20160830_204831.png
 def get_date_hour_image(tempo):
-    data_img = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
-    hora_img = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+    hora_img = tempo[-10:-8]+":"+tempo[-8:-6]+":"+tempo[-6:-4]
 
-    dia_img = data_img[11:12]
-    mes_img = data_img[8:10]
-    ano_img = data_img[4:7]
+    dia_img = tempo[-13:-11]
+    mes_img = tempo[-15:-13]
+    ano_img = tempo[-19:-15]
 
-    return data_img, hora_img, dia_img, mes_img, ano_img
+    print('\n\nData:')
+    print('dia = ' + dia_img + ' mes' + mes_img + ' ano' + ano_img)
+    print('\n\n')
+
+    return hora_img, dia_img, mes_img, ano_img
 
 
 def photoshoot(etime, pre, binning):
