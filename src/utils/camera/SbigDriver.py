@@ -13,9 +13,9 @@ from datetime import datetime
 
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
-from src.business.consoleThreadOutput import ConsoleThreadOutput
+#from src.business.consoleThreadOutput import ConsoleThreadOutput
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 
 # Load Driver (DLL)
@@ -388,18 +388,39 @@ def set_png(filename, newname):
     print("Abrindo filename")
     fits_file = fits.open(filename)
 
+    data, hora, dia, mes, ano = get_date_hour(newname)
+
+    print("\n\nHora = " + hora)
+    print("Data = " + dia + "/" + mes + "/" + ano + "\n\n")
+
     try:
-        subprocess.call('convert ' + filename + " -resize 512x512 " + newname, shell=True)
-        copy_for_png = Image.open(newname)
-        print("4")
-        copy_for_png.save(newname)
-        print("5")
+        '''
+        print("tricat do set_png")
+        pyplot.imshow(fits_file[0].data, cmap='gray')
+        pyplot.axis('off')
+        pyplot.savefig(newname, bbox_inches='tight')
+        '''
+
+        newname_aux = str(newname[19:])
+        subprocess.call('convert ' + filename + ' -depth 8 -size 512x512 ' + newname, shell=True)
+
+        '''Desenhando na imagem png'''
+
+        data_img, hora_img, dia_img, mes_img, ano_img = get_date_hour_image(newname_aux)
+
+        img = Image.open(newname)
+        draw = ImageDraw.Draw(img)
+        draw.text((100, 150), 'Observatorio.\n' + hora_img + '\n' + dia_img + "/" + mes_img + "/" + ano_img, fill='white')
+        del draw
+        img.save(newname)
+
+
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
         pyplot.close()
-
+        #os.chdir(os.path.dirname(dir_images))
 
 
 def set_path(pre):
@@ -433,6 +454,17 @@ def get_date_hour(tempo):
     ano = data[0:4]
 
     return data, hora, dia, mes, ano
+
+#pre_20160830_204831
+def get_date_hour_image(tempo):
+    data_img = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
+    hora_img = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+
+    dia_img = data_img[11:12]
+    mes_img = data_img[8:10]
+    ano_img = data_img[4:7]
+
+    return data_img, hora_img, dia_img, mes_img, ano_img
 
 
 def photoshoot(etime, pre, binning):
@@ -581,9 +613,6 @@ def photoshoot(etime, pre, binning):
     set_png(fitsname, pngname)
 
     data, hora, dia, mes, ano = get_date_hour(tempo)
-
-    print("\n\nHora = " + hora)
-    print("Data = " + dia + "/" + mes + "/" + ano + "\n\n")
 
     print("Final do processo")
     return path, pngname_final, fitsname_final, data, hora
