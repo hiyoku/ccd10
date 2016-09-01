@@ -1,18 +1,17 @@
 import ctypes
 import os
 import sys
+import time
 from ctypes import c_ushort, POINTER, byref
+from datetime import datetime
 
 import numpy as np
-from matplotlib import pyplot
-
 import pyfits as fits
-import time
-from datetime import datetime
+from PIL import Image, ImageDraw
+from scipy.misc import toimage
 
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
-from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 # Load Driver (DLL)
 try:
@@ -157,7 +156,7 @@ def getlinkstatus():
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    # print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    #print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
     return cout.linkEstablished == 1
 
 
@@ -372,7 +371,7 @@ def set_header(filename):
     # Criando o arquivo final
     try:
         print("Tricat do set_header")
-        # Fechando e removendo o arquivo tempor�rio
+        # Fechando e removendo o arquivo temporario
         # fits_file.flush()
         fits_file.close()
     except OSError as e:
@@ -385,27 +384,45 @@ def set_png(filename, newname):
     fits_file = fits.open(filename)
 
     try:
+
         print("tricat do set_png")
-        pyplot.imshow(fits_file[0].data, cmap='gray')
-        pyplot.axis('off')
-        pyplot.savefig(newname, bbox_inches='tight')
+        img = toimage(fits_file[0].data)
+
+        hora_img, data_img, draw_filter = get_filter_obs_date_hour_draw_image(newname)
+
+        '''Resize'''
+        width = 512
+        height = 512
+        resizedIm = img.resize((int(width), int(height)))
+        resizedIm.save(newname)
+
+        img = Image.open(newname)
+
+        draw = ImageDraw.Draw(img)
+        draw.text((0, 0), 'OBSERVATORIO', fill='white')
+        draw.text((450, 0), draw_filter, fill='white')
+        draw.text((420, 500), hora_img, fill='white')
+        draw.text((0, 500), data_img, fill='white')
+        del draw
+
+        img.save(newname)
+
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
-        pyplot.close()
 
 
 def set_path(pre):
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
-    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
+    data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
     from src.business.configuration.configSystem import ConfigSystem
     cs = ConfigSystem()
     path = str(cs.get_image_path()) + "/"
     if int(tempo[9:11]) > 12:
-        path = path+pre+"_"+data+"/"
+        path = path + pre + "_" + data + "/"
     else:
         day = int(tempo[6:8])
         if 0 < day < 10:
@@ -413,16 +430,29 @@ def set_path(pre):
         else:
             day = str(day - 1)
 
-        path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+day+"/"
+        path = path + pre + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
 
     return path, tempo
 
 
 def get_date_hour(tempo):
-    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
-    hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+    data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
+    hora = tempo[9:11] + ":" + tempo[11:13] + ":" + tempo[13:15]
 
     return data, hora
+
+
+def get_filter_obs_date_hour_draw_image(nome):
+
+    hora_img = nome[-10:-8] + ":" + nome[-8:-6]+":" + nome[-6:-4] + " UT"
+    data_img = nome[-13:-11] + "/" + nome[-15:-13] + "/" + nome[-19:-15]
+    nome_split = nome.split('/')
+    nome_split2 = nome_split[-1].split('_')
+
+    #observatory = nome_split2[-3]
+    draw_filter = nome_split2[1]
+
+    return hora_img, data_img, draw_filter
 
 
 def photoshoot(etime, pre, binning):
@@ -538,8 +568,8 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-    fn = pre+"_"+tempo
-    name = path+fn
+    fn = sitename + "_" + pre + "_" + tempo
+    name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
     fitsname_final = fn + '.fits'
