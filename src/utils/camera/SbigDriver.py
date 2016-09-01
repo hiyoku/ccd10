@@ -1,23 +1,17 @@
 import ctypes
 import os
 import sys
-from ctypes import c_ushort, POINTER, byref
-
-import numpy as np
-import subprocess
-from matplotlib import pyplot
-
-import pyfits as fits
 import time
+from ctypes import c_ushort, POINTER, byref
 from datetime import datetime
 
+import numpy as np
+import pyfits as fits
+
+from PIL import Image, ImageColor, ImageDraw, ImageFont
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
-#from src.business.consoleThreadOutput import ConsoleThreadOutput
-
-from PIL import Image, ImageDraw, ImageFont
-
-
+from scipy.misc import toimage
 # Load Driver (DLL)
 try:
     if sys.platform.startswith("linux"):
@@ -161,7 +155,7 @@ def getlinkstatus():
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    # print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    #print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
     return cout.linkEstablished == 1
 
 
@@ -376,7 +370,7 @@ def set_header(filename):
     # Criando o arquivo final
     try:
         print("Tricat do set_header")
-        # Fechando e removendo o arquivo temporário
+        # Fechando e removendo o arquivo temporario
         # fits_file.flush()
         fits_file.close()
     except OSError as e:
@@ -385,42 +379,37 @@ def set_header(filename):
 
 
 def set_png(filename, newname):
-    print("Abrindo filename")
+    print("abrindo filename")
     fits_file = fits.open(filename)
 
-    data, hora, dia, mes, ano = get_date_hour(newname)
-
-    print("\n\nHora = " + hora)
-    print("Data = " + dia + "/" + mes + "/" + ano + "\n\n")
-
     try:
-        '''
+
         print("tricat do set_png")
-        pyplot.imshow(fits_file[0].data, cmap='gray')
-        pyplot.axis('off')
-        pyplot.savefig(newname, bbox_inches='tight')
-        '''
+        img = toimage(fits_file[0].data)
 
-        #newname_aux = str(newname[19:])
-        subprocess.call('convert ' + filename + ' -depth 8 -size 512x512 ' + newname, shell=True)
+        hora_img, data_img = get_date_hour_image(newname)
 
-        '''Desenhando na imagem png'''
-
-        hora_img, dia_img, mes_img, ano_img = get_date_hour_image(newname)
+        '''Resize'''
+        width = 512
+        height = 512
+        resizedIm = img.resize((int(width), int(height)))
+        resizedIm.save(newname)
 
         img = Image.open(newname)
-        draw = ImageDraw.Draw(img)
-        draw.text((100, 150), 'Observatorio.\n' + hora_img + '\n' + dia_img + "/" + mes_img + "/" + ano_img, fill='white')
-        del draw
-        img.save(newname)
 
+        draw = ImageDraw.Draw(img)
+        draw.text((0, 0), 'OBSERVATORIO', fill='white')
+        draw.text((450, 0), 'EMISSAO', fill='white')
+        draw.text((420, 500), hora_img, fill='white')
+        draw.text((0, 500), data_img, fill='white')
+        del draw
+
+        img.save(newname)
 
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
-        pyplot.close()
-        #os.chdir(os.path.dirname(dir_images))
 
 
 def set_path(pre):
@@ -449,25 +438,13 @@ def get_date_hour(tempo):
     data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
     hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
-    dia = data[7:9]
-    mes = data[5:7]
-    ano = data[0:4]
+    return data, hora
 
-    return data, hora, dia, mes, ano
-
-#pre_20160830_204831.png
 def get_date_hour_image(tempo):
-    hora_img = tempo[-10:-8]+":"+tempo[-8:-6]+":"+tempo[-6:-4]
+    hora_img = tempo[-10:-8] + ":" + tempo[-8:-6]+":" + tempo[-6:-4] + " UT"
+    data_img = tempo[-13:-11] + "/" + tempo[-15:-13] + "/" + tempo[-19:-15]
 
-    dia_img = tempo[-13:-11]
-    mes_img = tempo[-15:-13]
-    ano_img = tempo[-19:-15]
-
-    print('\n\nData:')
-    print('dia = ' + dia_img + ' mes' + mes_img + ' ano' + ano_img)
-    print('\n\n')
-
-    return hora_img, dia_img, mes_img, ano_img
+    return hora_img, data_img
 
 
 def photoshoot(etime, pre, binning):
@@ -615,7 +592,6 @@ def photoshoot(etime, pre, binning):
     print("Call set_png")
     set_png(fitsname, pngname)
 
-    data, hora, dia, mes, ano = get_date_hour(tempo)
-
+    data, hora = get_date_hour(tempo)
     print("Final do processo")
     return path, pngname_final, fitsname_final, data, hora
