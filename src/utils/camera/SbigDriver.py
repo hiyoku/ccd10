@@ -1,18 +1,17 @@
 import ctypes
 import os
 import sys
+import time
 from ctypes import c_ushort, POINTER, byref
+from datetime import datetime
 
 import numpy as np
-from matplotlib import pyplot
-
 import pyfits as fits
-import time
-from datetime import datetime
+from PIL import Image, ImageDraw
+from scipy.misc import toimage
 
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
-from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 # Load Driver (DLL)
 try:
@@ -26,6 +25,7 @@ except Exception as e:
     print(e)
     # ConsoleThreadOutput().raise_text("Não foi possível carregar o Driver.", 3)
     import platform
+
     try:
         bits, linkage = platform.architecture()
         if bits.startswith("32"):
@@ -157,7 +157,7 @@ def getlinkstatus():
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    # print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
     return cout.linkEstablished == 1
 
 
@@ -300,7 +300,6 @@ def get_filterposition():
 
 # Starting Fan
 def start_fan():
-
     mcp = SbigStructures.MiscellaneousControlParams
     mcr = None
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(mcp), POINTER(mcr)]
@@ -331,7 +330,6 @@ def stop_fan():
 
 # Checking if is Fanning
 def is_fanning():
-
     qsp = SbigStructures.QueryTemperatureStatusParams
     qtsr = SbigStructures.QueryTemperatureStatusResults2
 
@@ -350,7 +348,6 @@ def is_fanning():
 
 def ccdinfo():
     for ccd in SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value, SbigLib.CCD_INFO_REQUEST.CCD_INFO_TRACKING.value:
-
         cin = SbigStructures.ReadOutInfo
         cout = SbigStructures.GetCCDInfoResults0
         udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
@@ -372,7 +369,7 @@ def set_header(filename):
     # Criando o arquivo final
     try:
         print("Tricat do set_header")
-        # Fechando e removendo o arquivo tempor�rio
+        # Fechando e removendo o arquivo temporario
         # fits_file.flush()
         fits_file.close()
     except OSError as e:
@@ -385,27 +382,46 @@ def set_png(filename, newname):
     fits_file = fits.open(filename)
 
     try:
+
         print("tricat do set_png")
-        pyplot.imshow(fits_file[0].data, cmap='gray')
-        pyplot.axis('off')
-        pyplot.savefig(newname, bbox_inches='tight')
+        img = toimage(fits_file[0].data)
+
+        hora_img, data_img = get_date_hour_image(newname)
+
+        '''Resize'''
+
+        width = 512
+        height = 512
+        resized_img = img.resize((int(width), int(height)))
+        resized_img.save(newname)
+
+        img = Image.open(newname)
+
+        draw = ImageDraw.Draw(img)
+        draw.text((0, 0), 'OBSERVATORIO', fill='white')
+        draw.text((450, 0), 'EMISSAO', fill='white')
+        draw.text((420, 500), hora_img, fill='white')
+        draw.text((0, 500), data_img, fill='white')
+        del draw
+
+        img.save(newname)
+
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
-        pyplot.close()
 
 
 def set_path(pre):
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
-    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
+    data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
     from src.business.configuration.configSystem import ConfigSystem
     cs = ConfigSystem()
     path = str(cs.get_image_path()) + "/"
     if int(tempo[9:11]) > 12:
-        path = path+pre+"_"+data+"/"
+        path = path + pre + "_" + data + "/"
     else:
         day = int(tempo[6:8])
         if 0 < day < 10:
@@ -413,16 +429,23 @@ def set_path(pre):
         else:
             day = str(day - 1)
 
-        path = path+pre+"_"+tempo[0:4]+"_"+tempo[4:6]+day+"/"
+        path = path + pre + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
 
     return path, tempo
 
 
 def get_date_hour(tempo):
-    data = tempo[0:4]+"_"+tempo[4:6]+tempo[6:8]
-    hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+    data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
+    hora = tempo[9:11] + ":" + tempo[11:13] + ":" + tempo[13:15]
 
     return data, hora
+
+
+def get_date_hour_image(tempo):
+    hora_img = tempo[-10:-8] + ":" + tempo[-8:-6] + ":" + tempo[-6:-4] + " UT"
+    data_img = tempo[-13:-11] + "/" + tempo[-15:-13] + "/" + tempo[-19:-15]
+
+    return hora_img, data_img
 
 
 def photoshoot(etime, pre, binning):
@@ -459,16 +482,16 @@ def photoshoot(etime, pre, binning):
     v_w = readout_mode[1]
     if binning == 1:
         v_read = 1
-        v_h = int(v_h/2)
-        v_w = int(v_w/2)
+        v_h = int(v_h / 2)
+        v_w = int(v_w / 2)
     elif binning == 2:
         v_read = 2
-        v_h = int(v_h/3)
-        v_w = int(v_w/3)
+        v_h = int(v_h / 3)
+        v_w = int(v_w / 3)
 
-    print("Binning = "+str(v_read))
-    print("Height = "+str(v_h))
-    print("Width = "+str(v_w))
+    print("Binning = " + str(v_read))
+    print("Height = " + str(v_h))
+    print("Width = " + str(v_w))
 
     print("GRAB IMAGE - Start Exposure")
     cin = SbigStructures.StartExposureParams2
@@ -477,8 +500,8 @@ def photoshoot(etime, pre, binning):
     cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, exposureTime=etime,
               openShutter=SbigLib.SHUTTER_COMMAND.SC_OPEN_SHUTTER.value, readoutMode=v_read, top=0, left=0,
               height=v_h, width=v_w)
-    print("Readout Height: "+str(v_h))
-    print("Readout Width: "+str(v_w))
+    print("Readout Height: " + str(v_h))
+    print("Readout Width: " + str(v_w))
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_START_EXPOSURE2.value, byref(cin), cout)
     print("Ret: ", ret)
 
@@ -538,8 +561,8 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-    fn = pre+"_"+tempo
-    name = path+fn
+    fn = pre + "_" + tempo
+    name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
     fitsname_final = fn + '.fits'
