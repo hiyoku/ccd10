@@ -382,38 +382,40 @@ def set_png(filename, newname):
     fits_file = fits.open(filename)
 
     try:
-
         print("tricat do set_png")
         img = toimage(fits_file[0].data)
-
-        hora_img, data_img = get_date_hour_image(newname)
-
-        '''Resize'''
-
-        width = 512
-        height = 512
-        resized_img = img.resize((int(width), int(height)))
-        resized_img.save(newname)
-
-        img = Image.open(newname)
-
-        fontsFolder = '/usr/share/fonts/truetype'
-
-        times_nr_Font = ImageFont.truetype(os.path.join(fontsFolder, 'Times_New_Roman.ttf'), 16)
-
-        draw = ImageDraw.Draw(img)
-        draw.text((0, 0), 'OBSERVATORIO', fill='white', font=times_nr_Font)
-        draw.text((430, 0), 'EMISSAO', fill='white', font=times_nr_Font)
-        draw.text((420, 490), hora_img, fill='white', font=times_nr_Font)
-        draw.text((0, 490), data_img, fill='white', font=times_nr_Font)
-        del draw
-
         img.save(newname)
+        resize_image_512X512(newname)
+        draw_image(newname)
 
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
+
+
+def resize_image_512X512(name_png):
+    img = Image.open(name_png)
+    resized_img = img.resize((int(512), int(512)))
+    resized_img.save(name_png)
+
+
+def draw_image(name_png):
+    hora_img, data_img = get_date_hour_image(name_png)
+
+    img = Image.open(name_png)
+
+    fontsFolder = '/usr/share/fonts/truetype'
+    times_nr_Font = ImageFont.truetype(os.path.join(fontsFolder, 'Times_New_Roman_Bold.ttf'), 16)
+
+    draw = ImageDraw.Draw(img)
+    draw.text((10, 10), 'OBS', fill='white', font=times_nr_Font)
+    draw.text((480, 10), 'EMI', fill='white', font=times_nr_Font)
+    draw.text((420, 490), hora_img, fill='white', font=times_nr_Font)
+    draw.text((10, 490), data_img, fill='white', font=times_nr_Font)
+    del draw
+
+    img.save(name_png)
 
 
 def set_path(pre):
