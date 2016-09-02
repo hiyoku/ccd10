@@ -399,13 +399,13 @@ def set_png(filename, newname):
 
         fontsFolder = '/usr/share/fonts/truetype'
 
-        arialFont = ImageFont.truetype(os.path.join(fontsFolder, 'arial.ttf'), 16)
+        times_nr_Font = ImageFont.truetype(os.path.join(fontsFolder, 'Times_New_Roman.ttf'), 16)
 
         draw = ImageDraw.Draw(img)
-        draw.text((0, 0), 'OBSERVATORIO', fill='white', font=arialFont)
-        draw.text((430, 0), 'EMISSAO', fill='white', font=arialFont)
-        draw.text((420, 490), hora_img, fill='white', font=arialFont)
-        draw.text((0, 490), data_img, fill='white', font=arialFont)
+        draw.text((0, 0), 'OBSERVATORIO', fill='white', font=times_nr_Font)
+        draw.text((430, 0), 'EMISSAO', fill='white', font=times_nr_Font)
+        draw.text((420, 490), hora_img, fill='white', font=times_nr_Font)
+        draw.text((0, 490), data_img, fill='white', font=times_nr_Font)
         del draw
 
         img.save(newname)
