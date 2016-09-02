@@ -7,7 +7,7 @@ from datetime import datetime
 
 import numpy as np
 import pyfits as fits
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from scipy.misc import toimage
 
 from src.utils.camera import SbigLib
@@ -157,7 +157,7 @@ def getlinkstatus():
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
     cout = cout()
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_GET_LINK_STATUS.value, cin, byref(cout))
-    print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
+    #print(ret, cout.linkEstablished, cout.baseAddress, cout.cameraType, cout.comTotal, cout.comFailed)
     return cout.linkEstablished == 1
 
 
@@ -397,11 +397,15 @@ def set_png(filename, newname):
 
         img = Image.open(newname)
 
+        fontsFolder = '/usr/share/fonts/truetype'
+
+        arialFont = ImageFont.truetype(os.path.join(fontsFolder, 'arial.ttf'), 16)
+
         draw = ImageDraw.Draw(img)
-        draw.text((0, 0), 'OBSERVATORIO', fill='white')
-        draw.text((450, 0), 'EMISSAO', fill='white')
-        draw.text((420, 500), hora_img, fill='white')
-        draw.text((0, 500), data_img, fill='white')
+        draw.text((0, 0), 'OBSERVATORIO', fill='white', font=arialFont)
+        draw.text((430, 0), 'EMISSAO', fill='white', font=arialFont)
+        draw.text((420, 490), hora_img, fill='white', font=arialFont)
+        draw.text((0, 490), data_img, fill='white', font=arialFont)
         del draw
 
         img.save(newname)
