@@ -49,11 +49,11 @@ class Shooter(QtWidgets.QWidget):
         # self.fill_combo()
         #
         # hbox = set_hbox(self.sbutton, self.tb,
-        #                 QLabel("Prefixo:", self), self.pre,
-        #                 QLabel("Binning:", self), self.combo,
-        #                 self.abutton,
-        #                 QLabel("Hora:", self), self.htext,
-        #                 QLabel("Min:", self), self.mtext)
+        # QLabel("Prefixo:", self), self.pre,
+        # QLabel("Binning:", self), self.combo,
+        # self.abutton,
+        # QLabel("Hora:", self), self.htext,
+        # QLabel("Min:", self), self.mtext)
 
         hb2 = set_hbox(self.prefix, self.date, self.hour)
 

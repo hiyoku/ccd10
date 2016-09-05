@@ -17,7 +17,6 @@ class SiteInfo(QtWidgets.QFrame):
 
         self.make_layout()
 
-
     def init_site_widgets(self, sitename, imagername):
         self.title = QtWidgets.QLabel("Site Information", self)
         self.site = QtWidgets.QLabel("Site Name:", self)
@@ -35,7 +34,6 @@ class SiteInfo(QtWidgets.QFrame):
         self.longr = QtWidgets.QLabel(str(long) + "º", self)
         self.elevr = QtWidgets.QLabel(str(elev) + "m", self)
         self.pressr = QtWidgets.QLabel(str(press) + "mb", self)
-
 
     def set_site_values(self, sitename, imagername):
         self.siter.setText(sitename)

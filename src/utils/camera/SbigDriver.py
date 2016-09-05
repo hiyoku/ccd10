@@ -385,7 +385,7 @@ def set_png(filename, newname):
         print("tricat do set_png")
         img = toimage(fits_file[0].data)
         img.save(newname)
-        resize_image_512X512(newname)
+        resize_image_512x512(newname)
         draw_image(newname)
 
     except Exception as e:
@@ -394,7 +394,7 @@ def set_png(filename, newname):
         fits_file.close()
 
 
-def resize_image_512X512(name_png):
+def resize_image_512x512(name_png):
     img = Image.open(name_png)
     resized_img = img.resize((int(512), int(512)))
     resized_img.save(name_png)
@@ -402,6 +402,7 @@ def resize_image_512X512(name_png):
 
 def draw_image(name_png):
     hora_img, data_img = get_date_hour_image(name_png)
+    filter_img = get_filter(name_png)
 
     img = Image.open(name_png)
 
@@ -410,7 +411,7 @@ def draw_image(name_png):
 
     draw = ImageDraw.Draw(img)
     draw.text((10, 10), 'OBS', fill='white', font=times_nr_Font)
-    draw.text((480, 10), 'EMI', fill='white', font=times_nr_Font)
+    draw.text((470, 10), filter_img, fill='white', font=times_nr_Font)
     draw.text((420, 490), hora_img, fill='white', font=times_nr_Font)
     draw.text((10, 490), data_img, fill='white', font=times_nr_Font)
     del draw
@@ -452,6 +453,14 @@ def get_date_hour_image(tempo):
     data_img = tempo[-13:-11] + "/" + tempo[-15:-13] + "/" + tempo[-19:-15]
 
     return hora_img, data_img
+
+
+def get_filter(name):
+    name_aux = name.split('/')[-1]
+    count_find_underline = name_aux.find('_')
+    name_filter = name_aux[:count_find_underline]
+
+    return name_filter
 
 
 def photoshoot(etime, pre, binning):
@@ -567,7 +576,7 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-    fn = pre + "_" + tempo
+    fn = pre + "_" + "obs" + "_" + tempo
     name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
