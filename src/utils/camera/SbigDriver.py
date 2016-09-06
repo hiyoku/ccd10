@@ -590,12 +590,15 @@ def photoshoot(etime, pre, binning):
     if not os.path.isdir(path):
         os.makedirs(path)
 
+
+    '''Acessando o valor de site_id'''
+
     from src.business.configuration.configProject import ConfigProject
     ci = ConfigProject()
     site_id_name = str(ci.get_site_settings())
 
     site_id_name_aux = site_id_name
-    get_observatory(site_id_name_aux)
+    site_id_name_aux = get_observatory(site_id_name_aux)
 
     print("\n\nsite_id_name ==============" + site_id_name_aux + '\n\n')
 
