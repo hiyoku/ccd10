@@ -13,6 +13,9 @@ from scipy.misc import toimage
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
 
+from src.business.configuration.constants import system as project_info
+
+
 # Load Driver (DLL)
 try:
     if sys.platform.startswith("linux"):
@@ -402,7 +405,7 @@ def resize_image_512x512(name_png):
 
 def draw_image(name_png):
     hora_img, data_img = get_date_hour_image(name_png)
-    filter_img = get_filter(name_png)
+    filter_img, observatory_img = get_filter_observatory(name_png)
 
     img = Image.open(name_png)
 
@@ -410,7 +413,7 @@ def draw_image(name_png):
     times_nr_Font = ImageFont.truetype(os.path.join(fontsFolder, 'Times_New_Roman_Bold.ttf'), 16)
 
     draw = ImageDraw.Draw(img)
-    draw.text((10, 10), 'OBS', fill='white', font=times_nr_Font)
+    draw.text((10, 10), observatory_img, fill='white', font=times_nr_Font)
     draw.text((470, 10), filter_img, fill='white', font=times_nr_Font)
     draw.text((420, 490), hora_img, fill='white', font=times_nr_Font)
     draw.text((10, 490), data_img, fill='white', font=times_nr_Font)
@@ -424,6 +427,7 @@ def set_path(pre):
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
+
     from src.business.configuration.configSystem import ConfigSystem
     cs = ConfigSystem()
     path = str(cs.get_image_path()) + "/"
@@ -455,12 +459,21 @@ def get_date_hour_image(tempo):
     return hora_img, data_img
 
 
-def get_filter(name):
+def get_filter_observatory(name):
     name_aux = name.split('/')[-1]
-    count_find_underline = name_aux.find('_')
-    name_filter = name_aux[:count_find_underline]
+    name_filter = name_aux.split('_')[0]
+    name_observatory = name_aux.split('_')[1]
 
-    return name_filter
+    return name_filter, name_observatory
+
+
+'''Funcao temporaria'''
+
+
+def get_observatory(name):
+    name_aux = name.split(',')[1]
+
+    return name_aux
 
 
 def photoshoot(etime, pre, binning):
@@ -576,7 +589,18 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-    fn = pre + "_" + "obs" + "_" + tempo
+
+    from src.business.configuration.configProject import ConfigProject
+    ci = ConfigProject()
+    site_id_name = str(ci.get_site_settings())
+
+    site_id_name_aux = site_id_name
+    get_observatory(site_id_name_aux)
+
+    print("\n\nsite_id_name ==============" + site_id_name_aux + '\n\n')
+
+    fn = pre + "_" + site_id_name_aux + "_" + tempo
+    #fn = pre + "_" + site_id + "_" + tempo
     name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
@@ -589,7 +613,7 @@ def photoshoot(etime, pre, binning):
         pass
 
     fits.writeto(fitsname, img)
-
+    #src.utils.camera.SbigDriver.site
     print("GRAB IMAGE - End Readout")
 
     cin = SbigStructures.EndReadoutParams
