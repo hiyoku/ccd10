@@ -428,19 +428,31 @@ def set_path(pre):
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
-    from src.business.configuration.configSystem import ConfigSystem
-    cs = ConfigSystem()
-    path = str(cs.get_image_path()) + "/"
+
+    #from src.business.configuration.configSystem import ConfigSystem
+    #cs = ConfigSystem()
+    #path = str(cs.get_image_path()) + "/"
+
+    from src.business.configuration.configProject import ConfigProject
+    ci = ConfigProject()
+    name_observatory = str(ci.get_site_settings())
+    path = get_observatory(name_observatory)
+
     if int(tempo[9:11]) > 12:
-        path = path + pre + "_" + data + "/"
+        path = path + "_" + data + "/"
+        print("\n\nAQUI!!!!\n\n")
     else:
         day = int(tempo[6:8])
         if 0 < day < 10:
             day = "0" + str(day - 1)
+            print("\n\n22222222222222222!!!!\n\n")
+
         else:
             day = str(day - 1)
+            print("\n\n3333333333333333!!!!\n\n")
 
-        path = path + pre + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
+
+        path = path + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
 
     return path, tempo
 
@@ -471,7 +483,9 @@ def get_filter_observatory(name):
 
 
 def get_observatory(name):
-    name_aux = name.split(',')[1]
+    name_aux = str(name).split(',')[1]
+    name_aux = name_aux.replace("\'", "")
+    name_aux = name_aux.replace(" ", "")
 
     return name_aux
 
@@ -600,10 +614,7 @@ def photoshoot(etime, pre, binning):
     site_id_name_aux = site_id_name
     site_id_name_aux = get_observatory(site_id_name_aux)
 
-    print("\n\nsite_id_name ==============" + site_id_name_aux + '\n\n')
-
     fn = pre + "_" + site_id_name_aux + "_" + tempo
-    #fn = pre + "_" + site_id + "_" + tempo
     name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
