@@ -429,30 +429,25 @@ def set_path(pre):
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
 
-    #from src.business.configuration.configSystem import ConfigSystem
-    #cs = ConfigSystem()
-    #path = str(cs.get_image_path()) + "/"
+    from src.business.configuration.configSystem import ConfigSystem
+    cs = ConfigSystem()
+    path = str(cs.get_image_path()) + "/"
 
     from src.business.configuration.configProject import ConfigProject
     ci = ConfigProject()
     name_observatory = str(ci.get_site_settings())
-    path = get_observatory(name_observatory)
+    name_observatory = get_observatory(name_observatory)
 
     if int(tempo[9:11]) > 12:
-        path = path + "_" + data + "/"
-        print("\n\nAQUI!!!!\n\n")
+        path = path + name_observatory + "_" + data + "/"
     else:
         day = int(tempo[6:8])
         if 0 < day < 10:
             day = "0" + str(day - 1)
-            print("\n\n22222222222222222!!!!\n\n")
-
         else:
             day = str(day - 1)
-            print("\n\n3333333333333333!!!!\n\n")
 
-
-        path = path + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
+        path = path + name_observatory + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
 
     return path, tempo
 
@@ -611,10 +606,9 @@ def photoshoot(etime, pre, binning):
     ci = ConfigProject()
     site_id_name = str(ci.get_site_settings())
 
-    site_id_name_aux = site_id_name
-    site_id_name_aux = get_observatory(site_id_name_aux)
+    site_id_name = get_observatory(site_id_name)
 
-    fn = pre + "_" + site_id_name_aux + "_" + tempo
+    fn = pre + "_" + site_id_name + "_" + tempo
     name = path + fn
     fitsname = name + '.fits'
     pngname = name + '.png'
