@@ -27,7 +27,8 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
                                  set_hbox(self.fanButton),
-                                 set_hbox(self.buttonok, stretch2=1)))
+                                 set_hbox(self.buttonok, stretch2=1),
+                                 set_hbox(self.buttoncancel, stretch2=2)))
 
     def get_values(self):
         return self.cam.get_camera_settings()
@@ -62,6 +63,9 @@ class SettingsWindow(QtWidgets.QWidget):
         self.buttonok = QtWidgets.QPushButton("Save", self)
         self.buttonok.clicked.connect(self.button_ok_func)
 
+        self.buttoncancel = QtWidgets.QPushButton("Cancel", self)
+        self.buttoncancel.clicked.connect(self.func_cancel)
+
         self.tempo_fotos = QtWidgets.QLineEdit(self)
         self.tempo_fotos_label = QtWidgets.QLabel("Time between photos:", self)
 
@@ -81,6 +85,9 @@ class SettingsWindow(QtWidgets.QWidget):
             self.console.raise_text("Camera settings were not saved.", 3)
         finally:
             self.p.close()
+
+    def func_cancel(self):
+        self.p.close()
 
     def button_fan_func(self):
         try:
