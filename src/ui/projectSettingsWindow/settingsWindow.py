@@ -18,8 +18,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.site = WidgetsSite(self)
         self.geo = WidgetsGeography(self)
         self.sun = WidgetsSun(self)
-        self.button_ok = QtWidgets.QPushButton('Salvar', self)
-        self.button_cancel = QtWidgets.QPushButton('Cancelar', self)
+        self.button_ok = QtWidgets.QPushButton('Save', self)
+        self.button_cancel = QtWidgets.QPushButton('Cancel', self)
         self.button_settings()
 
         # Init Interface
@@ -37,9 +37,9 @@ class SettingsWindow(QtWidgets.QWidget):
     def func_ok(self):
         try:
             self.save_settings()
-            self.console.raise_text("Configurações do projeto salvas com sucesso!", 1)
+            self.console.raise_text("Project settings successfully saved!", 1)
         except:
-            self.console.raise_text("Não foi possível salvar as configurações do projeto.", 3)
+            self.console.raise_text("Unable to save the project settings.", 3)
         finally:
             self.p.close()
             self.clear_all()

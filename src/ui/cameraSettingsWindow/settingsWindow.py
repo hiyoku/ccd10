@@ -27,8 +27,7 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
                                  set_hbox(self.fanButton),
-                                 set_hbox(self.buttonok, stretch2=1),
-                                 set_hbox(self.buttoncancel, stretch2=2)))
+                                 set_hbox(self.buttonok, self.buttoncancel, stretch2=1)))
 
     def get_values(self):
         return self.cam.get_camera_settings()
