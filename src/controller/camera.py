@@ -79,7 +79,7 @@ class Camera(metaclass=Singleton):
         try:
             ret = tuple(ccdinfo())
         except Exception as e:
-            self.console.raise_text("Falha ao obter informações da câmera.\n{}".format(e))
+            self.console.raise_text("Failed to get camera information.\n{}".format(e))
         finally:
             self.lock.set_release()
         return ret
@@ -90,15 +90,15 @@ class Camera(metaclass=Singleton):
             open_deviceusb()
             c = establishinglink()
             if a is True and c is True:
-                self.console.raise_text("Conectado com sucesso! {} {}".format(a, c), 2)
+                self.console.raise_text("Successfully connected! {} {}".format(a, c), 2)
                 self.set_firmware_and_model_values()
                 self.fan.refresh_fan_status()
                 return True
             else:
-                self.console.raise_text("Erro na conexão", 3)
+                self.console.raise_text("Connection error", 3)
 
         except Exception as e:
-            self.console.raise_text('Houve falha ao se conectar a camera!\n{}'.format(e), 3)
+            self.console.raise_text('Failed to connect the camera!\n{}'.format(e), 3)
 
         return False
 
@@ -109,12 +109,12 @@ class Camera(metaclass=Singleton):
             cdr = close_driver()
 
             if cd and cdr:
-                self.console.raise_text("Desconectado com sucesso! {} {}".format(cd, cdr), 2)
+                self.console.raise_text("Successfully disconnected!{} {}".format(cd, cdr), 2)
                 self.clear_firmware_and_model_values()
             else:
-                self.console.raise_text("Erro ao desconectar {} {}".format(cd, cdr), 3)
+                self.console.raise_text("Error disconnect! {} {}".format(cd, cdr), 3)
         except Exception as e:
-            self.console.raise_text("Houve falha ao se desconectar a camera!\n{}".format(e), 3)
+            self.console.raise_text("It failed to disconnect the camera!\n{}".format(e), 3)
 
     def set_temperature(self, value):
         if getlinkstatus() is True:
@@ -122,12 +122,12 @@ class Camera(metaclass=Singleton):
             try:
                 set_temperature(regulation=True, setpoint=value, autofreeze=False)
             except Exception as e:
-                self.console.raise_text("Erro ao configurar a temperatura.\n{}".format(e), 3)
+                self.console.raise_text("Error setting the temperature.\n{}".format(e), 3)
             finally:
                 self.lock.set_release()
-                self.console.raise_text("Temperature configurada para {}".format(int(value)), 1)
+                self.console.raise_text("Temperature set to {}".format(int(value)), 1)
         else:
-            self.console.raise_text("A camera não está conectada!", 3)
+            self.console.raise_text("The camera is not connected!", 3)
 
     def get_temperature(self):
         temp = "None"
@@ -142,7 +142,7 @@ class Camera(metaclass=Singleton):
             else:
                 temp = "None"
         except Exception as e:
-            self.console.raise_text("Não foi possível recuperar a temperatura.\n{}".format(e), 3)
+            self.console.raise_text("Unable to retrieve the temperature.\n{}".format(e), 3)
 
         return temp
 
@@ -167,7 +167,7 @@ class Camera(metaclass=Singleton):
                 self.continuousShooterThread.start_continuous_shooter()
                 self.continuousShooterThread.start()
             else:
-                self.console.raise_text("A camera não está conectada!", 3)
+                self.console.raise_text("The camera is not connected", 3)
         except Exception as e:
             print(e)
 
@@ -175,35 +175,35 @@ class Camera(metaclass=Singleton):
         if getlinkstatus() is True:
             self.continuousShooterThread.stop_continuous_shooter()
         else:
-            self.console.raise_text("A camera não está conectada!", 3)
+            self.console.raise_text("The camera is not connected!", 3)
 
     def start_ephemeris_shooter(self):
         if getlinkstatus() is True:
             self.ephemerisShooterThread.start()
         else:
-            self.console.raise_text("A camera não está conectada!", 3)
+            self.console.raise_text("The camera is not connected!", 3)
 
     def stop_ephemeris_shooter(self):
         if getlinkstatus() is True:
             self.ephemerisShooterThread.stop_shooter()
         else:
-            self.console.raise_text("A camera não está conectada!", 3)
+            self.console.raise_text("The camera is not connected!", 3)
 
     # All PyQt Slots
 
     def eshooter_started(self):
-        self.console.raise_text("Shooter de Efemérides Iniciado!", 1)
+        self.console.raise_text("Shooter Ephemeris Started!", 1)
         self.standby_mode()
 
     def eshooter_finished(self):
-        self.console.raise_text('Shooter finalizado', 1)
+        self.console.raise_text('Shooter finalized', 1)
 
     def eshooter_observation_started(self):
         self.shooting = True
-        self.console.raise_text("Observation Iniciada", 1)
+        self.console.raise_text("Observation Started", 1)
 
     def eshooter_observation_finished(self):
-        self.console.raise_text("Observation Finalizada", 1)
+        self.console.raise_text("Observation Finalized", 1)
         self.standby_mode()
         self.shooting = False
 
