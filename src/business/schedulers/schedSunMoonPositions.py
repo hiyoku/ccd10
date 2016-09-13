@@ -22,5 +22,5 @@ class SchedSunMoonPositions(metaclass=Singleton):
             self.moonElevationField.setText(info[1])
             self.moonPhaseField.setText(info[2])
         except Exception as e:
-            self.console.raise_text("Erro no Scheduler de sun e moon\n{}".format(e))
+            self.console.raise_text("Error sun and moon Scheduler\n{}".format(e))
 

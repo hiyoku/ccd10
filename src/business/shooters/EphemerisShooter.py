@@ -57,7 +57,7 @@ class EphemerisShooter(QtCore.QThread):
             self.max_lunar_phase = float(infosun[3])  # 1
 
         except Exception as e:
-            self.console.raise_text("Excessão lançada ao adquirir informações\n" + str(e), level=3)
+            self.console.raise_text("Exception thrown to acquire information\n" + str(e), level=3)
             self.latitude = 0
             self.longitude = 0
             self.elevation = 0

@@ -83,7 +83,7 @@ class Shooter(QtWidgets.QWidget):
             print(e)
 
     def set_image(self, img):
-        print("Setando os Pixmap")
+        print("Setting Pixmap")
         try:
             path = img.path + img.png_name
             self.img.setPixmap(QtGui.QPixmap(path))

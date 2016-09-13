@@ -24,7 +24,7 @@ class Fan(metaclass=Singleton):
             # Doing requisition to Driver
             status = SbigDriver.is_fanning()
         except Exception as e:
-            self.console.raise_text("Erro ao adquirir o status da Fan.\n{}".format(e))
+            self.console.raise_text("Error acquiring the status of Fan.\n{}".format(e))
 
         # Release the Lock
         self.lock.set_release()
@@ -48,7 +48,7 @@ class Fan(metaclass=Singleton):
                 SbigDriver.start_fan()
                 self.fanField.setText('Fan On')
         except Exception as e:
-            self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
+            self.console.raise_text("Error off/on the Fan.\n{}".format(e))
         finally:
             self.lock.set_release()
             self.fanField.setText(self.fan_status())
@@ -58,7 +58,7 @@ class Fan(metaclass=Singleton):
         try:
             SbigDriver.stop_fan()
         except Exception as e:
-            self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
+            self.console.raise_text("Error off/on the Fan.\n{}".format(e))
         finally:
             self.lock.set_release()
             self.fanField.setText(self.fan_status())
@@ -68,7 +68,7 @@ class Fan(metaclass=Singleton):
         try:
             SbigDriver.start_fan()
         except Exception as e:
-            self.console.raise_text("Erro ao desligar/ligar a Fan.\n{}".format(e))
+            self.console.raise_text("Error off/on the Fan.\n{}".format(e))
         finally:
             self.lock.set_release()
             self.fanField.setText(self.fan_status())

@@ -53,10 +53,10 @@ class CameraQThread(QtCore.QThread):
             open_deviceusb()
             c = establishinglink()
             if a is True and c is True:
-                self.text = "Conectado com sucesso! {} {}".format(a, c)
+                self.text = "Successfully connected! {} {}".format(a, c)
             else:
-                self.text = "Erro na conexão"
+                self.text = "Error in connection"
         except Exception as e:
-            self.text = 'Houve falha ao se conectar a camera!\n{}'.format(e)
+            self.text = 'Failed to connect to camera!\n{}'.format(e)
         finally:
             self.lock.set_release()

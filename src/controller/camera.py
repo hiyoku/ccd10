@@ -200,10 +200,10 @@ class Camera(metaclass=Singleton):
 
     def eshooter_observation_started(self):
         self.shooting = True
-        self.console.raise_text("Observação Iniciada", 1)
+        self.console.raise_text("Observation Iniciada", 1)
 
     def eshooter_observation_finished(self):
-        self.console.raise_text("Observação Finalizada", 1)
+        self.console.raise_text("Observation Finalizada", 1)
         self.standby_mode()
         self.shooting = False
 

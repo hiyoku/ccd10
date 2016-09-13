@@ -371,7 +371,7 @@ def set_header(filename):
 
     # Criando o arquivo final
     try:
-        print("Tricat do set_header")
+        print("Tricat of set_header")
         # Fechando e removendo o arquivo temporario
         # fits_file.flush()
         fits_file.close()
@@ -381,11 +381,11 @@ def set_header(filename):
 
 
 def set_png(filename, newname):
-    print("abrindo filename")
+    print("Opening filename")
     fits_file = fits.open(filename)
 
     try:
-        print("tricat do set_png")
+        print("tricat of set_png")
         img = toimage(fits_file[0].data)
         img.save(newname)
         resize_image_512x512(newname)
@@ -427,7 +427,6 @@ def set_path(pre):
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
-
 
     from src.business.configuration.configSystem import ConfigSystem
     cs = ConfigSystem()
@@ -622,7 +621,7 @@ def photoshoot(etime, pre, binning):
 
     fits.writeto(fitsname, img)
     #src.utils.camera.SbigDriver.site
-    print("GRAB IMAGE - End Readout")
+    print("\nGRAB IMAGE - End Readout\n")
 
     cin = SbigStructures.EndReadoutParams
     cout = None
@@ -641,5 +640,5 @@ def photoshoot(etime, pre, binning):
     set_png(fitsname, pngname)
 
     data, hora = get_date_hour(tempo)
-    print("Final do processo")
+    print("End of process")
     return path, pngname_final, fitsname_final, data, hora

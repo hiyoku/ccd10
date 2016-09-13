@@ -14,14 +14,14 @@ class SettingsWindow(QtWidgets.QWidget):
         self.cam = SettingsCamera()
         self.camera = Camera()
         self.console = ConsoleThreadOutput()
-        self.a = TempRegulation(self)
+        self.a_temp_regulation = TempRegulation(self)
         self.create_cam_widgets()
         self.p = parent
         self.fan = Fan(self.fanButton)
 
         self.setting_values()
 
-        self.setLayout(set_lvbox(set_hbox(self.a),
+        self.setLayout(set_lvbox(set_hbox(self.a_temp_regulation),
                                  set_hbox(self.pre, self.prel),
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
@@ -46,8 +46,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
-        self.pre = QtWidgets.QLabel("Prefixo:", self)
-        self.exp = QtWidgets.QLabel("Tempo de Exposição:", self)
+        self.pre = QtWidgets.QLabel("Observatory:", self)
+        self.exp = QtWidgets.QLabel("Exposure time:", self)
         self.binning = QtWidgets.QLabel("Binning:", self)
 
         self.prel = QtWidgets.QLineEdit(self)
@@ -59,16 +59,16 @@ class SettingsWindow(QtWidgets.QWidget):
         self.fanButton = QtWidgets.QPushButton("Fan")
         self.fanButton.clicked.connect(self.button_fan_func)
 
-        self.buttonok = QtWidgets.QPushButton("Salvar", self)
+        self.buttonok = QtWidgets.QPushButton("Save", self)
         self.buttonok.clicked.connect(self.button_ok_func)
 
         self.tempo_fotos = QtWidgets.QLineEdit(self)
-        self.tempo_fotos_label = QtWidgets.QLabel("Tempo entre as fotos:", self)
+        self.tempo_fotos_label = QtWidgets.QLabel("Time between photos:", self)
 
     def button_ok_func(self):
         try:
             # Setting the Temperature
-            value = self.a.setField.text()
+            value = self.a_temp_regulation.setField.text()
             if value is '':
                 value = 20
             self.camera.set_temperature(float(value))
@@ -76,18 +76,18 @@ class SettingsWindow(QtWidgets.QWidget):
             # Saving the Settings
             self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
             self.cam.save_settings()
-            self.console.raise_text("Configurações da Camera salvas com sucesso!", 1)
+            self.console.raise_text("Camera settings successfully saved!", 1)
         except Exception as e:
-            self.console.raise_text("Configurações da Camera não foram salvas.", 3)
+            self.console.raise_text("Camera settings were not saved.", 3)
         finally:
             self.p.close()
 
     def button_fan_func(self):
         try:
             self.fan.set_fan()
-            self.console.raise_text('Estado da Fan alterado!', 2)
+            self.console.raise_text('State changed Fan!', 2)
         except Exception as e:
-            self.console.raise_text('Estado da Fan não alterado', 3)
+            self.console.raise_text('State Fan unchanged', 3)
 
     def fill_combo(self):
         self.combo.addItem("1x1", 0)

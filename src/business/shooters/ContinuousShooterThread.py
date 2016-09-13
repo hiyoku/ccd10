@@ -40,5 +40,5 @@ class ContinuousShooterThread(QtCore.QThread):
         self.continuous = False
 
     def thread_iniciada(self):
-        self.console.raise_text("Tirando foto N: {}".format(self.count), 2)
+        self.console.raise_text("Taking photo N: {}".format(self.count), 2)
         self.count += 1
