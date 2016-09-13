@@ -46,7 +46,7 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
-        self.pre = QtWidgets.QLabel("Observatory:", self)
+        self.pre = QtWidgets.QLabel("Filter:", self)
         self.exp = QtWidgets.QLabel("Exposure time:", self)
         self.binning = QtWidgets.QLabel("Binning:", self)
 
