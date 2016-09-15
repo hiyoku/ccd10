@@ -19,14 +19,17 @@ class SettingsWindow(QtWidgets.QWidget):
         self.p = parent
         self.fan = Fan(self.fanButton)
 
+        #tentativa do field
+        self.setField = QtWidgets.QLineEdit(self)
+
         self.setting_values()
 
-        self.setLayout(set_lvbox(set_hbox(self.a_temp_regulation),
+        self.setLayout(set_lvbox(set_hbox(self.setField_label, self.setField),
                                  set_hbox(self.pre, self.prel),
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
-                                 set_hbox(self.fanButton),
+                                 set_hbox(self.a_temp_regulation, self.fanButton, stretch2=1),
                                  set_hbox(self.buttonok, self.buttoncancel, stretch2=1)))
 
     def get_values(self):
@@ -46,6 +49,9 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
+        #tentativa
+        self.setField_label = QtWidgets.QLabel("Temperature:", self)
+
         self.pre = QtWidgets.QLabel("Filter:", self)
         self.exp = QtWidgets.QLabel("Exposure time:", self)
         self.binning = QtWidgets.QLabel("Binning:", self)
@@ -99,3 +105,16 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.addItem("1x1", 0)
         self.combo.addItem("2x2", 1)
         self.combo.addItem("3x3", 2)
+
+
+        '''Tentativa de separação do set do field'''
+
+    def btn_temperature(self):
+            try:
+                value = self.setField.text()
+                if value is '':
+                    pass
+                else:
+                    self.cam.set_temperature(float(value))
+            except Exception as e:
+                print("Exception -> {}".format(e))
