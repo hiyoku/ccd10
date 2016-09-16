@@ -17,7 +17,7 @@ class TempRegulation(QtWidgets.QWidget):
 
         self.setField = QtWidgets.QLineEdit(self)
 
-        self.setLayout(set_hbox(self.setBtn, self.setField))
+        #self.setLayout(set_hbox(self.setBtn, self.setField))
 
     def btn_temperature(self):
         try:

@@ -15,7 +15,8 @@ class SettingsCamera:
     def save_settings(self):
         self._settings.sync()
 
-    def set_camera_settings(self, pre, exp, bin, time, teste):
+    def set_camera_settings(self, temperature_camera, pre, exp, bin, time):
+        self._settings.setValue(c.TEMPERATURE, temperature_camera)
         self._settings.setValue(c.PREFIXO, pre)
         self._settings.setValue(c.EXPOSICAO, exp)
         self._settings.setValue(c.BINNING, bin)
@@ -24,7 +25,7 @@ class SettingsCamera:
         #add temperatura, primeira variavel
 
     def get_camera_settings(self):
-        return self._settings.value(c.PREFIXO), self._settings.value(c.EXPOSICAO), self._settings.value(c.BINNING), self._settings.value(c.TIMEPHOTO)
+        return self._settings.value(c.TEMPERATURE), self._settings.value(c.PREFIXO), self._settings.value(c.EXPOSICAO), self._settings.value(c.BINNING), self._settings.value(c.TIMEPHOTO)
 
     def get_filepath(self):
         return self._settings.value(c.FILENAME)

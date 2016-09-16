@@ -14,22 +14,21 @@ class SettingsWindow(QtWidgets.QWidget):
         self.cam = SettingsCamera()
         self.camera = Camera()
         self.console = ConsoleThreadOutput()
-        self.a_temp_regulation = TempRegulation(self)
+        #self.a_temp_regulation = TempRegulation(self)
         self.create_cam_widgets()
         self.p = parent
         self.fan = Fan(self.fanButton)
 
         #tentativa do field
-        self.setField = QtWidgets.QLineEdit(self)
-
+        self.setField_temperature = QtWidgets.QLineEdit(self)
         self.setting_values()
 
-        self.setLayout(set_lvbox(set_hbox(self.setField_label, self.setField),
+        self.setLayout(set_lvbox(set_hbox(self.setField_temperature_label, self.setField_temperature),
                                  set_hbox(self.pre, self.prel),
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
-                                 set_hbox(self.a_temp_regulation, self.fanButton, stretch2=1),
+                                 set_hbox(self.tempButton, self.fanButton, stretch2=1),
                                  set_hbox(self.buttonok, self.buttoncancel, stretch2=1)))
 
     def get_values(self):
@@ -37,9 +36,10 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def setting_values(self):
         info = self.get_values()
-        self.set_values(info[0], info[1], info[2], info[3])
+        self.set_values(info[0], info[1], info[2], info[3], info[4])
 
-    def set_values(self, prefixo, exposicao, binning, tempo_entre_fotos):
+    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos):
+        self.setField_temperature.setText(temperature_camera)
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
         try:
@@ -52,7 +52,7 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def create_cam_widgets(self):
         #tentativa
-        self.setField_label = QtWidgets.QLabel("Temperature:", self)
+        self.setField_temperature_label = QtWidgets.QLabel("Temperature:", self)
 
         self.pre = QtWidgets.QLabel("Filter:", self)
         self.prel = QtWidgets.QLineEdit(self)
@@ -64,6 +64,9 @@ class SettingsWindow(QtWidgets.QWidget):
 
         self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
+
+        self.tempButton = QtWidgets.QPushButton("Set Temp", self)
+        self.tempButton.clicked.connect(self.button_ok_func)
 
         self.fanButton = QtWidgets.QPushButton("Fan")
         self.fanButton.clicked.connect(self.button_fan_func)
@@ -80,14 +83,14 @@ class SettingsWindow(QtWidgets.QWidget):
     def button_ok_func(self):
         try:
             # Setting the Temperature
-            value = self.a_temp_regulation.setField.text()
+            value = self.setField_temperature.text()
             if value is '':
                 value = 20
             self.camera.set_temperature(float(value))
 
             # Saving the Settings
             #problema saving settings
-            self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text(), self.testel.text())
+            self.cam.set_camera_settings(self.setField_temperature.text(), self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
             self.cam.save_settings()
             self.console.raise_text("Camera settings successfully saved!", 1)
         except Exception as e:
@@ -115,7 +118,7 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def btn_temperature(self):
             try:
-                value = self.setField.text()
+                value = self.setField_temperature.text()
                 if value is '':
                     pass
                 else:
