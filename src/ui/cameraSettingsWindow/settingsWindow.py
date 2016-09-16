@@ -66,7 +66,7 @@ class SettingsWindow(QtWidgets.QWidget):
         self.fill_combo()
 
         self.tempButton = QtWidgets.QPushButton("Set Temp", self)
-        self.tempButton.clicked.connect(self.button_ok_func)
+        self.tempButton.clicked.connect(self.btn_temperature)
 
         self.fanButton = QtWidgets.QPushButton("Fan")
         self.fanButton.clicked.connect(self.button_fan_func)
@@ -83,13 +83,12 @@ class SettingsWindow(QtWidgets.QWidget):
     def button_ok_func(self):
         try:
             # Setting the Temperature
-            value = self.setField_temperature.text()
+            '''value = self.setField_temperature.text()
             if value is '':
                 value = 20
-            self.camera.set_temperature(float(value))
+            self.camera.set_temperature(float(value))'''
 
             # Saving the Settings
-            #problema saving settings
             self.cam.set_camera_settings(self.setField_temperature.text(), self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
             self.cam.save_settings()
             self.console.raise_text("Camera settings successfully saved!", 1)
@@ -114,14 +113,12 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.addItem("3x3", 2)
 
 
-        '''Tentativa de separação do set do field'''
-
     def btn_temperature(self):
             try:
                 value = self.setField_temperature.text()
                 if value is '':
                     pass
                 else:
-                    self.cam.set_temperature(float(value))
+                    self.camera.set_temperature(float(value))
             except Exception as e:
                 print("Exception -> {}".format(e))
