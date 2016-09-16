@@ -15,11 +15,12 @@ class SettingsCamera:
     def save_settings(self):
         self._settings.sync()
 
-    def set_camera_settings(self, pre, exp, bin, time):
+    def set_camera_settings(self, pre, exp, bin, time, teste):
         self._settings.setValue(c.PREFIXO, pre)
         self._settings.setValue(c.EXPOSICAO, exp)
         self._settings.setValue(c.BINNING, bin)
         self._settings.setValue(c.TIMEPHOTO, time)
+
         #add temperatura, primeira variavel
 
     def get_camera_settings(self):

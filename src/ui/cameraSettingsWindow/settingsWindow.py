@@ -37,27 +37,30 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def setting_values(self):
         info = self.get_values()
-        self.set_values(info[0], info[1], info[2])
+        self.set_values(info[0], info[1], info[2], info[3])
 
-    def set_values(self, prefixo, exposicao, binning):
+    def set_values(self, prefixo, exposicao, binning, tempo_entre_fotos):
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
         try:
             b = int(binning)
         except:
             b = 0
+        self.tempo_fotos.setText(tempo_entre_fotos)
         self.combo.setCurrentIndex(b)
+
 
     def create_cam_widgets(self):
         #tentativa
         self.setField_label = QtWidgets.QLabel("Temperature:", self)
 
         self.pre = QtWidgets.QLabel("Filter:", self)
-        self.exp = QtWidgets.QLabel("Exposure time:", self)
-        self.binning = QtWidgets.QLabel("Binning:", self)
-
         self.prel = QtWidgets.QLineEdit(self)
+
+        self.exp = QtWidgets.QLabel("Exposure time:", self)
         self.expl = QtWidgets.QLineEdit(self)
+
+        self.binning = QtWidgets.QLabel("Binning:", self)
 
         self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
@@ -71,8 +74,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.buttoncancel = QtWidgets.QPushButton("Cancel", self)
         self.buttoncancel.clicked.connect(self.func_cancel)
 
-        self.tempo_fotos = QtWidgets.QLineEdit(self)
         self.tempo_fotos_label = QtWidgets.QLabel("Time between photos:", self)
+        self.tempo_fotos = QtWidgets.QLineEdit(self)
 
     def button_ok_func(self):
         try:
@@ -83,7 +86,8 @@ class SettingsWindow(QtWidgets.QWidget):
             self.camera.set_temperature(float(value))
 
             # Saving the Settings
-            self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
+            #problema saving settings
+            self.cam.set_camera_settings(self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text(), self.testel.text())
             self.cam.save_settings()
             self.console.raise_text("Camera settings successfully saved!", 1)
         except Exception as e:
