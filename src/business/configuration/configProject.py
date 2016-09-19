@@ -49,7 +49,7 @@ class ConfigProject:
     def get_geographic_settings(self):
         m = p.GEOGRAPHIC_TITLE
         return self.get_value(m, p.LATITUDE), self.get_value(m, p.LONGITUDE), \
-               self.get_value(m, p.ELEVATION), self.get_value(m, p.PRESSURE)
+               self.get_value(m, p.ELEVATION), self.get_value(m, p.PRESSURE), self.get_value(m, p.TEMPERATURE)
 
     def get_moonsun_settings(self):
         m = p.SUN_MOON_TITLE

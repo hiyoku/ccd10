@@ -56,7 +56,7 @@ class SettingsWindow(QtWidgets.QWidget):
             infoSite = st.get_site_settings()
             self.site.set_site_info(infoSite[0], infoSite[1], infoSite[2])
             infoGeo = st.get_geographic_settings()
-            self.geo.set_geography(infoGeo[0], infoGeo[1], infoGeo[2], infoGeo[3], '10')
+            self.geo.set_geography(infoGeo[0], infoGeo[1], infoGeo[2], infoGeo[3], infoGeo[4])
             infoSun = st.get_moonsun_settings()
             self.sun.set_sun(str(infoSun[0]), infoSun[1], str(infoSun[2]), str(infoSun[3]))
         except Exception as e:
