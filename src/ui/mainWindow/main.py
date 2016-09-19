@@ -57,7 +57,7 @@ class Main(QtWidgets.QMainWindow):
         self.add_to_menu(m, 'Manual', a4[0], a4[1])
         self.add_to_menu(m, 'Automatic', a5[0], a5[1])
         a2 = self.open_settings()
-        self.add_to_menu(menubar, a2[1], a2[0], self.open_settings_system()[0], self.open_settings_camera()[0])
+        self.add_to_menu(menubar, a2[1], self.open_settings_system()[0], a2[0], self.open_settings_camera()[0])
 
         # add_to_menu(menubar, open_settings_system(self))
 
