@@ -49,11 +49,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.tempo_fotos.setText(tempo_entre_fotos)
         self.combo.setCurrentIndex(b)
 
-
     def create_cam_widgets(self):
-        #tentativa
         self.setField_temperature_label = QtWidgets.QLabel("Temperature:", self)
-
         self.pre = QtWidgets.QLabel("Filter:", self)
         self.prel = QtWidgets.QLineEdit(self)
 
@@ -61,7 +58,6 @@ class SettingsWindow(QtWidgets.QWidget):
         self.expl = QtWidgets.QLineEdit(self)
 
         self.binning = QtWidgets.QLabel("Binning:", self)
-
         self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
 
@@ -111,7 +107,6 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo.addItem("1x1", 0)
         self.combo.addItem("2x2", 1)
         self.combo.addItem("3x3", 2)
-
 
     def btn_temperature(self):
             try:

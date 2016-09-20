@@ -13,6 +13,7 @@ class CCDInfo(QtWidgets.QWidget):
         self.init_widgets()
 
     def init_widgets(self):
+        self.title = QtWidgets.QLabel("CCD Information", self)
         """ Function to initiate the Widgets of CCD Information """
         # Camera Firmware
         lf = QtWidgets.QLabel("Firmware:", self)
@@ -29,5 +30,6 @@ class CCDInfo(QtWidgets.QWidget):
         cn.setAlignment(QtCore.Qt.AlignCenter)
 
         # Setting the layout
-        self.setLayout(set_lvbox(set_hbox(lf, tfirm),
+        self.setLayout(set_lvbox(set_hbox(self.title),
+                                 set_hbox(lf, tfirm),
                                  set_hbox(ln, cn)))
