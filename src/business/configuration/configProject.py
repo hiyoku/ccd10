@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 
 from src.business.configuration.constants import project as p
+from src.ui.commons.verification import cb
 
 
 class ConfigProject:
@@ -26,11 +27,13 @@ class ConfigProject:
         self._settings.setValue(p.TEMPERATURE, temp)
         self._settings.endGroup()
 
-    def set_moonsun_settings(self, solarelev, ignorel, lunarph, lunarpos):
+    def set_moonsun_settings(self, solarelev, ignoreLunar, lunarph, lunarpos):
+        '''
         if ignorel:
             ignoreLunar = 1
         else:
             ignoreLunar = 0
+        '''
 
         self._settings.beginGroup(p.SUN_MOON_TITLE)
         self._settings.setValue(p.MAX_SOLAR_ELEVATION, solarelev)
@@ -53,11 +56,5 @@ class ConfigProject:
 
     def get_moonsun_settings(self):
         m = p.SUN_MOON_TITLE
-        lunarConditional = self.get_value(m, p.IGNORE_LUNAR_POSITION)
-        if lunarConditional == 1:
-            lc = True
-        else:
-            lc = False
-
-        return self.get_value(m, p.MAX_SOLAR_ELEVATION), lc, \
+        return self.get_value(m, p.MAX_SOLAR_ELEVATION), cb(self.get_value(m, p.IGNORE_LUNAR_POSITION)), \
                self.get_value(m, p.MAX_LUNAR_PHASE), self.get_value(m, p.MAX_LUNAR_ELEVATION)

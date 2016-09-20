@@ -30,6 +30,7 @@ class EphemerisShooter(QtCore.QThread):
         self.elevation = info[2]  # 350
 
         self.max_solar_elevation = infosun[0]# -12
+        self.ignore_lunar_position = infosun[1]
         self.max_lunar_elevation = infosun[2]# 8
         self.max_lunar_phase = infosun[3] #1
 
@@ -52,7 +53,7 @@ class EphemerisShooter(QtCore.QThread):
 
             infosun = self.config.get_moonsun_settings()
             self.max_solar_elevation = float(infosun[0])  # -12
-            self.ignoreMoon = True if infosun[1] == 1 else False
+            self.ignore_lunar_position = infosun[1]
             self.max_lunar_elevation = float(infosun[2])  # 8
             self.max_lunar_phase = float(infosun[3])  # 1
 
@@ -114,8 +115,8 @@ class EphemerisShooter(QtCore.QThread):
 
                 t = 0
                 if (float(math.degrees(a)) < self.max_solar_elevation or t == 1):
-                    if (self.ignoreMoon == False and float(math.degrees(b)) < self.max_lunar_elevation
-                            and frac < self.max_lunar_phase) or (self.ignoreMoon):
+                    if (self.ignore_lunar_position == False and float(math.degrees(b)) < self.max_lunar_elevation
+                            and frac < self.max_lunar_phase) or self.ignore_lunar_position:
 
                         if not self.shootOn:
                             self.signal_started_shooting.emit()
