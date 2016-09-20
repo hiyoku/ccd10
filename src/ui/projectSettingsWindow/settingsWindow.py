@@ -18,6 +18,7 @@ class SettingsWindow(QtWidgets.QWidget):
         self.site = WidgetsSite(self)
         self.geo = WidgetsGeography(self)
         self.sun = WidgetsSun(self)
+        self.button_clear = QtWidgets.QPushButton('Clear', self)
         self.button_ok = QtWidgets.QPushButton('Save', self)
         self.button_cancel = QtWidgets.QPushButton('Cancel', self)
         self.button_settings()
@@ -27,12 +28,13 @@ class SettingsWindow(QtWidgets.QWidget):
         self.refresh_all_fields()
 
     def button_settings(self):
+        self.button_clear.clicked.connect(self.clear_all)
         self.button_cancel.clicked.connect(self.func_cancel)
         self.button_ok.clicked.connect(self.func_ok)
 
     def func_cancel(self):
         self.p.close()
-        self.clear_all()
+        #self.clear_all()
 
     def func_ok(self):
         try:
@@ -88,4 +90,4 @@ class SettingsWindow(QtWidgets.QWidget):
         self.setLayout(set_lvbox(set_hbox(self.site),
                                  set_hbox(self.geo),
                                  set_hbox(self.sun),
-                                 set_hbox(self.button_ok, self.button_cancel, stretch2=1)))
+                                 set_hbox(self.button_clear, self.button_ok, self.button_cancel, stretch2=1)))
