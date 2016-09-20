@@ -4,6 +4,8 @@ from PyQt5 import QtWidgets
 from src.controller.camera import Camera
 from src.ui.commons.layout import set_hbox, set_lvbox
 
+from src.ui.commons.widgets import get_qfont
+
 
 class CCDInfo(QtWidgets.QWidget):
 
@@ -11,6 +13,7 @@ class CCDInfo(QtWidgets.QWidget):
         super(CCDInfo, self).__init__(parent)
         self.cam = Camera()
         self.init_widgets()
+        self.config_widgets()
 
     def init_widgets(self):
         self.title = QtWidgets.QLabel("CCD Information", self)
@@ -33,3 +36,9 @@ class CCDInfo(QtWidgets.QWidget):
         self.setLayout(set_lvbox(set_hbox(self.title),
                                  set_hbox(lf, tfirm),
                                  set_hbox(ln, cn)))
+
+    def config_widgets(self):
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
+        self.title.setFont(get_qfont(True))
+
+        self.setStyleSheet("background-color: rgb(50, 50, 50); border-radius: 10px; color: white;")

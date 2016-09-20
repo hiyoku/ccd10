@@ -2,10 +2,10 @@ from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 from src.controller.fan import Fan
-from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
+#from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.ui.commons.layout import set_lvbox, set_hbox
+from src.ui.commons.layout import set_lvbox, set_hbox, add_widget_to_vbox
 
 
 class SettingsWindow(QtWidgets.QWidget):
@@ -19,7 +19,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.p = parent
         self.fan = Fan(self.fanButton)
 
-        #tentativa do field
+        #self.button_clear = QtWidgets.QPushButton('Clear', self)
+
         self.setField_temperature = QtWidgets.QLineEdit(self)
         self.setting_values()
 
@@ -29,7 +30,7 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
                                  set_hbox(self.tempButton, self.fanButton, stretch2=1),
-                                 set_hbox(self.buttonok, self.buttoncancel, stretch2=1)))
+                                 set_hbox(self.buttonok, self.button_clear, self.buttoncancel, stretch2=1)))
 
     def get_values(self):
         return self.cam.get_camera_settings()
@@ -60,6 +61,9 @@ class SettingsWindow(QtWidgets.QWidget):
         self.binning = QtWidgets.QLabel("Binning:", self)
         self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
+
+        self.button_clear = QtWidgets.QPushButton('Clear', self)
+        self.button_clear.clicked.connect(self.clear_all)
 
         self.tempButton = QtWidgets.QPushButton("Set Temp", self)
         self.tempButton.clicked.connect(self.btn_temperature)
@@ -92,6 +96,12 @@ class SettingsWindow(QtWidgets.QWidget):
             self.console.raise_text("Camera settings were not saved.", 3)
         finally:
             self.p.close()
+
+    def clear_all(self):
+        self.setField_temperature.clear()
+        self.prel.clear()
+        self.expl.clear()
+        self.tempo_fotos.clear()
 
     def func_cancel(self):
         self.p.close()

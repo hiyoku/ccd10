@@ -22,8 +22,6 @@ class SettingsCamera:
         self._settings.setValue(c.BINNING, bin)
         self._settings.setValue(c.TIMEPHOTO, time)
 
-        #add temperatura, primeira variavel
-
     def get_camera_settings(self):
         return self._settings.value(c.TEMPERATURE), self._settings.value(c.PREFIXO), self._settings.value(c.EXPOSICAO), self._settings.value(c.BINNING), self._settings.value(c.TIMEPHOTO)
 

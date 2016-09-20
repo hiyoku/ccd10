@@ -90,4 +90,4 @@ class SettingsWindow(QtWidgets.QWidget):
         self.setLayout(set_lvbox(set_hbox(self.site),
                                  set_hbox(self.geo),
                                  set_hbox(self.sun),
-                                 set_hbox(self.button_clear, self.button_ok, self.button_cancel, stretch2=1)))
+                                 set_hbox(self.button_ok, self.button_clear, self.button_cancel, stretch2=1)))
