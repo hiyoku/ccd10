@@ -16,6 +16,7 @@ class SystemSettingsWindow(QtWidgets.QWidget):
         # Creating Widgets
         self.wp = WidgetsPath(self)
         self.button_ok = QtWidgets.QPushButton('Save', self)
+        self.button_clear = QtWidgets.QPushButton('Clear', self)
         self.button_cancel = QtWidgets.QPushButton('Cancel', self)
 
         # Setting Up
@@ -25,6 +26,7 @@ class SystemSettingsWindow(QtWidgets.QWidget):
         self.filling_fields()
 
     def button_settings(self):
+        self.button_clear.clicked.connect(self.clear_fields)
         self.button_cancel.clicked.connect(self.s.close)
         self.button_ok.clicked.connect(self.ok_button)
 
@@ -39,7 +41,7 @@ class SystemSettingsWindow(QtWidgets.QWidget):
 
     def setting_up(self):
         self.setLayout(set_lvbox(set_hbox(self.wp),
-                                 set_hbox(self.button_ok, self.button_cancel, stretch2=1)))
+                                 set_hbox(self.button_ok, self.button_clear, self.button_cancel, stretch2=1)))
 
     def saving_settings(self):
         info = self.wp.get_values()
@@ -49,3 +51,6 @@ class SystemSettingsWindow(QtWidgets.QWidget):
     def filling_fields(self):
         info = self.cs.get_site_settings()
         self.wp.set_values(info[0], info[1], info[2], info[3], info[4])
+
+    def clear_fields(self):
+        self.wp.clear_path()

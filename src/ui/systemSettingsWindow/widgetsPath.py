@@ -65,3 +65,10 @@ class WidgetsPath(QtWidgets.QWidget):
             self.path = path
         except Exception as e:
             print(e)
+
+    def clear_path(self):
+        self.cStart.setChecked(False)
+        self.cLog.setChecked(False)
+        self.eLog.clear()
+        self.eProjPath.clear()
+        self.eImagesPath.clear()
