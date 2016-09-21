@@ -5,7 +5,9 @@ from src.controller.fan import Fan
 #from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.ui.commons.layout import set_lvbox, set_hbox, add_widget_to_vbox
+from src.ui.commons.layout import set_lvbox, set_hbox
+
+from src.utils.camera.SbigDriver import (getlinkstatus)
 
 
 class SettingsWindow(QtWidgets.QWidget):
@@ -107,10 +109,15 @@ class SettingsWindow(QtWidgets.QWidget):
         self.p.close()
 
     def button_fan_func(self):
-        try:
-            self.fan.set_fan()
-            self.console.raise_text('State changed Fan!', 2)
-        except Exception as e:
+        if getlinkstatus() is True:
+            try:
+                self.fan.set_fan()
+                self.console.raise_text('State changed Fan!', 2)
+            except Exception:
+                self.console.raise_text("The camera is not connected!", 3)
+                self.console.raise_text('State Fan unchanged', 3)
+        else:
+            self.console.raise_text("The camera is not connected!", 3)
             self.console.raise_text('State Fan unchanged', 3)
 
     def fill_combo(self):
