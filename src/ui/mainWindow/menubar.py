@@ -28,6 +28,8 @@ def menu_operation_mode(self, menubar):
     pass
 
 # All actions needs return a QAction and a menuType, line '&File'
+
+
 def action_close(self):
     # Creating the button to close the application
     aexit = QtWidgets.QAction(QtGui.QIcon('\icons\exit.png'), "&Exit", self)
@@ -39,12 +41,14 @@ def action_close(self):
 
     return aexit, "&File"
 
+
 def action_continuous_shooter(self, menubar):
     menubar.addMenu('Operation Mode')
     ac = QtWidgets.QAction('&Manual', self)
     self.cont = conts()
 
     ac.triggered.connect(self.cont.show)
+
 
 def open_settings(self):
     settings = QtWidgets.QAction('Project Settings', self)
@@ -56,6 +60,7 @@ def open_settings(self):
 
     return settings, "&Options"
 
+
 def open_settings_system(self):
     setS = QtWidgets.QAction('System Settings', self)
     setS.setShortcut('Ctrl+T')
@@ -65,6 +70,7 @@ def open_settings_system(self):
 
     return setS, "&Options"
 
+
 def open_settings_camera(self):
     setC = QtWidgets.QAction('Camera Settings', self)
     setC.setShortcut("Ctrl+C")
@@ -73,6 +79,7 @@ def open_settings_camera(self):
     setC.triggered.connect(self.c.show)
 
     return setC, "&Options"
+
 
 def action_connect_disconnect(self):
     setAC = QtWidgets.QAction('Connect', self)
@@ -84,6 +91,7 @@ def action_connect_disconnect(self):
     setAD.triggered.connect(self.cam.disconnect)
 
     return 'Connection', setAC, setAD
+
 
 def add_to_menu(menubar, menu, *args):
     m = menubar.addMenu(menu)

@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets
 
 # Function that create a HBox Layout
+
+
 def set_hbox(*args, stretch=None, stretch2=None):
     hbox = QtWidgets.QHBoxLayout()
 
@@ -15,6 +17,7 @@ def set_hbox(*args, stretch=None, stretch2=None):
 
     return hbox
 
+
 def set_wvbox(*args, stretch=None):
     vbox = QtWidgets.QVBoxLayout()
     for widget in args:
@@ -24,6 +27,7 @@ def set_wvbox(*args, stretch=None):
         vbox.addStretch(stretch)
     return vbox
 
+
 def set_lvbox(*args):
     vbox = QtWidgets.QVBoxLayout()
     for layout in args:
@@ -31,11 +35,13 @@ def set_lvbox(*args):
 
     return vbox
 
+
 def add_all_to_vbox(vbox, *args):
     for h in args:
         vbox.addWidget(h)
 
     return vbox
+
 
 def add_widget_to_vbox(vbox, *args):
     for h in args:

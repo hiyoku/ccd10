@@ -58,9 +58,9 @@ class QThreadSunMoon(QtCore.QThread):
             sun_alt = ephem.degrees(sun.alt)
             moon_alt = ephem.degrees(moon.alt)
 
-            sun_elevation = "{: .4f}º".format(float(math.degrees(sun_alt)))
-            moon_elevation = "{: .4f}º".format(float(math.degrees(moon_alt)))
-            moon_phase = "{0:.6f}%".format(frac * 100)
+            sun_elevation = "{:.2f}º".format(float(math.degrees(sun_alt)))
+            moon_elevation = "{:.2f}º".format(float(math.degrees(moon_alt)))
+            moon_phase = "{0:.2f}%".format(frac * 100)
 
             self.signal_update_sun_moon.emit([sun_elevation, moon_elevation, moon_phase])
             time.sleep(1)
