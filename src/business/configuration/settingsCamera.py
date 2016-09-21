@@ -23,7 +23,8 @@ class SettingsCamera:
         self._settings.setValue(c.TIMEPHOTO, time)
 
     def get_camera_settings(self):
-        return self._settings.value(c.TEMPERATURE), self._settings.value(c.PREFIXO), self._settings.value(c.EXPOSICAO), self._settings.value(c.BINNING), self._settings.value(c.TIMEPHOTO)
+        return self._settings.value(c.TEMPERATURE), self._settings.value(c.PREFIXO), self._settings.value(c.EXPOSICAO),\
+               self._settings.value(c.BINNING), self._settings.value(c.TIMEPHOTO)
 
     def get_filepath(self):
         return self._settings.value(c.FILENAME)

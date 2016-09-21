@@ -473,9 +473,6 @@ def get_filter_observatory(name):
     return name_filter, name_observatory
 
 
-'''Funcao temporaria'''
-
-
 def get_observatory(name):
     name_aux = str(name).split(',')[1]
     name_aux = name_aux.replace("\'", "")
@@ -597,9 +594,6 @@ def photoshoot(etime, pre, binning):
 
     if not os.path.isdir(path):
         os.makedirs(path)
-
-
-    '''Acessando o valor de site_id'''
 
     from src.business.configuration.configProject import ConfigProject
     ci = ConfigProject()

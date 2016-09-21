@@ -23,13 +23,16 @@ class SThread(QtCore.QThread):
     def set_etime_pre_binning(self):
         try:
             info = self.get_camera_settings()
-            self.etime = int(info[1])
-            self.pre = str(info[0])
-            self.b = int(info[2])
+            self.etime = int(info[2])
+            self.pre = str(info[1])
+            self.b = int(info[3])
         except Exception as e:
             print(e)
             self.etime = 1
-            self.pre = "pre"
+            if str(info[1]) != '':
+                self.pre = str(info[1])
+            else:
+                self.pre = 'pre'
             self.b = 2
 
     def run(self):
