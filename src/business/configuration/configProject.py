@@ -38,7 +38,7 @@ class ConfigProject:
         self._settings.beginGroup(p.SUN_MOON_TITLE)
         self._settings.setValue(p.MAX_SOLAR_ELEVATION, solarelev)
         self._settings.setValue(p.IGNORE_LUNAR_POSITION, ignoreLunar)
-        self._settings.setValue(p.MAX_LUNAR_PHASE, zlunarph)
+        self._settings.setValue(p.MAX_LUNAR_PHASE, lunarph)
         self._settings.setValue(p.MAX_LUNAR_ELEVATION, lunarpos)
         self._settings.endGroup()
 

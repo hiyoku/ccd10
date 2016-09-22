@@ -12,5 +12,4 @@ Creating an application to manage a CCD SBIG Camera.
 > - APScheduler
 > - matplotlib
 
-Need a Sbig Driver
-
+Need a Sbig Driver and Microsoft’s TrueType Core fonts
