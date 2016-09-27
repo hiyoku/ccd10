@@ -140,7 +140,13 @@ class Camera(metaclass=Singleton):
                 else:
                     temp = "None"
             else:
-                temp = "None"
+                if getlinkstatus() is True:
+                    sleep(1)
+                    self.lock.set_acquire()
+                    temp = tuple(get_temperature())[3]
+                    self.lock.set_release()
+                else:
+                    temp = "None"
         except Exception as e:
             self.console.raise_text("Unable to retrieve the temperature.\n{}".format(e), 3)
 
