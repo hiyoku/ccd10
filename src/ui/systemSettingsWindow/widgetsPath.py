@@ -7,7 +7,7 @@ class WidgetsPath(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(WidgetsPath, self).__init__(parent)
 
-        self.cStart = QtWidgets.QCheckBox('Automatically start at Windows Logon', self)
+        self.cStart = QtWidgets.QCheckBox('Automatically start at Linux Logon', self)
         self.cLog = QtWidgets.QCheckBox('Create and save a LOG file', self)
         self.lLog = QtWidgets.QLabel('Log Path:', self)
         self.eLog = QtWidgets.QLineEdit(self)
