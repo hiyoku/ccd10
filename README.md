@@ -1,6 +1,6 @@
 Creating an application to manage a CCD SBIG Camera.
 
-> **Status:** Last Update at 01/04/2016
+> **Status:** 
 
 -----
 
@@ -13,3 +13,8 @@ Creating an application to manage a CCD SBIG Camera.
 > - matplotlib
 
 Need a Sbig Driver and Microsoft’s TrueType Core fonts
+
+
+## License
+
+[![GPL-3.0](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/quick-guide-gplv3.html)
