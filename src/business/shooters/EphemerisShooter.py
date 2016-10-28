@@ -14,31 +14,38 @@ from src.business.configuration.settingsCamera import SettingsCamera
 
 class EphemerisShooter(QtCore.QThread):
     signal_started_shooting = QtCore.pyqtSignal(name="signalStartedShooting")
+    signal_temp = QtCore.pyqtSignal(name="signalTemp")
 
     def __init__(self):
         super(EphemerisShooter, self).__init__()
+        self.camconfig = SettingsCamera()
+        self.camconfig.setup_settings()
+        infocam = self.camconfig.get_camera_settings()
+
         self.ObserverFactory = EphemObserverFactory()
-        self.continuousShooterThread = ContinuousShooterThread()
+        self.continuousShooterThread = ContinuousShooterThread(int(infocam[4]))
         self.console = ConsoleThreadOutput()
         self.config = ConfigProject()
-        self.camconfig = SettingsCamera()
 
         info = self.config.get_geographic_settings()
         infosun = self.config.get_moonsun_settings()
+
         self.latitude = info[0]  # '-45.51'
         self.longitude = info[1]  # '-23.12'
         self.elevation = info[2]  # 350
 
-        self.max_solar_elevation = infosun[0]# -12
+        self.max_solar_elevation = infosun[0]  # -12
         self.ignore_lunar_position = infosun[1]
-        self.max_lunar_elevation = infosun[2]# 8
-        self.max_lunar_phase = infosun[3] #1
+        self.max_lunar_elevation = infosun[2]  # 8
+        self.max_lunar_phase = infosun[3]  # 1
+        self.t = False
 
-        infocam = self.camconfig.get_camera_settings()
+        print(int(infocam[4]))
         try:
-            self.s = int(infocam[3])
+            self.s = int(infocam[4])
+            self.continuousShooterThread.set_sleep_time(self.s)
         except Exception as e:
-            self.s = 0
+            self.s = 5
 
         self.shootOn = False
         self.controller = True
@@ -58,7 +65,8 @@ class EphemerisShooter(QtCore.QThread):
             self.max_lunar_phase = float(infosun[3])  # 1
 
         except Exception as e:
-            self.console.raise_text("Exception thrown to acquire information\n" + str(e), level=3)
+            self.console.raise_text("Exception thrown to acquire information\n"
+                                    "Please set an observatory information on settings\n" + str(e), level=3)
             self.latitude = 0
             self.longitude = 0
             self.elevation = 0
@@ -67,8 +75,9 @@ class EphemerisShooter(QtCore.QThread):
             self.max_lunar_phase = 0
 
         infocam = self.camconfig.get_camera_settings()
+
         try:
-            self.s = int(infocam[3])
+            self.s = int(infocam[4])
         except Exception as e:
             self.s = 0
 
@@ -100,7 +109,7 @@ class EphemerisShooter(QtCore.QThread):
 
         self.controller = True
         self.shootOn = False
-
+        c = 0
         try:
             while self.controller:
                 obs.date = ephem.date(datetime.datetime.utcnow())
@@ -113,22 +122,31 @@ class EphemerisShooter(QtCore.QThread):
                 a = ephem.degrees(sun.alt)
                 b = ephem.degrees(str(moon.alt))
 
+                # Variavel de controle do shooter
                 t = 0
-                if (float(math.degrees(a)) < self.max_solar_elevation or t == 1):
+
+                if float(math.degrees(a)) < self.max_solar_elevation or t == 1:
                     if (self.ignore_lunar_position == False and float(math.degrees(b)) < self.max_lunar_elevation
                             and frac < self.max_lunar_phase) or self.ignore_lunar_position:
 
+
                         if not self.shootOn:
-                            self.signal_started_shooting.emit()
+                            if not c:
+                                self.signal_started_shooting.emit()
+                                c = 1
+                            self.signal_temp.emit()
                             time.sleep(5)
-                            # Iniciar as Observações
-                            self.start_taking_photo()
-                            self.shootOn = True
+
+                            if self.t:
+                                # Iniciar as Observações
+                                self.start_taking_photo()
+                                self.shootOn = True
 
                 else:
                     if self.shootOn:
                         # Finalizar as Observações
                         self.stop_taking_photo()
+                        c = 0
                         self.shootOn = False
 
                 time.sleep(5)

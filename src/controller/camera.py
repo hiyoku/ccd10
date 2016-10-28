@@ -21,6 +21,7 @@ class Camera(metaclass=Singleton):
         self.lock = Locker()
         self.console = ConsoleThreadOutput()
         self.settings = SettingsCamera()
+        self.settings.setup_settings()
         self.fan = Fan()
 
         # Campos da janela principal para as informações da câmera
@@ -29,7 +30,7 @@ class Camera(metaclass=Singleton):
 
         self.main = Status()
         self.settedhour = datetime.now()
-        self.continuousShooterThread = ContinuousShooterThread()
+        self.continuousShooterThread = ContinuousShooterThread(int(self.settings.get_camera_settings()[4]))
         self.ephemerisShooterThread = EphemerisShooter()
 
         self.commands = CameraQThread(self)
@@ -38,14 +39,20 @@ class Camera(metaclass=Singleton):
         # Initiating the Slots
         self.init_slots()
 
+        self.temp = 0
+
     def init_slots(self):
         # Ephemeris Shooter Slots
         self.ephemerisShooterThread.started.connect(self.eshooter_started)
         self.ephemerisShooterThread.finished.connect(self.eshooter_finished)
         self.ephemerisShooterThread.signal_started_shooting.connect(self.shooter_mode)
+        self.ephemerisShooterThread.signal_temp.connect(self.check_temp)
 
         self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
         self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
+        # Criando connect da temperatura
+        # self.ephemerisShooterThread.continuousShooterThread.signalAfterShooting.connect()
+
         self.continuousShooterThread.finished.connect(self.standby_mode)
 
         # Camera Commands Slots
@@ -92,7 +99,12 @@ class Camera(metaclass=Singleton):
             if a is True and c is True:
                 self.console.raise_text("Successfully connected! {} {}".format(a, c), 2)
                 self.set_firmware_and_model_values()
-                self.fan.refresh_fan_status()
+
+                '''
+                    Fan Field sera atualizado automaticamente
+                    atualizado pela thread de refresh temp.
+                '''
+                # self.fan.refresh_fan_status()
                 return True
             else:
                 self.console.raise_text("Connection error", 3)
@@ -132,21 +144,22 @@ class Camera(metaclass=Singleton):
     def get_temperature(self):
         temp = "None"
         try:
-            if getlinkstatus() is True and self.shooting is False:
+            if getlinkstatus() is True:
                 if not self.lock.is_locked():
                     self.lock.set_acquire()
                     temp = tuple(get_temperature())[3]
+                    self.temp = temp
                     self.lock.set_release()
-                #else:
-                    # temp = "None"
+                else:
+                    temp = "None"
             else:
-                if getlinkstatus() is True:
-                    sleep(1)
-                    self.lock.set_acquire()
-                    temp = tuple(get_temperature())[3]
-                    self.lock.set_release()
-                #else:
-                    #temp = "None"
+                # if getlinkstatus() is True:
+                #     sleep(1)
+                #     self.lock.set_acquire()
+                #     temp = tuple(get_temperature())[3]
+                #     self.lock.set_release()
+            # else:
+                temp = "None"
         except Exception as e:
             self.console.raise_text("Unable to retrieve the temperature.\n{}".format(e), 3)
 
@@ -214,6 +227,10 @@ class Camera(metaclass=Singleton):
         self.shooting = False
 
     # Commands Slots
+
+    def check_temp(self):
+        if self.temp < -15:
+            self.ephemerisShooterThread.t = True
 
     def connect_mainwindow_update(self):
         self.set_firmware_and_model_values()

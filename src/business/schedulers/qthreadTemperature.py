@@ -18,5 +18,4 @@ class QThreadTemperature(QtCore.QThread):
             self.temperatura = self.cam.get_temperature()
             if self.temperatura != "None":
                 self.temperatura = "{0:.2f}".format(float(self.temperatura))
-
-            self.temp_signal.emit(self.temperatura)
+                self.temp_signal.emit(self.temperatura)

@@ -7,7 +7,9 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 
 class ContinuousShooterThread(QtCore.QThread):
-    def __init__(self, timeSleep=0):
+    signalAfterShooting = QtCore.pyqtSignal(name="signalAfterShooting")
+
+    def __init__(self, timeSleep):
         super(ContinuousShooterThread, self).__init__()
         self.continuous = True
         self.s = timeSleep
@@ -28,9 +30,12 @@ class ContinuousShooterThread(QtCore.QThread):
                 while self.ss.isRunning():
                     time.sleep(1)
 
-                time.sleep(self.s)
             except Exception as e:
                 print(e)
+
+            time.sleep(self.s)
+
+            self.signalAfterShooting.emit()
 
     def start_continuous_shooter(self):
         self.continuous = True

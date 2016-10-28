@@ -7,10 +7,10 @@ class SchedTemperature(metaclass=Singleton):
     def __init__(self, valor=None):
 
         self.console = ConsoleThreadOutput()
-        self.stemp = QThreadTemperature()
 
         self.object = valor
 
+        self.stemp = QThreadTemperature()
         self.stemp.temp_signal.connect(self.refresh_temp)
         self.stemp.start()
 

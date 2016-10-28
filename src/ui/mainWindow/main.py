@@ -32,6 +32,10 @@ class Main(QtWidgets.QMainWindow):
         self.init_menu()
         self.init_window_geometry()
 
+        # Connect Camera
+        self.cam.connect()
+        self.cam.start_ephemeris_shooter()
+
     def init_widgets(self):
         a = MainWindow(self)
         self.setCentralWidget(a)
