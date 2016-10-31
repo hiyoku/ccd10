@@ -40,6 +40,7 @@ class Camera(metaclass=Singleton):
         self.init_slots()
 
         self.temp = 0
+        self.temp_contador = 0
 
     def init_slots(self):
         # Ephemeris Shooter Slots
@@ -50,6 +51,7 @@ class Camera(metaclass=Singleton):
 
         self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
         self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
+
         # Criando connect da temperatura
         # self.ephemerisShooterThread.continuousShooterThread.signalAfterShooting.connect()
 
@@ -227,10 +229,13 @@ class Camera(metaclass=Singleton):
         self.shooting = False
 
     # Commands Slots
-
     def check_temp(self):
-        if self.temp < -15:
+        if self.temp <= -15 or self.temp_contador == 60:
             self.ephemerisShooterThread.t = True
+        else:
+            self.console.raise_text("Temp_contador = " + str(self.temp_contador), 1)
+            self.console.raise_text("CCD cooling to -15", 1)
+            self.temp_contador += 1
 
     def connect_mainwindow_update(self):
         self.set_firmware_and_model_values()
