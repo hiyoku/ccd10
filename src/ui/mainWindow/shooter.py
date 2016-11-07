@@ -88,7 +88,7 @@ class Shooter(QtWidgets.QWidget):
             path = img.path + img.png_name
             self.img.setPixmap(QtGui.QPixmap(path))
             print(path)
-            self.fill_image_info(img.png_name, img.date, img.hour)
+            #self.fill_image_info(img.png_name, img.date, img.hour)
 
         except Exception as e:
             print(e)
@@ -98,10 +98,10 @@ class Shooter(QtWidgets.QWidget):
         self.combo.addItem("2x2", 1)
         self.combo.addItem("3x3", 2)
 
-    def fill_image_info(self, filename, time, hora):
+    '''def fill_image_info(self, filename, time, hora):
         self.prefix.setText(filename)
         self.date.setText(time)
-        self.hour.setText(hora)
+        self.hour.setText(hora)'''
 
     def clear_image_info(self):
         self.prefix.clear()
