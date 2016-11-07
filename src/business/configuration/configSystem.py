@@ -18,8 +18,8 @@ class ConfigSystem:
     def save_settings(self):
         self._settings.sync()
 
-    def set_site_settings(self, linux_startup, log_cond, log_path, project_path, image_path):
-        self._settings.setValue(s.STARTUP, linux_startup)
+    def set_site_settings(self, GNU_linux_startup, log_cond, log_path, project_path, image_path):
+        self._settings.setValue(s.STARTUP, GNU_linux_startup)
         self._settings.setValue(s.LOG_FILE, log_cond)
         self._settings.setValue(s.LOG_PATH, log_path)
         self._settings.setValue(s.PROJECT_PATH, project_path)

@@ -10,6 +10,7 @@ from src.ui.cameraSettingsWindow.main import Main as csw
 from src.ui.testWindow.MainWindow2 import MainWindow2 as conts
 from src.ui.ephemerisShooterWindow.main import Main as eph
 from src.controller.camera import Camera
+from src.business.configuration.configSystem import ConfigSystem
 
 from src.ui.mainWindow.status import Status
 
@@ -32,9 +33,14 @@ class Main(QtWidgets.QMainWindow):
         self.init_menu()
         self.init_window_geometry()
 
+        self.cs = ConfigSystem()
+
+        info = self.cs.get_site_settings()
+
         # Connect Camera
-        self.cam.connect()
-        self.cam.start_ephemeris_shooter()
+        if info[0] == True:
+            self.cam.connect()
+            self.cam.start_ephemeris_shooter()
 
     def init_widgets(self):
         a = MainWindow(self)

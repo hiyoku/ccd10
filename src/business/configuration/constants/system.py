@@ -1,6 +1,6 @@
 FILENAME = 'system'
 
-STARTUP = 'linux_startup'
+STARTUP = 'GNU_linux_startup'
 LOG_FILE = 'save_log_file'
 LOG_PATH = 'log_path'
 PROJECT_PATH = 'project_path'
