@@ -31,6 +31,7 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.exp, self.expl),
                                  set_hbox(self.binning, self.combo),
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
+                                 set_hbox(self.time_colling_label, self.time_colling),
                                  set_hbox(self.tempButton, self.fanButton, stretch2=1),
                                  set_hbox(self.buttonok, self.button_clear, self.buttoncancel, stretch2=1)))
 
@@ -39,9 +40,9 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def setting_values(self):
         info = self.get_values()
-        self.set_values(info[0], info[1], info[2], info[3], info[4])
+        self.set_values(info[0], info[1], info[2], info[3], info[4], info[5])
 
-    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos):
+    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos, time_colling):
         self.setField_temperature.setText(temperature_camera)
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
@@ -50,14 +51,15 @@ class SettingsWindow(QtWidgets.QWidget):
         except:
             b = 0
         self.tempo_fotos.setText(tempo_entre_fotos)
+        self.time_colling.setText(time_colling)
         self.combo.setCurrentIndex(b)
 
     def create_cam_widgets(self):
-        self.setField_temperature_label = QtWidgets.QLabel("Temperature:", self)
+        self.setField_temperature_label = QtWidgets.QLabel("Temperature(°C):", self)
         self.pre = QtWidgets.QLabel("Filter:", self)
         self.prel = QtWidgets.QLineEdit(self)
 
-        self.exp = QtWidgets.QLabel("Exposure time:", self)
+        self.exp = QtWidgets.QLabel("Exposure time(s):", self)
         self.expl = QtWidgets.QLineEdit(self)
 
         self.binning = QtWidgets.QLabel("Binning:", self)
@@ -79,8 +81,11 @@ class SettingsWindow(QtWidgets.QWidget):
         self.buttoncancel = QtWidgets.QPushButton("Cancel", self)
         self.buttoncancel.clicked.connect(self.func_cancel)
 
-        self.tempo_fotos_label = QtWidgets.QLabel("Time between photos:", self)
+        self.tempo_fotos_label = QtWidgets.QLabel("Time between photos(s):", self)
         self.tempo_fotos = QtWidgets.QLineEdit(self)
+
+        self.time_colling_label = QtWidgets.QLabel("CCD Cooling Time(s):", self)
+        self.time_colling = QtWidgets.QLineEdit(self)
 
     def button_ok_func(self):
         try:
@@ -91,7 +96,7 @@ class SettingsWindow(QtWidgets.QWidget):
             self.camera.set_temperature(float(value))'''
 
             # Saving the Settings
-            self.cam.set_camera_settings(self.setField_temperature.text(), self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text())
+            self.cam.set_camera_settings(self.setField_temperature.text(), self.prel.text(), self.expl.text(), self.combo.currentIndex(), self.tempo_fotos.text(), self.time_colling.text())
             self.cam.save_settings()
             self.console.raise_text("Camera settings successfully saved!", 1)
         except Exception as e:

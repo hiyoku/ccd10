@@ -123,12 +123,11 @@ class EphemerisShooter(QtCore.QThread):
                 b = ephem.degrees(str(moon.alt))
 
                 # Variavel de controle do shooter
-                t = 1
+                t = 0
 
                 if float(math.degrees(a)) < self.max_solar_elevation or t == 1:
                     if (self.ignore_lunar_position == False and float(math.degrees(b)) < self.max_lunar_elevation
                             and frac < self.max_lunar_phase) or self.ignore_lunar_position:
-
 
                         if not self.shootOn:
                             if not c:

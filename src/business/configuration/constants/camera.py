@@ -6,4 +6,5 @@ PREFIXO = "prefixo"
 EXPOSICAO = "tempo_exposicao"
 BINNING = "binning"
 TIMEPHOTO = "tempo_fotos"
+TIMECOOLING = "time_cooling"
 
