@@ -446,7 +446,11 @@ def set_path(pre):
         else:
             day = str(day - 1)
 
-        path = path + name_observatory + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
+        if day != 0:
+            path = path + name_observatory + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
+        else:
+            day = tempo[6:8]
+            path = path + name_observatory + "_" + tempo[0:4] + "_" + tempo[4:6] + day + "/"
 
     return path, tempo
 
