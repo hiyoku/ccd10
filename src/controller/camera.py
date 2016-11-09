@@ -35,7 +35,6 @@ class Camera(metaclass=Singleton):
 
         self.commands = CameraQThread(self)
         self.shooting = False
-
         # Initiating the Slots
         self.init_slots()
 
@@ -230,7 +229,7 @@ class Camera(metaclass=Singleton):
 
     # Commands Slots
     def check_temp(self):
-        if self.temp <= -15 or self.temp_contador == 60:
+        if self.temp <= -15 or self.temp_contador >= 60:
             self.ephemerisShooterThread.t = True
         else:
             self.console.raise_text("Temp_contador = " + str(self.temp_contador), 1)
