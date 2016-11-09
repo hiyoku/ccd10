@@ -427,8 +427,6 @@ def set_path(pre):
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
-    month_last = tempo[4:6]
-    day_last = tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
     from src.business.configuration.configSystem import ConfigSystem
@@ -441,14 +439,13 @@ def set_path(pre):
     name_observatory = get_observatory(name_observatory)
 
     if int(tempo[9:11]) > 12:
-        print("\n\n1 int(tempo[9:11]) = " + str(tempo[9:11]) + "\n\n")
         path = path + name_observatory + "_" + data + "/"
     else:
         tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
-        ano = tempo[0:4]
-        mes = tempo[4:6]
-        dia = tempo[6:8]
-        abs_julian_day = jd_to_date(date_to_jd(ano, mes, int(dia)) - 1)
+        year = tempo[0:4]
+        month = tempo[4:6]
+        day = tempo[6:8]
+        abs_julian_day = jd_to_date(date_to_jd(year, month, day) - 1)
 
         if 0 < abs_julian_day[2] < 10:
             path = path + name_observatory + "_" + str(abs_julian_day[0]) + "_" + str(abs_julian_day[1]) + "0" + str(abs_julian_day[2]) + "/"
@@ -644,6 +641,8 @@ def photoshoot(etime, pre, binning):
     data, hora = get_date_hour(tempo)
     print("End of process")
     return path, pngname_final, fitsname_final, data, hora
+
+# Find in https://gist.github.com/jiffyclub/1294443
 
 
 def date_to_jd(year, month, day):
