@@ -7,4 +7,5 @@ EXPOSICAO = "tempo_exposicao"
 BINNING = "binning"
 TIMEPHOTO = "tempo_fotos"
 TIMECOOLING = "time_cooling"
+DARK_PHOTO = "dark_photo"
 

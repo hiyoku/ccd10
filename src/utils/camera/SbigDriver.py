@@ -14,9 +14,6 @@ from scipy.misc import toimage
 from src.utils.camera import SbigLib
 from src.utils.camera import SbigStructures
 
-from src.business.configuration.constants import system as project_info
-
-
 # Load Driver (DLL)
 try:
     if sys.platform.startswith("linux"):
@@ -35,7 +32,7 @@ except Exception as e:
         if bits.startswith("32"):
             udrv = ctypes.windll.LoadLibrary("sbigudrv.dll")
         else:
-            print("Invalid Python distributionm Should be 32bits")
+            print("Invalid Python distribution Should be 32bits")
     except Exception as e:
         print(e)
 
@@ -427,6 +424,8 @@ def set_path(pre):
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
+    month_last = tempo[4:6]
+    day_last = tempo[6:8]
     # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
     from src.business.configuration.configSystem import ConfigSystem
@@ -442,17 +441,16 @@ def set_path(pre):
         path = path + name_observatory + "_" + data + "/"
     else:
         tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
-        year = tempo[0:4]
-        month = tempo[4:6]
-        day = tempo[6:8]
-        abs_julian_day = jd_to_date(date_to_jd(year, month, day) - 1)
+        ano = tempo[0:4]
+        mes = tempo[4:6]
+        dia = tempo[6:8]
+        abs_julian_day = jd_to_date(date_to_jd(ano, mes, int(dia)) - 1)
 
         if 0 < abs_julian_day[2] < 10:
             path = path + name_observatory + "_" + str(abs_julian_day[0]) + "_" + str(abs_julian_day[1]) + "0" + str(abs_julian_day[2]) + "/"
         else:
             path = path + name_observatory + "_" + str(abs_julian_day[0]) + "_" + str(abs_julian_day[1]) + str(abs_julian_day[2]) + "/"
 
-    print("\n\npath = " + path + "\n\n")
     return path, tempo
 
 
@@ -486,7 +484,7 @@ def get_observatory(name):
     return name_aux
 
 
-def photoshoot(etime, pre, binning):
+def photoshoot(etime, pre, binning, dark_photo):
     # open_driver()
     # open_deviceusb()
     # establishinglink()
@@ -507,7 +505,7 @@ def photoshoot(etime, pre, binning):
             # print(cout.readoutInfo[i_mode].mode, cout.readoutInfo[i_mode].width, cout.readoutInfo[i_mode].height,
             #       cout.readoutInfo[i_mode].width, cout.readoutInfo[i_mode].gain, cout.readoutInfo[i_mode].pixel_width,
             #       cout.readoutInfo[i_mode].pixel_height)
-            if ccd == SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value and i_mode == 0:
+            if ccd == SbigLib.CCD_INFO_REQUEST.CCD_INFO_IMAGING.value and i_mode == 1:
                 readout_mode = [
                     cout.readoutInfo[i_mode].mode, cout.readoutInfo[i_mode].width, cout.readoutInfo[i_mode].height,
                     cout.readoutInfo[i_mode].width, cout.readoutInfo[i_mode].gain, cout.readoutInfo[i_mode].pixel_width,
@@ -535,9 +533,21 @@ def photoshoot(etime, pre, binning):
     cin = SbigStructures.StartExposureParams2
     cout = None
     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
-    cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, exposureTime=etime,
-              openShutter=SbigLib.SHUTTER_COMMAND.SC_OPEN_SHUTTER.value, readoutMode=v_read, top=0, left=0,
-              height=v_h, width=v_w)
+
+    try:
+        if dark_photo == 1:
+            cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, exposureTime=etime,
+                      openShutter=SbigLib.SHUTTER_COMMAND.SC_CLOSE_SHUTTER.value, readoutMode=v_read, top=0, left=0,
+                      height=v_h, width=v_w)
+        else:
+            cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, exposureTime=etime,
+                      openShutter=SbigLib.SHUTTER_COMMAND.SC_OPEN_SHUTTER.value, readoutMode=v_read, top=0, left=0,
+                      height=v_h, width=v_w)
+    except Exception:
+        cin = cin(ccd=SbigLib.CCD_REQUEST.CCD_IMAGING.value, exposureTime=etime,
+                  openShutter=SbigLib.SHUTTER_COMMAND.SC_OPEN_SHUTTER.value, readoutMode=v_read, top=0, left=0,
+                  height=v_h, width=v_w)
+
     print("Readout Height: " + str(v_h))
     print("Readout Width: " + str(v_w))
     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_START_EXPOSURE2.value, byref(cin), cout)
@@ -641,8 +651,6 @@ def photoshoot(etime, pre, binning):
     data, hora = get_date_hour(tempo)
     print("End of process")
     return path, pngname_final, fitsname_final, data, hora
-
-# Find in https://gist.github.com/jiffyclub/1294443
 
 
 def date_to_jd(year, month, day):
