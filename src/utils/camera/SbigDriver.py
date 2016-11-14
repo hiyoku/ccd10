@@ -424,9 +424,6 @@ def set_path(pre):
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]
-    month_last = tempo[4:6]
-    day_last = tempo[6:8]
-    # hora = tempo[9:11]+":"+tempo[11:13]+":"+tempo[13:15]
 
     from src.business.configuration.configSystem import ConfigSystem
     cs = ConfigSystem()
@@ -616,12 +613,20 @@ def photoshoot(etime, pre, binning, dark_photo):
 
     site_id_name = get_observatory(site_id_name)
 
-    fn = pre + "_" + site_id_name + "_" + tempo
-    name = path + fn
-    fitsname = name + '.fits'
-    pngname = name + '.png'
-    fitsname_final = fn + '.fits'
-    pngname_final = fn + '.png'
+    if dark_photo == 1:
+        fn = pre + "-DARK" + "_" + site_id_name + "_" + tempo
+        name = path + fn
+        fitsname = name + '.fits'
+        pngname = name + '.png'
+        fitsname_final = fn + '.fits'
+        pngname_final = fn + '.png'
+    else:
+        fn = pre + "_" + site_id_name + "_" + tempo
+        name = path + fn
+        fitsname = name + '.fits'
+        pngname = name + '.png'
+        fitsname_final = fn + '.fits'
+        pngname_final = fn + '.png'
 
     try:
         os.unlink(fitsname)

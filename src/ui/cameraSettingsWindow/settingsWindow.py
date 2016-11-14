@@ -66,7 +66,7 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def create_cam_widgets(self):
         self.setField_temperature_label = QtWidgets.QLabel("Temperature(°C):", self)
-        self.pre = QtWidgets.QLabel("Filter:", self)
+        self.pre = QtWidgets.QLabel("Filter name:", self)
         self.prel = QtWidgets.QLineEdit(self)
 
         self.exp = QtWidgets.QLabel("Exposure time(s):", self)
@@ -76,7 +76,7 @@ class SettingsWindow(QtWidgets.QWidget):
         self.combo = QtWidgets.QComboBox(self)
         self.fill_combo()
 
-        self.dark = QtWidgets.QLabel("Dark:", self)
+        self.dark = QtWidgets.QLabel("Shooter:", self)
         self.close_open = QtWidgets.QComboBox(self)
         self.fill_combo_close_open()
 
@@ -115,7 +115,8 @@ class SettingsWindow(QtWidgets.QWidget):
         except Exception as e:
             self.console.raise_text("Camera settings were not saved.", 3)
         finally:
-            self.p.close()
+            pass
+            #self.p.close()
 
     def clear_all(self):
         self.setField_temperature.clear()
