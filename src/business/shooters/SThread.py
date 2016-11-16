@@ -38,7 +38,6 @@ class SThread(QtCore.QThread):
                 self.pre = 'pre'
 
     def run(self):
-        print("\n\n1 generic_count = " + str(SThread.generic_count) + "\n\n")
         if SThread.generic_count == 0:
             self.set_etime_pre_binning()
             self.lock.set_acquire()
@@ -49,7 +48,6 @@ class SThread(QtCore.QThread):
                 print(e)
             finally:
                 SThread.generic_count += 1
-                print("\n\ngeneric_count = " + str(SThread.generic_count) + "\n\n")
                 self.lock.set_release()
         else:
             self.set_etime_pre_binning()
@@ -60,7 +58,6 @@ class SThread(QtCore.QThread):
             except Exception as e:
                 print(e)
             finally:
-                print("\n\n3 = generic_count = " + str(SThread.generic_count) + "\n\n")
                 self.lock.set_release()
 
     def init_image(self):
@@ -68,9 +65,9 @@ class SThread(QtCore.QThread):
             for i in self.info:
                 print(i)
 
-            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4], self.info[5])
+            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
         except Exception as e:
-            self.img = Image('','','','','','')
+            self.img = Image('','','','','')
         return self.img
 
     def get_image_info(self):
