@@ -232,8 +232,8 @@ class Camera(metaclass=Singleton):
         if self.temp <= -15 or self.temp_contador >= 60:
             self.ephemerisShooterThread.t = True
         else:
-            self.console.raise_text("Temp_contador = " + str(self.temp_contador), 1)
-            self.console.raise_text("CCD cooling to -15", 1)
+            #self.console.raise_text("Temp_contador = " + str(self.temp_contador), 1)
+            self.console.raise_text("Waiting CCD cooling to -15", 1)
             self.temp_contador += 1
 
     def connect_mainwindow_update(self):

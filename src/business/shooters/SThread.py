@@ -13,6 +13,8 @@ class SThread(QtCore.QThread):
         self.lock = Locker()
         self.info = []
         self.img = None
+        global generic_count
+        SThread.generic_count = 0
 
     def get_camera_settings(self):
         settings = SettingsCamera()
@@ -26,30 +28,40 @@ class SThread(QtCore.QThread):
             self.pre = str(info[1])
             self.b = int(info[3])
             self.dark_photo = int(info[6])
-            print("\n\nstr(self.dark_photo) = " + str(self.dark_photo) + "\n\n")
-            print("\n\n1\n\n")
         except Exception as e:
             print(e)
             self.etime = 1
             self.dark_photo = int(info[6])
-            print("\n\nstr(self.dark_photo) = " + str(self.dark_photo) + "\n\n")
-
             if str(info[1]) != '':
                 self.pre = str(info[1])
             else:
                 self.pre = 'pre'
-            print("\n\n2\n\n")
 
     def run(self):
-        self.set_etime_pre_binning()
-        self.lock.set_acquire()
-        try:
-            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, self.dark_photo)
-            self.init_image()
-        except Exception as e:
-            print(e)
-        finally:
-            self.lock.set_release()
+        print("\n\n1 generic_count = " + str(SThread.generic_count) + "\n\n")
+        if SThread.generic_count == 0:
+            self.set_etime_pre_binning()
+            self.lock.set_acquire()
+            try:
+                self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, 1)
+                self.init_image()
+            except Exception as e:
+                print(e)
+            finally:
+                SThread.generic_count += 1
+                print("\n\ngeneric_count = " + str(SThread.generic_count) + "\n\n")
+                self.lock.set_release()
+        else:
+            self.set_etime_pre_binning()
+            self.lock.set_acquire()
+            try:
+                self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, self.dark_photo)
+                self.init_image()
+            except Exception as e:
+                print(e)
+            finally:
+                print("\n\n3 = generic_count = " + str(SThread.generic_count) + "\n\n")
+                self.lock.set_release()
 
     def init_image(self):
         try:

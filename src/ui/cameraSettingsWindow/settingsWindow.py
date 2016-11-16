@@ -154,7 +154,6 @@ class SettingsWindow(QtWidgets.QWidget):
         self.close_open.addItem("Open", 0)
         self.close_open.addItem("Close", 1)
 
-
     def btn_temperature(self):
             try:
                 value = self.setField_temperature.text()
