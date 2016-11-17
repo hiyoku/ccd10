@@ -175,7 +175,7 @@ class Camera(metaclass=Singleton):
         self.fan.set_fan_off()
 
     def shooter_mode(self):
-        self.set_temperature(-16.00)
+        self.set_temperature(-15.00)
         self.fan.set_fan_on()
         while self.get_temperature() < -15:
             sleep(1)
@@ -229,9 +229,9 @@ class Camera(metaclass=Singleton):
 
     # Commands Slots
     def check_temp(self):
-        if self.temp <= -15 or self.temp_contador >= 60:
+        if self.temp <= -15 or self.temp_contador >= 1:
             self.ephemerisShooterThread.t = True
-        elif self.temp_contador % 20 == 0:
+        elif self.temp_contador % 40 == 0:
             self.temp_contador += 1
             self.console.raise_text("Waiting CCD cooling to -15", 1)
         else:

@@ -40,6 +40,11 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.btn_one_photo, self.tempButton, self.fanButton, stretch2=1),
                                  set_hbox(self.buttonok, self.button_clear, self.buttoncancel, stretch2=1)))
 
+    def get_camera_settings(self):
+        settings = SettingsCamera()
+        info = settings.get_camera_settings()
+        return info
+
     def get_values(self):
         return self.cam.get_camera_settings()
 
@@ -126,7 +131,13 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def take_one_photo(self):
         try:
-            self.one_photo.start()
+            info = self.get_camera_settings()
+            if int(info[6]) == 1:
+                self.console.raise_text("Taking dark photo", 2)
+                self.one_photo.start()
+            else:
+                self.console.raise_text("Taking photo", 2)
+                self.one_photo.start()
         except Exception:
             self.console.raise_text("Not possible taking photo", 2)
 
