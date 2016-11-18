@@ -1,4 +1,5 @@
 from PyQt5 import QtCore
+import time
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.models.image import Image
@@ -13,13 +14,24 @@ class SThread(QtCore.QThread):
         self.lock = Locker()
         self.info = []
         self.img = None
-        global generic_count
-        SThread.generic_count = 0
+        self.generic_count = 0
 
     def get_camera_settings(self):
         settings = SettingsCamera()
         info = settings.get_camera_settings()
         return info
+
+    def take_dark(self):
+        try:
+            self.set_etime_pre_binning()
+            self.lock.set_acquire()
+            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, 1)
+            self.init_image()
+        except Exception as e:
+            print(e)
+        finally:
+            time.sleep(1)
+            self.lock.set_release()
 
     def set_etime_pre_binning(self):
         try:
@@ -31,34 +43,22 @@ class SThread(QtCore.QThread):
         except Exception as e:
             print(e)
             self.etime = 1
-            self.dark_photo = int(info[6])
+            self.dark_photo = 1
             if str(info[1]) != '':
                 self.pre = str(info[1])
             else:
                 self.pre = 'pre'
 
     def run(self):
-        if SThread.generic_count == 0:
-            self.set_etime_pre_binning()
-            self.lock.set_acquire()
-            try:
-                self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, 1)
-                self.init_image()
-            except Exception as e:
-                print(e)
-            finally:
-                SThread.generic_count += 1
-                self.lock.set_release()
-        else:
-            self.set_etime_pre_binning()
-            self.lock.set_acquire()
-            try:
-                self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, self.dark_photo)
-                self.init_image()
-            except Exception as e:
-                print(e)
-            finally:
-                self.lock.set_release()
+        self.set_etime_pre_binning()
+        self.lock.set_acquire()
+        try:
+            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, self.dark_photo)
+            self.init_image()
+        except Exception as e:
+            print(e)
+        finally:
+            self.lock.set_release()
 
     def init_image(self):
         try:

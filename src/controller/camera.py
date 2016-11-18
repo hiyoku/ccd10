@@ -13,6 +13,8 @@ from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperatu
                                          close_device, close_driver, getlinkstatus)
 from src.utils.singleton import Singleton
 from src.controller.cameraQThread import CameraQThread
+from src.business.shooters.SThread import SThread
+
 
 
 class Camera(metaclass=Singleton):
@@ -32,6 +34,8 @@ class Camera(metaclass=Singleton):
         self.settedhour = datetime.now()
         self.continuousShooterThread = ContinuousShooterThread(int(self.settings.get_camera_settings()[4]))
         self.ephemerisShooterThread = EphemerisShooter()
+
+        self.sthread = SThread()
 
         self.commands = CameraQThread(self)
         self.shooting = False
@@ -219,17 +223,21 @@ class Camera(metaclass=Singleton):
         self.console.raise_text('Shooter finalized', 1)
 
     def eshooter_observation_started(self):
+        self.console.raise_text("Taking dark", 1)
+        self.sthread.take_dark()
         self.shooting = True
         self.console.raise_text("Observation Started", 1)
 
     def eshooter_observation_finished(self):
         self.console.raise_text("Observation Finalized", 1)
         self.standby_mode()
+        self.console.raise_text("Taking dark", 1)
+        self.sthread.take_dark()
         self.shooting = False
 
     # Commands Slots
     def check_temp(self):
-        if self.temp <= -15 or self.temp_contador >= 1:
+        if self.temp <= -15 or self.temp_contador >= 60:
             self.ephemerisShooterThread.t = True
         elif self.temp_contador % 40 == 0:
             self.temp_contador += 1
