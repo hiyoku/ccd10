@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
 
 from src.business.configuration.settingsCamera import SettingsCamera
@@ -30,6 +30,7 @@ class Camera(metaclass=Singleton):
         self.model_field = None
 
         self.main = Status()
+        self.now_plus_10 = datetime.now()
         self.settedhour = datetime.now()
         self.continuousShooterThread = ContinuousShooterThread(int(self.settings.get_camera_settings()[4]))
         self.ephemerisShooterThread = EphemerisShooter()
@@ -232,11 +233,19 @@ class Camera(metaclass=Singleton):
 
     # Commands Slots
     def check_temp_manual(self):
-        if self.temp <= 10:
+        now = datetime.now()
+        if self.temp_contador == 0:
+            self.now_plus_10 = datetime.now() + timedelta(minutes=10)
+            self.temp_contador += 1
+        if self.temp <= -10 or now >= self.now_plus_10:
             self.continuousShooterThread.t = True
 
     def check_temp(self):
-        if self.temp <= 10:
+        now = datetime.now()
+        if self.temp_contador == 0:
+            self.now_plus_10 = datetime.now() + timedelta(minutes=10)
+            self.temp_contador += 1
+        if self.temp <= -10 or now >= self.now_plus_10:
             self.ephemerisShooterThread.continuousShooterThread.t = True
             self.ephemerisShooterThread.t = True
 
