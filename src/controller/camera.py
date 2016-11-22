@@ -42,6 +42,11 @@ class Camera(metaclass=Singleton):
         # Initiating the Slots
         self.init_slots()
 
+        self.info_ini = []
+
+        info_ini = self.get_camera_settings_ini()
+        self.aux_temperature = int(info_ini[0])
+
         self.temp = 0
         self.temp_contador = 0
 
@@ -174,13 +179,18 @@ class Camera(metaclass=Singleton):
     def check_link(self):
         return getlinkstatus()
 
+    def get_camera_settings_ini(self):
+        settings = SettingsCamera()
+        info_ini = settings.get_camera_settings()
+        return info_ini
+
     # Camera Mode
     def standby_mode(self):
         self.set_temperature(15.00)
         self.fan.set_fan_off()
 
     def shooter_mode(self):
-        self.set_temperature(-15.00)
+        self.set_temperature(int(self.aux_temperature))
         self.fan.set_fan_on()
 
     # Shooters
@@ -233,21 +243,29 @@ class Camera(metaclass=Singleton):
 
     # Commands Slots
     def check_temp_manual(self):
-        now = datetime.now()
-        if self.temp_contador == 0:
-            self.now_plus_10 = datetime.now() + timedelta(minutes=10)
-            self.temp_contador += 1
-        if self.temp <= -10 or now >= self.now_plus_10:
-            self.continuousShooterThread.t = True
+        try:
+            now = datetime.now()
+            if self.temp_contador == 0:
+                self.now_plus_10 = datetime.now() + timedelta(minutes=10)
+                self.temp_contador += 1
+            if self.temp <= int(self.aux_temperature) or now >= self.now_plus_10:
+                self.continuousShooterThread.t = True
+                self.temp_contador == 0
+        except Exception as e:
+            print(e)
 
     def check_temp(self):
-        now = datetime.now()
-        if self.temp_contador == 0:
-            self.now_plus_10 = datetime.now() + timedelta(minutes=10)
-            self.temp_contador += 1
-        if self.temp <= -10 or now >= self.now_plus_10:
-            self.ephemerisShooterThread.continuousShooterThread.t = True
-            self.ephemerisShooterThread.t = True
+        try:
+            now = datetime.now()
+            if self.temp_contador == 0:
+                self.now_plus_10 = datetime.now() + timedelta(minutes=10)
+                self.temp_contador += 1
+            if self.temp <= int(self.aux_temperature) or now >= self.now_plus_10:
+                self.ephemerisShooterThread.continuousShooterThread.t = True
+                self.ephemerisShooterThread.t = True
+                self.temp_contador == 0
+        except Exception as e:
+            print(e)
 
     def connect_mainwindow_update(self):
         self.set_firmware_and_model_values()
