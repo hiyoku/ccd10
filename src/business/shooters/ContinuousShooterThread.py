@@ -8,6 +8,7 @@ from src.business.consoleThreadOutput import ConsoleThreadOutput
 
 class ContinuousShooterThread(QtCore.QThread):
     signalAfterShooting = QtCore.pyqtSignal(name="signalAfterShooting")
+    signal_temp = QtCore.pyqtSignal(name="signalTemp")
 
     def __init__(self, timeSleep):
         super(ContinuousShooterThread, self).__init__()
@@ -19,6 +20,8 @@ class ContinuousShooterThread(QtCore.QThread):
         self.console = ConsoleThreadOutput()
         self.count = 0
 
+        self.t = False
+
     def set_sleep_time(self, t):
         self.s = t
 
@@ -26,24 +29,32 @@ class ContinuousShooterThread(QtCore.QThread):
         self.count = 1
         while self.continuous:
             try:
-                self.ss.start()
-                while self.ss.isRunning():
-                    time.sleep(1)
-
+                self.signal_temp.emit()
+                if self.t:
+                    self.ss.start()
+                    while self.ss.isRunning():
+                        time.sleep(1)
             except Exception as e:
                 print(e)
 
             time.sleep(self.s)
-
             self.signalAfterShooting.emit()
 
     def start_continuous_shooter(self):
         self.continuous = True
 
     def stop_continuous_shooter(self):
-        self.count = 1
+        self.console.raise_text("Taking dark photo\n")
+        self.ss.take_dark()
+        self.t = False
         self.continuous = False
+        self.count = 1
 
     def thread_iniciada(self):
-        self.console.raise_text("Taking photo N: {}".format(self.count), 2)
-        self.count += 1
+        if self.count == 2:
+            self.console.raise_text("Taking dark photo", 2)
+            self.ss.take_dark()
+            self.count += 1
+        else:
+            self.console.raise_text("Taking photo N: {}".format(self.count), 2)
+            self.count += 1

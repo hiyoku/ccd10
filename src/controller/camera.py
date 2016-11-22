@@ -16,7 +16,6 @@ from src.controller.cameraQThread import CameraQThread
 from src.business.shooters.SThread import SThread
 
 
-
 class Camera(metaclass=Singleton):
 
     def __init__(self):
@@ -51,13 +50,14 @@ class Camera(metaclass=Singleton):
         self.ephemerisShooterThread.finished.connect(self.eshooter_finished)
         self.ephemerisShooterThread.signal_started_shooting.connect(self.shooter_mode)
         self.ephemerisShooterThread.signal_temp.connect(self.check_temp)
+        self.ephemerisShooterThread.continuousShooterThread.signal_temp.connect(self.check_temp)
 
         self.ephemerisShooterThread.continuousShooterThread.started.connect(self.eshooter_observation_started)
         self.ephemerisShooterThread.continuousShooterThread.finished.connect(self.eshooter_observation_finished)
 
         # Criando connect da temperatura
         # self.ephemerisShooterThread.continuousShooterThread.signalAfterShooting.connect()
-
+        self.continuousShooterThread.signal_temp.connect(self.check_temp_manual)
         self.continuousShooterThread.finished.connect(self.standby_mode)
 
         # Camera Commands Slots
@@ -181,13 +181,12 @@ class Camera(metaclass=Singleton):
     def shooter_mode(self):
         self.set_temperature(-15.00)
         self.fan.set_fan_on()
-        while self.get_temperature() < -15:
-            sleep(1)
 
     # Shooters
     def start_taking_photo(self):
         try:
             if getlinkstatus() is True:
+                self.shooter_mode()
                 self.continuousShooterThread.start_continuous_shooter()
                 self.continuousShooterThread.start()
             else:
@@ -223,28 +222,23 @@ class Camera(metaclass=Singleton):
         self.console.raise_text('Shooter finalized', 1)
 
     def eshooter_observation_started(self):
-        self.console.raise_text("Taking dark", 1)
-        self.sthread.take_dark()
         self.shooting = True
         self.console.raise_text("Observation Started", 1)
 
     def eshooter_observation_finished(self):
         self.console.raise_text("Observation Finalized", 1)
         self.standby_mode()
-        self.console.raise_text("Taking dark", 1)
-        self.sthread.take_dark()
         self.shooting = False
 
     # Commands Slots
+    def check_temp_manual(self):
+        if self.temp <= 10:
+            self.continuousShooterThread.t = True
+
     def check_temp(self):
-        if self.temp <= -15 or self.temp_contador >= 60:
+        if self.temp <= 10:
+            self.ephemerisShooterThread.continuousShooterThread.t = True
             self.ephemerisShooterThread.t = True
-        elif self.temp_contador % 40 == 0:
-            self.temp_contador += 1
-            self.console.raise_text("Waiting CCD cooling to -15", 1)
-        else:
-            #self.console.raise_text("Temp_contador = " + str(self.temp_contador), 1)
-            self.temp_contador += 1
 
     def connect_mainwindow_update(self):
         self.set_firmware_and_model_values()
