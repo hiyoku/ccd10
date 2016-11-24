@@ -24,8 +24,6 @@ class Logger(QtCore.QThread):
             log_folder = ConfigSystem()
             name_log_folder = str(log_folder.get_log_path())
 
-            "[2016-11-24 @ 20:01:23 UTC]"
-
             from src.business.configuration.configProject import ConfigProject
             ci = ConfigProject()
             name_observatory = str(ci.get_site_settings())

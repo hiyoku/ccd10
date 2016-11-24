@@ -8,11 +8,10 @@ class WidgetsPath(QtWidgets.QWidget):
         super(WidgetsPath, self).__init__(parent)
 
         self.cStart = QtWidgets.QCheckBox('Automatic Mode Start', self)
-        self.cLog = QtWidgets.QCheckBox('Create and save a LOG file', self)
 
         self.lLog = QtWidgets.QLabel('Log Path:', self)
         self.eLog = QtWidgets.QLineEdit(self)
-        self.pbutton = QtWidgets.QPushButton("Open File", self)
+        self.pbutton = QtWidgets.QPushButton("Select Folder", self)
 
 
         '''self.lProjPath = QtWidgets.QLabel('Project Path:')
@@ -21,7 +20,7 @@ class WidgetsPath(QtWidgets.QWidget):
 
         self.lImagesPath = QtWidgets.QLabel('Images Path:')
         self.eImagesPath = QtWidgets.QLineEdit(self)
-        self.ibutton = QtWidgets.QPushButton('Open Path', self)
+        self.ibutton = QtWidgets.QPushButton('Select Folder', self)
 
         self.filename = ""
         self.path = ""
@@ -30,7 +29,6 @@ class WidgetsPath(QtWidgets.QWidget):
 
     def setting_up(self):
         vbox = set_lvbox(set_hbox(self.cStart),
-                         set_hbox(self.cLog),
                          set_hbox(self.lLog, self.eLog, self.pbutton),
                          set_hbox(self.lImagesPath, self.eImagesPath, self.ibutton))
 
@@ -40,11 +38,10 @@ class WidgetsPath(QtWidgets.QWidget):
         self.setLayout(vbox)
 
     def get_values(self):
-        return self.cStart.isChecked(), self.cLog.isChecked(), self.eLog.text(), self.eImagesPath.text()
+        return self.cStart.isChecked(), self.eLog.text(), self.eImagesPath.text()
 
-    def set_values(self, cstart, clog, elog, eip):
+    def set_values(self, cstart, elog, eip):
         self.cStart.setChecked(cstart)
-        self.cLog.setChecked(clog)
         self.eLog.setText(elog)
         self.eImagesPath.setText(eip)
 
@@ -68,6 +65,5 @@ class WidgetsPath(QtWidgets.QWidget):
 
     def clear_path(self):
         self.cStart.setChecked(False)
-        self.cLog.setChecked(False)
         self.eLog.clear()
         self.eImagesPath.clear()
