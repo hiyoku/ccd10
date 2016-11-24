@@ -9,12 +9,15 @@ class WidgetsPath(QtWidgets.QWidget):
 
         self.cStart = QtWidgets.QCheckBox('Automatic Mode Start', self)
         self.cLog = QtWidgets.QCheckBox('Create and save a LOG file', self)
+
         self.lLog = QtWidgets.QLabel('Log Path:', self)
         self.eLog = QtWidgets.QLineEdit(self)
-
-        self.lProjPath = QtWidgets.QLabel('Project Path:')
-        self.eProjPath = QtWidgets.QLineEdit(self)
         self.pbutton = QtWidgets.QPushButton("Open File", self)
+
+
+        '''self.lProjPath = QtWidgets.QLabel('Project Path:')
+        self.eProjPath = QtWidgets.QLineEdit(self)
+        self.pbutton = QtWidgets.QPushButton("Open File", self)'''
 
         self.lImagesPath = QtWidgets.QLabel('Images Path:')
         self.eImagesPath = QtWidgets.QLineEdit(self)
@@ -28,8 +31,7 @@ class WidgetsPath(QtWidgets.QWidget):
     def setting_up(self):
         vbox = set_lvbox(set_hbox(self.cStart),
                          set_hbox(self.cLog),
-                         set_hbox(self.lLog, self.eLog),
-                         set_hbox(self.lProjPath, self.eProjPath, self.pbutton),
+                         set_hbox(self.lLog, self.eLog, self.pbutton),
                          set_hbox(self.lImagesPath, self.eImagesPath, self.ibutton))
 
         self.pbutton.clicked.connect(self.open_projectpath)
@@ -38,22 +40,20 @@ class WidgetsPath(QtWidgets.QWidget):
         self.setLayout(vbox)
 
     def get_values(self):
-        return self.cStart.isChecked(), self.cLog.isChecked(), self.eLog.text(),\
-               self.eProjPath.text(), self.eImagesPath.text()
+        return self.cStart.isChecked(), self.cLog.isChecked(), self.eLog.text(), self.eImagesPath.text()
 
-    def set_values(self, cstart, clog, elog, epp, eip):
+    def set_values(self, cstart, clog, elog, eip):
         self.cStart.setChecked(cstart)
         self.cLog.setChecked(clog)
         self.eLog.setText(elog)
-        self.eProjPath.setText(epp)
         self.eImagesPath.setText(eip)
 
     def open_projectpath(self):
         try:
-            filename = QtWidgets.QFileDialog.getOpenFileName(self, 'OpenFile')
-            self.eProjPath.setText(str(filename[0]))
+            filename = QtWidgets.QFileDialog.getExistingDirectory(self, 'OpenFile')
+            self.eLog.setText(str(filename))
 
-            self.filename = filename[0]
+            self.filename = filename
         except Exception as e:
             print(e)
 
@@ -70,5 +70,4 @@ class WidgetsPath(QtWidgets.QWidget):
         self.cStart.setChecked(False)
         self.cLog.setChecked(False)
         self.eLog.clear()
-        self.eProjPath.clear()
         self.eImagesPath.clear()

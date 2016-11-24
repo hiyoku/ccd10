@@ -45,12 +45,12 @@ class SystemSettingsWindow(QtWidgets.QWidget):
 
     def saving_settings(self):
         info = self.wp.get_values()
-        self.cs.set_site_settings(info[0], info[1], info[2], info[3], info[4])
+        self.cs.set_site_settings(info[0], info[1], info[2], info[3])
         self.cs.save_settings()
 
     def filling_fields(self):
         info = self.cs.get_site_settings()
-        self.wp.set_values(info[0], info[1], info[2], info[3], info[4])
+        self.wp.set_values(info[0], info[1], info[2], info[3])
 
     def clear_fields(self):
         self.wp.clear_path()
