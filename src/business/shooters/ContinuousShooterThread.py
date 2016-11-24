@@ -44,7 +44,7 @@ class ContinuousShooterThread(QtCore.QThread):
         self.continuous = True
 
     def stop_continuous_shooter(self):
-        self.console.raise_text("Taking dark photo\n")
+        self.console.raise_text("Taking dark photo")
         self.ss.take_dark()
         self.t = False
         self.continuous = False

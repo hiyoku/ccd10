@@ -148,7 +148,7 @@ class Camera(metaclass=Singleton):
                 self.console.raise_text("Error setting the temperature.\n{}".format(e), 3)
             finally:
                 self.lock.set_release()
-                self.console.raise_text("Temperature set to {}".format(int(value)), 1)
+                self.console.raise_text("Temperature set to {}°C".format(int(value)), 1)
         else:
             self.console.raise_text("The camera is not connected!", 3)
 
@@ -237,7 +237,7 @@ class Camera(metaclass=Singleton):
         self.console.raise_text("Observation Started", 1)
 
     def eshooter_observation_finished(self):
-        self.console.raise_text("Observation Finalized", 1)
+        self.console.raise_text("Observation Finalized\n", 1)
         self.standby_mode()
         self.shooting = False
 
@@ -245,6 +245,9 @@ class Camera(metaclass=Singleton):
     def check_temp_manual(self):
         try:
             now = datetime.now()
+            if self.temp_contador == 1:
+                self.console.raise_text("Waiting CCD cooling to " + str(self.aux_temperature) + "°C", 1)
+                self.temp_contador += 1
             if self.temp_contador == 0:
                 self.now_plus_10 = datetime.now() + timedelta(minutes=10)
                 self.temp_contador += 1
@@ -257,6 +260,9 @@ class Camera(metaclass=Singleton):
     def check_temp(self):
         try:
             now = datetime.now()
+            if self.temp_contador == 1:
+                self.console.raise_text("Waiting CCD cooling to " + str(self.aux_temperature) + "°C", 1)
+                self.temp_contador += 1
             if self.temp_contador == 0:
                 self.now_plus_10 = datetime.now() + timedelta(minutes=10)
                 self.temp_contador += 1
