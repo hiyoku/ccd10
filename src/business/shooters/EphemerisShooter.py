@@ -38,7 +38,7 @@ class EphemerisShooter(QtCore.QThread):
         self.ignore_lunar_position = infosun[1]
         self.max_lunar_elevation = infosun[2]  # 8
         self.max_lunar_phase = infosun[3]  # 1
-        self.t = False
+        self.wait_temperature = False
 
         print(int(infocam[4]))
         try:
@@ -123,7 +123,7 @@ class EphemerisShooter(QtCore.QThread):
                 b = ephem.degrees(str(moon.alt))
 
                 # Variavel de controle do shooter
-                t = 0
+                t = 1
 
                 if float(math.degrees(a)) < self.max_solar_elevation or t == 1:
                     if (self.ignore_lunar_position == False and float(math.degrees(b)) < self.max_lunar_elevation
@@ -136,7 +136,7 @@ class EphemerisShooter(QtCore.QThread):
 
                             self.signal_temp.emit()
                             time.sleep(5)
-                            if self.t:
+                            if self.wait_temperature:
                                 # Iniciar as Observações
                                 self.start_taking_photo()
                                 self.shootOn = True

@@ -49,6 +49,7 @@ class Camera(metaclass=Singleton):
 
         self.temp = 0
         self.temp_contador = 0
+        self.temp_contador_manual = 0
 
     def init_slots(self):
         # Ephemeris Shooter Slots
@@ -169,7 +170,6 @@ class Camera(metaclass=Singleton):
                 #     self.lock.set_acquire()
                 #     temp = tuple(get_temperature())[3]
                 #     self.lock.set_release()
-            # else:
                 temp = "None"
         except Exception as e:
             self.console.raise_text("Unable to retrieve the temperature.\n{}".format(e), 3)
@@ -192,6 +192,7 @@ class Camera(metaclass=Singleton):
     def shooter_mode(self):
         self.set_temperature(int(self.aux_temperature))
         self.fan.set_fan_on()
+        self.console.raise_text("Waiting temperature to " + str(self.aux_temperature) + "°C", 15)
 
     # Shooters
     def start_taking_photo(self):
@@ -239,36 +240,38 @@ class Camera(metaclass=Singleton):
     def eshooter_observation_finished(self):
         self.console.raise_text("Observation Finalized\n", 1)
         self.standby_mode()
+        self.continuousShooterThread.wait_temperature = False
+        self.ephemerisShooterThread.wait_temperature = False
+        self.ephemerisShooterThread.continuousShooterThread.wait_temperature = False
+        self.temp_contador_manual = 0
         self.shooting = False
 
     # Commands Slots
     def check_temp_manual(self):
         try:
             now = datetime.now()
-            if self.temp_contador == 1:
-                self.console.raise_text("Waiting CCD cooling to " + str(self.aux_temperature) + "°C", 1)
-                self.temp_contador += 1
-            if self.temp_contador == 0:
+            if self.temp_contador_manual == 0:
                 self.now_plus_10 = datetime.now() + timedelta(minutes=10)
-                self.temp_contador += 1
-            if self.temp <= int(self.aux_temperature) or now >= self.now_plus_10:
-                self.continuousShooterThread.t = True
-                self.temp_contador = 0
+                self.temp_contador_manual += 2
+            elif self.temp <= int(self.aux_temperature) or now >= self.now_plus_10:
+                self.continuousShooterThread.wait_temperature = True
+                self.temp_contador_manual = 0
+            else:
+                self.temp_contador_manual += 2
+
         except Exception as e:
             print(e)
 
     def check_temp(self):
         try:
             now = datetime.now()
-            if self.temp_contador == 1:
-                self.console.raise_text("Waiting CCD cooling to " + str(self.aux_temperature) + "°C", 1)
-                self.temp_contador += 1
             if self.temp_contador == 0:
                 self.now_plus_10 = datetime.now() + timedelta(minutes=10)
                 self.temp_contador += 1
             if self.temp <= int(self.aux_temperature) or now >= self.now_plus_10:
-                self.ephemerisShooterThread.continuousShooterThread.t = True
-                self.ephemerisShooterThread.t = True
+                self.ephemerisShooterThread.wait_temperature = True
+                self.ephemerisShooterThread.continuousShooterThread.wait_temperature = True
+
                 self.temp_contador = 0
         except Exception as e:
             print(e)
