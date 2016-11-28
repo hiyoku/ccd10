@@ -109,7 +109,9 @@ class Camera(metaclass=Singleton):
             open_deviceusb()
             c = establishinglink()
             if a is True and c is True:
-                self.console.raise_text("Successfully connected! {} {}".format(a, c), 2)
+                self.console.raise_text("Open Device = {}".format(a), 2)
+                self.console.raise_text("Established Link = {}".format(c), 2)
+                self.console.raise_text("Successfully connected!", 2)
                 self.set_firmware_and_model_values()
 
                 '''
@@ -133,7 +135,9 @@ class Camera(metaclass=Singleton):
             cdr = close_driver()
 
             if cd and cdr:
-                self.console.raise_text("Successfully disconnected!{} {}".format(cd, cdr), 2)
+                self.console.raise_text("Close Device = {}".format(cd), 2)
+                self.console.raise_text("Close Driver = {}".format(cdr), 2)
+                self.console.raise_text("Successfully disconnected", 2)
                 self.clear_firmware_and_model_values()
             else:
                 self.console.raise_text("Error disconnect! {} {}".format(cd, cdr), 3)
