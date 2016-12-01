@@ -9,10 +9,14 @@ Creating an application to manage a CCD SBIG Camera.
 > - PyQt5
 > - Numpy
 > - PyFits
-> - APScheduler
-> - matplotlib
+> - PyEphem
+> - SciPy
+> - libusb-1.0-0-dev 
+> - libusb-dev
+> - fxload
+> - msttcorefonts
 
-Need a Sbig Driver and Microsoft’s TrueType Core fonts
+Need a Sbig Driver
 
 
 ## License
