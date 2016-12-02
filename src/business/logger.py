@@ -4,6 +4,8 @@ from datetime import datetime
 
 from src.utils.camera import SbigDriver
 
+import os
+
 
 class Logger(QtCore.QThread):
     def __init__(self):
@@ -22,7 +24,12 @@ class Logger(QtCore.QThread):
 
             from src.business.configuration.configSystem import ConfigSystem
             log_folder = ConfigSystem()
-            name_log_folder = str(log_folder.get_log_path())
+
+            if str(log_folder.get_log_path()) == "None":
+                name_log_folder = 'Log_folder'
+                os.mkdir(name_log_folder)
+            else:
+                name_log_folder = str(log_folder.get_log_path())
 
             from src.business.configuration.configProject import ConfigProject
             ci = ConfigProject()

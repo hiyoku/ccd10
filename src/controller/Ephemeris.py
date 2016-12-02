@@ -56,11 +56,11 @@ class Ephemeris():
 
                 moon = ephem.Moon()
                 moon.compute(obs)
-                frac=moon.moon_phase
+                frac = moon.moon_phase
 
                 a = ephem.degrees(str(sun.alt))
                 b = ephem.degrees(str(moon.alt))
-                if(degrees(a) < -12 and degrees(b) < 10):
+                if degrees(a) < -12 and degrees(b) < 10:
                     self.shootOn = True
                 else:
                     self.shootOn = False
