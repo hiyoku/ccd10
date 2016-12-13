@@ -1,0 +1,17 @@
+[geographic_options]
+elevation=
+latitude=
+longitude=
+pressure=
+temperature=
+
+[site_options]
+imager_id=
+project_name=
+site_id=default
+
+[sun_and_moon]
+ignore_lunar_position=true
+max_lunar_elevation=None
+max_lunar_phase=None
+max_solar_elevation=None

@@ -3,6 +3,6 @@ binning=1
 dark_photo=0
 prefixo=
 temperature_camera=0
-tempo_exposicao=
+tempo_exposicao=1
 tempo_fotos=1
 time_cooling=

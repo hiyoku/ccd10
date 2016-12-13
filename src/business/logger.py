@@ -26,8 +26,11 @@ class Logger(QtCore.QThread):
             log_folder = ConfigSystem()
 
             if str(log_folder.get_log_path()) == "None":
-                name_log_folder = 'Log_folder'
-                os.mkdir(name_log_folder)
+                if log_folder():
+                    name_log_folder = str(log_folder.get_log_path())
+                else:
+                    name_log_folder = 'Log_folder'
+                    os.mkdir(name_log_folder)
             else:
                 name_log_folder = str(log_folder.get_log_path())
 
