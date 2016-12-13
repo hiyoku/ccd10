@@ -616,16 +616,16 @@ def photoshoot(etime, pre, binning, dark_photo):
     if dark_photo == 1:
         fn = pre + "-DARK" + "_" + site_id_name + "_" + tempo
         name = path + fn
-        fitsname = name + '.fits'
+        fitsname = name + '.fit'
         pngname = name + '.png'
-        fitsname_final = fn + '.fits'
+        fitsname_final = fn + '.fit'
         pngname_final = fn + '.png'
     else:
         fn = pre + "_" + site_id_name + "_" + tempo
         name = path + fn
-        fitsname = name + '.fits'
+        fitsname = name + '.fit'
         pngname = name + '.png'
-        fitsname_final = fn + '.fits'
+        fitsname_final = fn + '.fit'
         pngname_final = fn + '.png'
 
     try:
