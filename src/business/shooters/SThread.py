@@ -43,7 +43,7 @@ class SThread(QtCore.QThread):
             self.dark_photo = int(info[6])
         except Exception as e:
             print(e)
-            self.etime = 1
+            self.etime = 1000
             self.dark_photo = 1
             if str(info[1]) != '':
                 self.pre = str(info[1])
