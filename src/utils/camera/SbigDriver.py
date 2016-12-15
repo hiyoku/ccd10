@@ -8,7 +8,7 @@ from datetime import datetime
 
 import numpy as np
 import pyfits as fits
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from scipy.misc import toimage
 
 from src.utils.camera import SbigLib
@@ -398,6 +398,7 @@ def set_png(filename, newname):
 def resize_image_512x512(name_png):
     img = Image.open(name_png)
     resized_img = img.resize((int(512), int(512)))
+    resized_img = ImageOps.autocontrast(resized_img, 2)
     resized_img.save(name_png)
 
 

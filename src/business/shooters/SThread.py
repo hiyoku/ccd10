@@ -25,7 +25,7 @@ class SThread(QtCore.QThread):
         try:
             self.set_etime_pre_binning()
             self.lock.set_acquire()
-            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, 1)
+            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, 1)
             self.init_image()
         except Exception as e:
             print(e)
@@ -36,7 +36,8 @@ class SThread(QtCore.QThread):
     def set_etime_pre_binning(self):
         try:
             info = self.get_camera_settings()
-            self.etime = int(info[2])
+            self.etime = float(info[2]) * 1000
+            self.etime = int(self.etime)
             self.pre = str(info[1])
             self.b = int(info[3])
             self.dark_photo = int(info[6])
@@ -53,7 +54,7 @@ class SThread(QtCore.QThread):
         self.set_etime_pre_binning()
         self.lock.set_acquire()
         try:
-            self.info = SbigDriver.photoshoot(self.etime * 100, self.pre, self.b, self.dark_photo)
+            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, self.dark_photo)
             self.init_image()
         except Exception as e:
             print(e)
