@@ -389,14 +389,15 @@ def set_png(filename, newname):
 
         im2 = fits_file[0].data
 
-        variavel = get_level(im2, 0.2, 0.98)
-        print('variavel')
-        print(variavel)
-        # print(atribuir_variavel)
+        variavel = get_level(im2, 0.1, 0.99)
+
 
         im2 = bytscl(fits_file[0].data, variavel[1], variavel[0])
         #im2 = toimage(im2)
         img.save(newname)
+
+        im3 = toimage(im2)
+        im3.save(newname)
 
 
         resize_image_512x512(newname)
@@ -418,7 +419,7 @@ def retorna_imagem(name_png):
 def resize_image_512x512(name_png):
     img = Image.open(name_png)
     resized_img = img.resize((int(512), int(512)))
-    resized_img = ImageOps.autocontrast(resized_img, 2)
+    #resized_img = ImageOps.autocontrast(resized_img, 2)
     resized_img.save(name_png)
 
 
@@ -526,7 +527,7 @@ def get_level(im2, sref_min, sref_max):
     :return: limites inferior e superior da imagem para exibição na tela, baseado nos niveis de referencia.
     '''
     #
-    x_min2, x_max = numpy.min(im2), numpy.max(im2)
+    x_min, x_max = numpy.min(im2), numpy.max(im2)
 
     # bin_size precisa ser 1 para analisar ponto à ponto
     bin_size = 1
@@ -534,12 +535,9 @@ def get_level(im2, sref_min, sref_max):
 
     nbins = numpy.floor(((x_max - x_min) / bin_size))
 
-    bins, hist = numpy.histogram(im2, int(nbins), range=[x_min, x_max])
+    hist, bins = numpy.histogram(im2, int(nbins), range=[x_min, x_max])
 
-    if x_min2 == 0.0:
-        x_min2 = 0.01778 * x_max
-
-    sum_histogram = numpy.sum(hist) / x_min2
+    sum_histogram = numpy.sum(hist)
 
     sref = numpy.zeros(2)
     sref[0] = sref_min
