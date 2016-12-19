@@ -1,11 +1,12 @@
 import ctypes
+import math
 import os
 import sys
 import time
-import math
 from ctypes import c_ushort, POINTER, byref
 from datetime import datetime
 
+import numpy
 import numpy as np
 import pyfits as fits
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -385,14 +386,33 @@ def set_png(filename, newname):
     try:
         print("tricat of set_png")
         img = toimage(fits_file[0].data)
+
+        im2 = fits_file[0].data
+
+        variavel = get_level(im2, 0.2, 0.98)
+        print('variavel')
+        print(variavel)
+        # print(atribuir_variavel)
+
+        im2 = bytscl(fits_file[0].data, variavel[1], variavel[0])
+        #im2 = toimage(im2)
         img.save(newname)
+
+
         resize_image_512x512(newname)
         draw_image(newname)
+        #retorna_imagem(newname)
+        #img.show()
 
     except Exception as e:
         print("Exception -> {}".format(e))
     finally:
         fits_file.close()
+
+
+def retorna_imagem(name_png):
+    img = Image.open(name_png)
+    img.show()
 
 
 def resize_image_512x512(name_png):
@@ -419,6 +439,8 @@ def draw_image(name_png):
     del draw
 
     img.save(name_png)
+    #mostra imagem unicamente
+    #img.show()
 
 
 def set_path(pre):
@@ -480,6 +502,65 @@ def get_observatory(name):
     name_aux = name_aux.replace(" ", "")
 
     return name_aux
+
+
+def bytscl(array, max=None, min=None, nan=0, top=255):
+    # see http://star.pst.qub.ac.uk/idl/BYTSCL.html
+    # note that IDL uses slightly different formulae for bytscaling floats and ints.
+    # here we apply only the FLOAT formula...
+
+    if max is None: max = numpy.nanmax(array)
+    if min is None: min = numpy.nanmin(array)
+
+    # return (top+0.9999)*(array-min)/(max-min)
+    return numpy.maximum(numpy.minimum(
+        ((top + 0.9999) * (array - min) / (max - min)).astype(numpy.int16)
+        , top), 0)
+
+
+def get_level(im2, sref_min, sref_max):
+    '''
+    :param im2: imagem tipo float
+    :param sref_min: nivel de referencia normalizado
+    :param sref_max: nivel de referencia normalizado
+    :return: limites inferior e superior da imagem para exibição na tela, baseado nos niveis de referencia.
+    '''
+    #
+    x_min2, x_max = numpy.min(im2), numpy.max(im2)
+
+    # bin_size precisa ser 1 para analisar ponto à ponto
+    bin_size = 1
+    x_min = 0.0
+
+    nbins = numpy.floor(((x_max - x_min) / bin_size))
+
+    bins, hist = numpy.histogram(im2, int(nbins), range=[x_min, x_max])
+
+    if x_min2 == 0.0:
+        x_min2 = 0.01778 * x_max
+
+    sum_histogram = numpy.sum(hist) / x_min2
+
+    sref = numpy.zeros(2)
+    sref[0] = sref_min
+    sref[1] = sref_max
+
+    res_sa = numpy.zeros(len(hist))
+
+    sa = 0.
+    for i in range(len(hist)):
+        sa += hist[i]
+        res_sa[i] = sa
+
+    res_sa2 = res_sa.tolist()
+    res = res_sa[numpy.where((res_sa > sum_histogram * sref[0]) & (res_sa < sum_histogram * sref[1]))]
+    nr = len(res)
+
+    sl0 = res_sa2.index(res[0])
+    sl1 = res_sa2.index(res[nr - 1])
+    slevel = [sl0, sl1]
+
+    return slevel
 
 
 def photoshoot(etime, pre, binning, dark_photo):

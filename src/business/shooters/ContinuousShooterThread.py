@@ -48,17 +48,17 @@ class ContinuousShooterThread(QtCore.QThread):
         self.wait_temperature = False
         self.continuous = False
         self.not_two_dark = False
-        self.console.raise_text("Taking dark photo", 2)
+        self.console.raise_text("Taking dark photo", 1)
         self.ss.take_dark()
         time.sleep(1)
         self.count = 1
 
     def thread_iniciada(self):
         if self.count == 1:
-            self.console.raise_text("Taking dark photo", 2)
+            self.console.raise_text("Taking dark photo", 1)
             self.ss.take_dark()
             self.count += 1
             self.not_two_dark = False
         elif self.count != 1:
-            self.console.raise_text("Taking photo N: {}".format(self.count), 2)
+            self.console.raise_text("Taking photo N: {}".format(self.count), 1)
             self.count += 1

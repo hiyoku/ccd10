@@ -39,6 +39,8 @@ class SThread(QtCore.QThread):
             self.etime = float(info[2])
             if self.etime <= 0.12:
                 self.etime = 0.12 * 100
+            elif self.etime >= 3600:
+                self.etime = 3600 * 100
             else:
                 self.etime = float(info[2]) * 100
             self.etime = int(self.etime)
