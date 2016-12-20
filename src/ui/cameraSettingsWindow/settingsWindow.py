@@ -54,7 +54,7 @@ class SettingsWindow(QtWidgets.QWidget):
         info = self.get_values()
         self.set_values(info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8])
 
-    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos, time_colling, dark_photo, getlevel1, getlevel2):
+    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos, time_colling, set_getlevel1, set_getlevel2, dark_photo):
         self.setField_temperature.setText(temperature_camera)
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
@@ -71,8 +71,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.time_colling.setText(time_colling)
         self.combo.setCurrentIndex(b)
         self.close_open.setCurrentIndex(open_or_close)
-        self.getlevel1l.setText(getlevel1)
-        self.getlevel2l.setText(getlevel2)
+        self.getlevel1l.setText(set_getlevel1)
+        self.getlevel2l.setText(set_getlevel2)
 
     def create_cam_widgets(self):
         self.setField_temperature_label = QtWidgets.QLabel("Temperature(°C):", self)

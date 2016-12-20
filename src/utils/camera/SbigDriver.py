@@ -379,7 +379,7 @@ def set_header(filename):
         print("Exception ->" + str(e))
 
 
-def set_png(filename, newname):
+def set_png(filename, newname, getlevelbins1, getlevelbins2):
     print("Opening filename")
     fits_file = fits.open(filename)
 
@@ -389,7 +389,7 @@ def set_png(filename, newname):
 
         im2 = fits_file[0].data
 
-        variavel = get_level(im2, 0.1, 0.99)
+        variavel = get_level(im2, getlevelbins1, getlevelbins2)
 
 
         im2 = bytscl(fits_file[0].data, variavel[1], variavel[0])
@@ -561,7 +561,7 @@ def get_level(im2, sref_min, sref_max):
     return slevel
 
 
-def photoshoot(etime, pre, binning, dark_photo):
+def photoshoot(etime, pre, binning, dark_photo, getlevelbins1, getlevelbins2):
     # open_driver()
     # open_deviceusb()
     # establishinglink()
@@ -731,7 +731,7 @@ def photoshoot(etime, pre, binning, dark_photo):
     print("Call set_header")
     set_header(fitsname)
     print("Call set_png")
-    set_png(fitsname, pngname)
+    set_png(fitsname, pngname, getlevelbins1, getlevelbins2)
 
     data, hora = get_date_hour(tempo)
     print("End of process")

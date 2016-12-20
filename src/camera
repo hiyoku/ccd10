@@ -1,8 +1,8 @@
 [General]
 binning=1
 dark_photo=1
-get_level1=2
-get_level2=0
+get_level1=99
+get_level2=55
 prefixo=OH
 temperature_camera=10
 tempo_exposicao=2
