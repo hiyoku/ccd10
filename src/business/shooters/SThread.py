@@ -79,10 +79,9 @@ class SThread(QtCore.QThread):
             for i in self.info:
                 print(i)
 
-            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4],\
-                             self.info[5], self.info[6])
+            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4])
         except Exception as e:
-            self.img = Image('','','','','','','')
+            self.img = Image('','','','','')
         return self.img
 
     def get_image_info(self):
