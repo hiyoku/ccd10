@@ -535,28 +535,33 @@ def get_level(im2, sref_min, sref_max):
 
     nbins = numpy.floor(((x_max - x_min) / bin_size))
 
-    hist, bins = numpy.histogram(im2, int(nbins), range=[x_min, x_max])
+    try:
+        hist, bins = numpy.histogram(im2, int(nbins), range=[x_min, x_max])
 
-    sum_histogram = numpy.sum(hist)
+        sum_histogram = numpy.sum(hist)
 
-    sref = numpy.zeros(2)
-    sref[0] = sref_min
-    sref[1] = sref_max
+        sref = numpy.zeros(2)
+        sref[0] = sref_min
+        sref[1] = sref_max
 
-    res_sa = numpy.zeros(len(hist))
+        res_sa = numpy.zeros(len(hist))
 
-    sa = 0.
-    for i in range(len(hist)):
-        sa += hist[i]
-        res_sa[i] = sa
+        sa = 0.
+        for i in range(len(hist)):
+                sa += hist[i]
+                res_sa[i] = sa
 
-    res_sa2 = res_sa.tolist()
-    res = res_sa[numpy.where((res_sa > sum_histogram * sref[0]) & (res_sa < sum_histogram * sref[1]))]
-    nr = len(res)
+        res_sa2 = res_sa.tolist()
+        res = res_sa[numpy.where((res_sa > sum_histogram * sref[0]) & (res_sa < sum_histogram * sref[1]))]
+        nr = len(res)
 
-    sl0 = res_sa2.index(res[0])
-    sl1 = res_sa2.index(res[nr - 1])
-    slevel = [sl0, sl1]
+        sl0 = res_sa2.index(res[0])
+        sl1 = res_sa2.index(res[nr - 1])
+        slevel = [sl0, sl1]
+    except Exception as e:
+        print("Exception get_level ->" + str(e))
+        print("slevel = [10, 20]")
+        slevel = [10, 20]
 
     return slevel
 
