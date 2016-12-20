@@ -25,7 +25,7 @@ class SThread(QtCore.QThread):
         try:
             self.set_etime_pre_binning()
             self.lock.set_acquire()
-            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, 1, self.getlevelbins1, self.getlevelbins2)
+            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, 1, self.get_level1, self.get_level2)
             self.init_image()
         except Exception as e:
             print(e)
@@ -37,15 +37,8 @@ class SThread(QtCore.QThread):
         try:
             info = self.get_camera_settings()
 
-            if self.getlevelbins1 < 0.1 or self.getlevelbins1 == 'None':
-                self.getlevelbins1 = 0.1
-            else:
-                self.getlevelbins1 = float(info[6])
-
-            if self.getlevelbins2 > 0.99 or self.getlevelbins2 == 'None':
-                self.getlevelbins2 = 0.99
-            else:
-                self.getlevelbins2 = float(info[7])
+            self.get_level1 = float(info[6])
+            self.get_level2 = float(info[7])
 
             self.etime = float(info[2])
             if self.etime <= 0.12:
@@ -62,8 +55,8 @@ class SThread(QtCore.QThread):
             print(e)
             self.etime = 100
             self.dark_photo = 1
-            self.getlevelbins1 = 0.1
-            self.getlevelbins2 = 0.99
+            self.get_level1 = 0.1
+            self.get_level2 = 0.99
             if str(info[1]) != '':
                 self.pre = str(info[1])
             else:
@@ -73,7 +66,8 @@ class SThread(QtCore.QThread):
         self.set_etime_pre_binning()
         self.lock.set_acquire()
         try:
-            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, self.dark_photo, self.getlevelbins1, self.getlevelbins2)
+            self.info = SbigDriver.photoshoot(self.etime, self.pre, self.b, self.dark_photo, self.get_level1,\
+                                              self.get_level2)
             self.init_image()
         except Exception as e:
             print(e)
@@ -85,9 +79,10 @@ class SThread(QtCore.QThread):
             for i in self.info:
                 print(i)
 
-            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4], self.info[5], self.info[6])
+            self.img = Image(self.info[0], self.info[1], self.info[2], self.info[3], self.info[4],\
+                             self.info[5], self.info[6])
         except Exception as e:
-            self.img = Image('','','','','')
+            self.img = Image('','','','','','','')
         return self.img
 
     def get_image_info(self):
