@@ -37,6 +37,8 @@ class SettingsWindow(QtWidgets.QWidget):
                                  set_hbox(self.tempo_fotos_label, self.tempo_fotos),
                                  set_hbox(self.time_colling_label, self.time_colling),
                                  set_hbox(self.dark, self.close_open),
+                                 set_hbox(self.getlevel1, self.getlevel1l),
+                                 set_hbox(self.getlevel2, self.getlevel2l),
                                  set_hbox(self.btn_one_photo, self.tempButton, self.fanButton, stretch2=1),
                                  set_hbox(self.buttonok, self.button_clear, self.buttoncancel, stretch2=1)))
 
@@ -50,12 +52,13 @@ class SettingsWindow(QtWidgets.QWidget):
 
     def setting_values(self):
         info = self.get_values()
-        self.set_values(info[0], info[1], info[2], info[3], info[4], info[5], info[6])
+        self.set_values(info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8])
 
-    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos, time_colling, dark_photo):
+    def set_values(self, temperature_camera, prefixo, exposicao, binning, tempo_entre_fotos, time_colling, dark_photo, getlevel1, getlevel2):
         self.setField_temperature.setText(temperature_camera)
         self.prel.setText(prefixo)
         self.expl.setText(exposicao)
+
         try:
             b = int(binning)
         except:
@@ -68,6 +71,8 @@ class SettingsWindow(QtWidgets.QWidget):
         self.time_colling.setText(time_colling)
         self.combo.setCurrentIndex(b)
         self.close_open.setCurrentIndex(open_or_close)
+        self.getlevel1l.setText(getlevel1)
+        self.getlevel2l.setText(getlevel2)
 
     def create_cam_widgets(self):
         self.setField_temperature_label = QtWidgets.QLabel("Temperature(°C):", self)
@@ -84,6 +89,12 @@ class SettingsWindow(QtWidgets.QWidget):
         self.dark = QtWidgets.QLabel("Shooter:", self)
         self.close_open = QtWidgets.QComboBox(self)
         self.fill_combo_close_open()
+
+        self.getlevel1 = QtWidgets.QLabel("Get level 1:", self)
+        self.getlevel1l = QtWidgets.QLineEdit(self)
+
+        self.getlevel2 = QtWidgets.QLabel("Get level 2:", self)
+        self.getlevel2l = QtWidgets.QLineEdit(self)
 
         self.button_clear = QtWidgets.QPushButton('Clear', self)
         self.button_clear.clicked.connect(self.clear_all)
@@ -114,7 +125,7 @@ class SettingsWindow(QtWidgets.QWidget):
             # Saving the Settings
             self.cam.set_camera_settings(self.setField_temperature.text(), self.prel.text(), self.expl.text(),\
                                          self.combo.currentIndex(), self.tempo_fotos.text(), self.time_colling.text(), \
-                                         self.close_open.currentIndex())
+                                         self.getlevel1l.text(), self.getlevel2l.text(), self.close_open.currentIndex())
             self.cam.save_settings()
             self.console.raise_text("Camera settings successfully saved!", 1)
         except Exception as e:
