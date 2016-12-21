@@ -93,7 +93,7 @@ class SettingsWindow(QtWidgets.QWidget):
         self.getlevel1 = QtWidgets.QLabel("Image contrast: bottom level:", self)
         self.getlevel1l = QtWidgets.QLineEdit(self)
 
-        self.getlevel2 = QtWidgets.QLabel("Image contrast: top level :", self)
+        self.getlevel2 = QtWidgets.QLabel("Image contrast:       top level:", self)
         self.getlevel2l = QtWidgets.QLineEdit(self)
 
         self.button_clear = QtWidgets.QPushButton('Clear', self)
