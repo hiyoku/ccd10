@@ -3,7 +3,6 @@ from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 from src.ui.commons.layout import set_hbox, set_lvbox
-
 from src.ui.commons.widgets import get_qfont
 
 

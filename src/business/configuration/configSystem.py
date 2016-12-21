@@ -1,8 +1,8 @@
 from PyQt5 import QtCore
 
 from src.business.configuration.constants import system as s
-from src.ui.commons.verification import cb
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.ui.commons.verification import cb
 
 
 class ConfigSystem:

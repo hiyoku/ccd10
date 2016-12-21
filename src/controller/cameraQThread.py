@@ -1,11 +1,9 @@
 from PyQt5 import QtCore
 
-from src.controller.fan import Fan
-from src.controller.commons.Locker import Locker
-from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
-                                         establishinglink, open_deviceusb, open_driver,
-                                         close_device, close_driver, getlinkstatus)
 from src.controller.commons import cameraActions as cam
+from src.controller.commons.Locker import Locker
+from src.controller.fan import Fan
+from src.utils.camera.SbigDriver import (establishinglink, open_deviceusb, open_driver)
 
 
 class CameraQThread(QtCore.QThread):

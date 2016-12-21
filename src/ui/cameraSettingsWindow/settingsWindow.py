@@ -1,15 +1,12 @@
 from PyQt5 import QtWidgets
 
-from src.controller.camera import Camera
-from src.controller.fan import Fan
-#from src.ui.cameraSettingsWindow.tempRegulation import TempRegulation
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.ui.commons.layout import set_lvbox, set_hbox
-
-from src.utils.camera.SbigDriver import (getlinkstatus)
-
 from src.business.shooters.SThread import SThread
+from src.controller.camera import Camera
+from src.controller.fan import Fan
+from src.ui.commons.layout import set_lvbox, set_hbox
+from src.utils.camera.SbigDriver import (getlinkstatus)
 
 
 class SettingsWindow(QtWidgets.QWidget):

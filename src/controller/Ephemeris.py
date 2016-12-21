@@ -1,9 +1,10 @@
-import ephem
 import datetime
-from time import sleep
 import sys
 from math import degrees
 from threading import Thread
+from time import sleep
+
+import ephem
 
 from src.business.configuration.configProject import ConfigProject
 
@@ -77,18 +78,19 @@ class Ephemeris():
             print(e)
             log.close()
 
-
-        # print('Sun Elev: {}'.format(degrees(a)))
-        # print('Moon Elev: {}'.format(degrees(b)))
-        # print('Moon ilumi: %f' %round(frac*100,1))
-        # print('Sun next rising %s\r' %obs.next_rising(sun))
-        # print('Sun next setting %s\r' %obs.next_setting(sun))
-        # print('Moon next rising %s\r' %obs.next_rising(moon))
-        # print('Moon next setting %s' %obs.next_setting(moon))
-        # print('%s\r' %str(sun.alt)),
-        # print('%s\r' %str(moon.alt)),
-        # print('%s\r' %str(obs.date)),
-        # sys.stdout.flush()
+    '''
+        print('Sun Elev: {}'.format(degrees(a)))
+        print('Moon Elev: {}'.format(degrees(b)))
+        print('Moon ilumi: %f' %round(frac*100,1))
+        print('Sun next rising %s\r' %obs.next_rising(sun))
+        print('Sun next setting %s\r' %obs.next_setting(sun))
+        print('Moon next rising %s\r' %obs.next_rising(moon))
+        print('Moon next setting %s' %obs.next_setting(moon))
+        print('%s\r' %str(sun.alt)),
+        print('%s\r' %str(moon.alt)),
+        print('%s\r' %str(obs.date)),
+        sys.stdout.flush()
+    '''
 
 if __name__ == '__main__':
     a = Ephemeris()

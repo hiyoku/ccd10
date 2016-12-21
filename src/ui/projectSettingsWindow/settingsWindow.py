@@ -1,12 +1,11 @@
 from PyQt5 import QtWidgets
 
+from src.business.configuration.configProject import ConfigProject
+from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.ui.commons.layout import set_hbox, set_lvbox
 from src.ui.projectSettingsWindow.widgetsGeography import WidgetsGeography
 from src.ui.projectSettingsWindow.widgetsSite import WidgetsSite
 from src.ui.projectSettingsWindow.widgetsSun import WidgetsSun
-from src.business.configuration.configProject import ConfigProject
-from src.business.consoleThreadOutput import ConsoleThreadOutput
-
-from src.ui.commons.layout import set_hbox, set_lvbox
 
 
 class SettingsWindow(QtWidgets.QWidget):

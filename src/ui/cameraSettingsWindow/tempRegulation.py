@@ -2,7 +2,6 @@ from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 from src.controller.commons.Locker import Locker
-from src.ui.commons.layout import set_hbox
 
 
 class TempRegulation(QtWidgets.QWidget):

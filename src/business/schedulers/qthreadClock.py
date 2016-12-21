@@ -1,6 +1,7 @@
-from PyQt5 import QtCore
-from datetime import datetime
 import time
+from datetime import datetime
+
+from PyQt5 import QtCore
 
 
 class QThreadClock(QtCore.QThread):

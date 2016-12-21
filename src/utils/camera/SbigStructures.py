@@ -1,5 +1,5 @@
-from ctypes import Structure, c_ushort, c_ulong, c_char, c_double, c_char_p
 import ctypes
+from ctypes import Structure, c_ushort, c_ulong, c_char, c_double, c_char_p
 
 
 class GetErrorStringResults(Structure):

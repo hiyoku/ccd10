@@ -1,6 +1,6 @@
-from src.utils.singleton import Singleton
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.business.schedulers.qthreadSunMoon import QThreadSunMoon
+from src.utils.singleton import Singleton
 
 
 class SchedSunMoonPositions(metaclass=Singleton):

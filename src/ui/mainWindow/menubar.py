@@ -1,11 +1,11 @@
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
-from src.ui.projectSettingsWindow.main import MainWindow
-from src.ui.systemSettingsWindow.main import MainWindow as mw
+from src.controller.camera import Camera
 from src.ui.cameraSettingsWindow.main import Main as csw
 from src.ui.continuousShooterWindow.main import Main as conts
-from src.controller.camera import Camera
+from src.ui.projectSettingsWindow.main import MainWindow
+from src.ui.systemSettingsWindow.main import MainWindow as mw
 
 
 def init_menu(self):

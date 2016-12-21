@@ -1,5 +1,5 @@
-from src.utils.singleton import Singleton
 from src.business.logger import Logger
+from src.utils.singleton import Singleton
 
 
 class ConsoleThreadOutput(metaclass=Singleton):

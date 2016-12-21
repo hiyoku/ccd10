@@ -1,6 +1,7 @@
-from src.utils.singleton import Singleton
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.business.schedulers.qthreadTemperature import QThreadTemperature
+from src.utils.singleton import Singleton
+
 
 class SchedTemperature(metaclass=Singleton):
 

@@ -1,10 +1,9 @@
-from PyQt5 import QtCore
-
+import os
 from datetime import datetime
 
-from src.utils.camera import SbigDriver
+from PyQt5 import QtCore
 
-import os
+from src.utils.camera import SbigDriver
 
 
 class Logger(QtCore.QThread):

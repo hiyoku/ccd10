@@ -1,18 +1,15 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon
 
-# Importing the widgets
+from src.business.configuration.configSystem import ConfigSystem
+from src.controller.camera import Camera
+from src.ui.cameraSettingsWindow.main import Main as csw
+from src.ui.ephemerisShooterWindow.main import Main as eph
 from src.ui.mainWindow.mainWindow import MainWindow
+from src.ui.mainWindow.status import Status
 from src.ui.projectSettingsWindow.main import MainWindow as sw
 from src.ui.systemSettingsWindow.main import MainWindow as mw
-from src.ui.cameraSettingsWindow.main import Main as csw
-# from src.ui.continuousShooterWindow.continuousShooterWindow import ContinuousShooterWindow as conts
 from src.ui.testWindow.MainWindow2 import MainWindow2 as conts
-from src.ui.ephemerisShooterWindow.main import Main as eph
-from src.controller.camera import Camera
-from src.business.configuration.configSystem import ConfigSystem
-
-from src.ui.mainWindow.status import Status
 
 
 class Main(QtWidgets.QMainWindow):

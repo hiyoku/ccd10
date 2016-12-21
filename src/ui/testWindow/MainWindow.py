@@ -1,7 +1,7 @@
-from PyQt5 import QtWidgets
-
-from threading import Thread
 import time
+from threading import Thread
+
+from PyQt5 import QtWidgets
 
 from src.controller.camera import Camera
 

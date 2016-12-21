@@ -1,9 +1,10 @@
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore
+from PyQt5 import QtWidgets
 
 from src.business.schedulers.schedClock import SchedClock
 from src.ui.commons.layout import set_wvbox
 from src.ui.commons.widgets import get_qfont
+
 
 class Clock(QtWidgets.QFrame):
     

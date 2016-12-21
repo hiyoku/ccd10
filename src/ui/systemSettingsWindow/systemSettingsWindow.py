@@ -1,9 +1,9 @@
 from PyQt5 import QtWidgets
 
-from src.ui.commons.layout import set_lvbox, set_hbox
-from src.ui.systemSettingsWindow.widgetsPath import WidgetsPath
 from src.business.configuration.configSystem import ConfigSystem
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.ui.commons.layout import set_lvbox, set_hbox
+from src.ui.systemSettingsWindow.widgetsPath import WidgetsPath
 
 
 class SystemSettingsWindow(QtWidgets.QWidget):

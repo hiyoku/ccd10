@@ -1,7 +1,9 @@
-from PyQt5 import QtWidgets
 import sys
-from src.ui.testWindow.MainWindow2 import MainWindow2
+
+from PyQt5 import QtWidgets
+
 from src.ui.mainWindow.tempMonitor import TempMonitor
+from src.ui.testWindow.MainWindow2 import MainWindow2
 
 
 class Main(QtWidgets.QMainWindow):

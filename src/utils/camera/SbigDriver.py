@@ -9,7 +9,7 @@ from datetime import datetime
 import numpy
 import numpy as np
 import pyfits as fits
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont
 from scipy.misc import toimage
 
 from src.utils.camera import SbigLib
@@ -361,6 +361,10 @@ def ccdinfo():
 
 
 def set_header(filename):
+    '''
+    :param filename: arquivo fit
+    :return: arquivo fit renomeado com data e horario
+    '''
     # Abrindo o arquivo
     fits_file = fits.open(filename)
     # Escrevendo o Header
@@ -380,6 +384,15 @@ def set_header(filename):
 
 
 def set_png(filename, newname, get_level1, get_level2):
+    '''
+    :param filename: nome do arquivo fit criado
+    :param newname: nome do arquivo png criado a partir do fit
+    :param get_level1: Image contrast: bottom level
+    :param get_level2: Image contrast: top level
+    :return: arquivo fit e png. Arquivo .png redimensionado para 512X512, com a lib PIL se desenha na imagem os \
+    seguintes:
+    Nome do observatorio, nome do filtro, data e horario.
+    '''
     print("Opening filename")
     fits_file = fits.open(filename)
 
@@ -445,6 +458,10 @@ def draw_image(name_png):
 
 
 def set_path(pre):
+    '''
+    :param pre:
+    :return: gera nome da pasta e consequente do arquivo fit e png.
+    '''
     tempo = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
 
     data = tempo[0:4] + "_" + tempo[4:6] + tempo[6:8]

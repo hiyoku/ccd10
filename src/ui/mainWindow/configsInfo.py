@@ -1,12 +1,10 @@
 from PyQt5 import QtWidgets
 
-
 from src.business.configuration.configProject import ConfigProject
 from src.business.configuration.configSystem import ConfigSystem as cs
-from src.ui.mainWindow.siteInfo import SiteInfo
-from src.ui.mainWindow.ephemInfo import EphemInfo
-
 from src.ui.commons.layout import set_wvbox
+from src.ui.mainWindow.ephemInfo import EphemInfo
+from src.ui.mainWindow.siteInfo import SiteInfo
 
 
 class ConfigsInfo(QtWidgets.QFrame):

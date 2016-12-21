@@ -6,13 +6,16 @@ import ephem
 from PyQt5 import QtCore
 
 from src.business.EphemObserverFactory import EphemObserverFactory
-from src.business.consoleThreadOutput import ConsoleThreadOutput
-from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
 from src.business.configuration.configProject import ConfigProject
 from src.business.configuration.settingsCamera import SettingsCamera
+from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
 
 
 class EphemerisShooter(QtCore.QThread):
+    '''
+    classe para modo automatico
+    '''
     signal_started_shooting = QtCore.pyqtSignal(name="signalStartedShooting")
     signal_temp = QtCore.pyqtSignal(name="signalTemp")
 

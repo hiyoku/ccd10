@@ -1,5 +1,6 @@
-from PyQt5 import QtCore
 import time
+
+from PyQt5 import QtCore
 
 from src.controller.camera import Camera
 

@@ -1,8 +1,9 @@
 import math
-import ephem
 import time
-from PyQt5 import QtCore
 from datetime import datetime
+
+import ephem
+from PyQt5 import QtCore
 
 from src.business.EphemObserverFactory import EphemObserverFactory
 from src.business.configuration.configProject import ConfigProject

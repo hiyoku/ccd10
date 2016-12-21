@@ -1,22 +1,24 @@
 from datetime import datetime, timedelta
-from time import sleep
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.business.shooters.ContinuousShooterThread import ContinuousShooterThread
 from src.business.shooters.EphemerisShooter import EphemerisShooter
+from src.business.shooters.SThread import SThread
+from src.controller.cameraQThread import CameraQThread
 from src.controller.commons.Locker import Locker
-from src.ui.mainWindow.status import Status
 from src.controller.fan import Fan
+from src.ui.mainWindow.status import Status
 from src.utils.camera.SbigDriver import (ccdinfo, set_temperature, get_temperature,
                                          establishinglink, open_deviceusb, open_driver,
                                          close_device, close_driver, getlinkstatus)
 from src.utils.singleton import Singleton
-from src.controller.cameraQThread import CameraQThread
-from src.business.shooters.SThread import SThread
 
 
 class Camera(metaclass=Singleton):
+    '''
+        classe de controle da camera
+    '''
 
     def __init__(self):
         self.lock = Locker()
@@ -89,10 +91,10 @@ class Camera(metaclass=Singleton):
         self.model_field.setText("Camera: ")
 
     def get_info(self):
-        """
+        '''
             Function to get the CCD Info
             This function will return [CameraFirmware, CameraType, CameraName]
-        """
+        '''
         ret = None
         self.lock.set_acquire()
         try:
@@ -252,6 +254,9 @@ class Camera(metaclass=Singleton):
 
     # Commands Slots
     def check_temp_manual(self):
+        '''
+        funcao que espera temperatura setada ou tempo pre-determinada
+        '''
         try:
             now = datetime.now()
             if self.temp_contador_manual == 0:
@@ -267,6 +272,9 @@ class Camera(metaclass=Singleton):
             print(e)
 
     def check_temp(self):
+        '''
+            funcao que espera temperatura setada ou tempo pre-determinada
+        '''
         try:
             now = datetime.now()
             if self.temp_contador == 0:

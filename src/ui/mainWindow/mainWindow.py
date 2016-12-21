@@ -1,12 +1,12 @@
 from PyQt5 import QtWidgets
 
+from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.ui.commons.layout import add_all_to_vbox, set_wvbox
 from src.ui.mainWindow.cameraInfo import CameraInfo
 from src.ui.mainWindow.clock import Clock
-from src.ui.mainWindow.shooter import Shooter
 from src.ui.mainWindow.configsInfo import ConfigsInfo
-from src.business.consoleThreadOutput import ConsoleThreadOutput
 from src.ui.mainWindow.consoleLogWidget import ConsoleLogWidget
+from src.ui.mainWindow.shooter import Shooter
 
 
 class MainWindow(QtWidgets.QWidget):

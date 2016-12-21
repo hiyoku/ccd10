@@ -2,11 +2,14 @@ import time
 
 from PyQt5 import QtCore
 
-from src.business.shooters.SThread import SThread
 from src.business.consoleThreadOutput import ConsoleThreadOutput
+from src.business.shooters.SThread import SThread
 
 
 class ContinuousShooterThread(QtCore.QThread):
+    '''
+    classe para modo manual
+    '''
     signalAfterShooting = QtCore.pyqtSignal(name="signalAfterShooting")
     signal_temp = QtCore.pyqtSignal(name="signalTemp")
 

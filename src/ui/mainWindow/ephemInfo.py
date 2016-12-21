@@ -1,9 +1,9 @@
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore
+from PyQt5 import QtWidgets
 
+from src.business.schedulers.schedSunMoonPositions import SchedSunMoonPositions
 from src.ui.commons.layout import set_lvbox, set_hbox
 from src.ui.commons.widgets import get_qfont
-from src.business.schedulers.schedSunMoonPositions import SchedSunMoonPositions
 
 
 class EphemInfo(QtWidgets.QFrame):
