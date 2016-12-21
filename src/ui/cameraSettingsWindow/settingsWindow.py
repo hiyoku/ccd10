@@ -90,10 +90,10 @@ class SettingsWindow(QtWidgets.QWidget):
         self.close_open = QtWidgets.QComboBox(self)
         self.fill_combo_close_open()
 
-        self.getlevel1 = QtWidgets.QLabel("Get level 1:", self)
+        self.getlevel1 = QtWidgets.QLabel("Image contrast: bottom level:", self)
         self.getlevel1l = QtWidgets.QLineEdit(self)
 
-        self.getlevel2 = QtWidgets.QLabel("Get level 2:", self)
+        self.getlevel2 = QtWidgets.QLabel("Image contrast: top level :", self)
         self.getlevel2l = QtWidgets.QLineEdit(self)
 
         self.button_clear = QtWidgets.QPushButton('Clear', self)
