@@ -124,18 +124,19 @@ def close_device():
     except Exception as e:
         return False, e
 
-
+'''
 # Open Device Eth
-# def openDevice(ip):
-#     cin = SbigStructures.OpenDeviceParams
-#     cout = None
-#     udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
-#     ip.split(".")
-#     ip_hex = hex(int(ip[0])).split('x')[1].rjust(2, '0') + hex(int(ip[1])).split('x')[1].rjust(2, '0') +\
-#              hex(int(ip[2])).split('x')[1].rjust(2, '0') + hex(int(ip[3])).split('x')[1].rjust(2, '0')
-#     cin = cin(deviceType=SbigLib.SBIG_DEVICE_TYPE.DEV_ETH.value, ipAddress=long(ip_hex, 16))
-#     ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_OPEN_DEVICE.value, byref(cin), cout)
-#     print ret
+def openDevice(ip):
+    cin = SbigStructures.OpenDeviceParams
+    cout = None
+    udrv.SBIGUnivDrvCommand.argtypes = [c_ushort, POINTER(cin), POINTER(cout)]
+    ip.split(".")
+    ip_hex = hex(int(ip[0])).split('x')[1].rjust(2, '0') + hex(int(ip[1])).split('x')[1].rjust(2, '0') +\
+             hex(int(ip[2])).split('x')[1].rjust(2, '0') + hex(int(ip[3])).split('x')[1].rjust(2, '0')
+    cin = cin(deviceType=SbigLib.SBIG_DEVICE_TYPE.DEV_ETH.value, ipAddress=long(ip_hex, 16))
+    ret = udrv.SBIGUnivDrvCommand(SbigLib.PAR_COMMAND.CC_OPEN_DEVICE.value, byref(cin), cout)
+    print(ret)
+'''
 
 
 # Establishing Link
@@ -522,7 +523,7 @@ def get_observatory(name):
     return name_aux
 
 
-def bytscl(array, max=None, min=None, nan=0, top=255):
+def bytscl(array, max = None, min = None, nan = 0, top=255):
     # see http://star.pst.qub.ac.uk/idl/BYTSCL.html
     # note that IDL uses slightly different formulae for bytscaling floats and ints.
     # here we apply only the FLOAT formula...
@@ -565,8 +566,8 @@ def get_level(im2, sref_min, sref_max):
 
         sa = 0.
         for i in range(len(hist)):
-                sa += hist[i]
-                res_sa[i] = sa
+            sa += hist[i]
+            res_sa[i] = sa
 
         res_sa2 = res_sa.tolist()
         res = res_sa[numpy.where((res_sa > sum_histogram * sref[0]) & (res_sa < sum_histogram * sref[1]))]
@@ -591,7 +592,6 @@ def photoshoot(etime, pre, binning, dark_photo, get_level1, get_level2):
     :param dark_photo: shooter fechado = 1 ou aberto = 0
     :param get_level1: limite inferior para auto contraste
     :param get_level2: limite superior para auto contraste
-    :return:
     '''
     # open_driver()
     # open_deviceusb()
