@@ -1,5 +1,6 @@
-from PyQt5 import QtCore
 import time
+
+from PyQt5 import QtCore
 
 from src.business.configuration.settingsCamera import SettingsCamera
 from src.business.models.image import Image
@@ -17,11 +18,25 @@ class SThread(QtCore.QThread):
         self.generic_count = 0
 
     def get_camera_settings(self):
+        '''
+        pega os valores no ini camera
+        info[0] = temperature_camera
+        info[1] = prefixo/filter name
+        info[2] = tempo_exposicao
+        info[3] = tempo_fotos(tempo entre fotos)
+        info[4] = time_cooling(CCD cooling time)
+        info[5] = Image contrast: bottom
+        info[6] = Image contrast: top level
+        info[7] = Booleano para decidir se a foto é dark
+        '''
         settings = SettingsCamera()
         info = settings.get_camera_settings()
         return info
 
     def take_dark(self):
+        '''
+        manda instrução para o SbigDriver para tirar uma foto dark
+        '''
         try:
             self.set_etime_pre_binning()
             self.lock.set_acquire()
@@ -34,6 +49,12 @@ class SThread(QtCore.QThread):
             self.lock.set_release()
 
     def set_etime_pre_binning(self):
+        '''
+        seta os valores para o tempo de exposição = etime, prefixo, binning, se a foto é dark ou não,\
+        e valores Image contrast: bottom e top level
+        :return:
+        '''
+
         try:
             info = self.get_camera_settings()
 
@@ -48,9 +69,13 @@ class SThread(QtCore.QThread):
             else:
                 self.etime = float(info[2]) * 100
             self.etime = int(self.etime)
+
             self.pre = str(info[1])
+
             self.b = int(info[3])
+
             self.dark_photo = int(info[8])
+
         except Exception as e:
             print(e)
             self.etime = 100
