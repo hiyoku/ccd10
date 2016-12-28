@@ -13,9 +13,8 @@ from src.business.shooters.ContinuousShooterThread import ContinuousShooterThrea
 
 
 class EphemerisShooter(QtCore.QThread):
-    '''
-    classe para modo automatico
-    '''
+    """classe para modo automatico"""
+
     signal_started_shooting = QtCore.pyqtSignal(name="signalStartedShooting")
     signal_temp = QtCore.pyqtSignal(name="signalTemp")
 
